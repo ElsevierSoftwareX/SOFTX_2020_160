@@ -1,0 +1,34 @@
+// Use this example to test L1H1V1 vs L1H2H3V1 (H2,H3 V Shape) with noise for aLigo and a standard MDC BRST set
+// The file macro/mdc.lst is used as input mdc source parameters 
+
+// to generate all necessary stuff do :
+make setup
+  
+// to change the cwb parameters edit :
+config/user_parameters*.C
+
+// to run interactive cwb pipeline for job1 do :
+make cwb_H1
+make cwb_H2
+make cwb_H3
+make cwb_L1H1V1
+make cwb_L1H2H3V1
+
+// to run interactive ced for job1 do :
+make ced_H1
+make ced_H2
+make ced_H3
+make ced_L1H1V1
+make ced_L1H2H3V1
+
+// to change the injection mdc factor (by default = 1) do :
+Ex: make cwb_L1H1V1 FACTOR=10
+
+// To draw the H2H3 network antenna patterns use macro :
+macro/Test_H2H3_45deg.C
+change definitions and do :
+// in par : polarization=3 -> sqrt(|F+|^2+|Fx|^2)      DPF
+root -l 'macro/Test_H2H3_45deg.C(3)' 
+
+// to reset the directory do :
+make clean

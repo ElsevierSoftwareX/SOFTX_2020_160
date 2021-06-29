@@ -1,0 +1,19 @@
+@c  MathJax project is open source JavaScript platform for display of mathematics in html pages
+
+@html
+<head>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config(@{
+  tex2jax: @{inlineMath: [['$','$'], ['\\(','\\)']]@}
+@});
+</script>
+
+<!--
+<script type="text/javascript"
+   src="/~waveburst/public_html/waveburst/WWW/MathJax/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+@end html

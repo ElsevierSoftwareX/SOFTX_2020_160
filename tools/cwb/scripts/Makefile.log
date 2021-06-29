@@ -1,0 +1,48 @@
+ATIME = $(shell date -u)
+
+svn:
+	echo    '------------------------------------------------------------------------------------'	>> cWB_analysis.log
+	echo    'CWB_ANALYSIS' 										>> cWB_analysis.log
+	echo    '------------------------------------------------------------------------------------'	>> cWB_analysis.log
+	echo    ''											>> cWB_analysis.log
+	echo    'DATE 			$(ATIME)'							>> cWB_analysis.log
+	echo    ''											>> cWB_analysis.log
+	echo -n 'CLUSTER_SITE 		'								>> cWB_analysis.log
+	echo    ${SITE_CLUSTER}                                                                         >> cWB_analysis.log
+	echo    ''											>> cWB_analysis.log
+	echo -n 'COMMAND_LINE 		'								>> cWB_analysis.log
+	echo    "\"${CMD_LINE}\""									>> cWB_analysis.log
+	echo    ''											>> cWB_analysis.log
+	echo -n 'WAT_URL_REPOSITORY	'                                                               >> cWB_analysis.log
+	cat     ${HOME_WAT}/wat/waturl    		                                                >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'WAT_LOCAL_REPOSITORY	'                                                               >> cWB_analysis.log
+	echo    ${HOME_WAT}           	                                                                >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'WAT_VERSION		'                                                               >> cWB_analysis.log
+	cat     $(HOME_WAT)/wat/wathash    	                                                        >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'WAT_BRANCH		'                                                               >> cWB_analysis.log
+	cat     $(HOME_WAT)/wat/watbranch              							>> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'WAT_TAG		'                                                               >> cWB_analysis.log
+	cat     $(HOME_WAT)/wat/wattag              							>> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	git     -C ${CWB_CONFIG} rev-parse HEAD		# check if $CWB_CONFIG exist
+	echo -n 'CFG_URL_REPOSITORY	'                                                               >> cWB_analysis.log
+	git     -C ${CWB_CONFIG} config --get remote.origin.url                                         >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'CFG_LOCAL_REPOSITORY	'                                                               >> cWB_analysis.log
+	echo    ${CWB_CONFIG}                                                                           >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'CFG_HASH		'                                                               >> cWB_analysis.log
+	git     -C ${CWB_CONFIG} rev-parse HEAD                                                         >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'CFG_BRANCH		'                                                               >> cWB_analysis.log
+	git     -C ${CWB_CONFIG} branch -l | grep '*'                                                   >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo -n 'CFG_TAG			'                                                       >> cWB_analysis.log
+	git     -C ${CWB_CONFIG} tag -l --points-at HEAD                                                >> cWB_analysis.log
+	echo    ''                                                                                      >> cWB_analysis.log
+	echo    ''											>> cWB_analysis.log
+ 

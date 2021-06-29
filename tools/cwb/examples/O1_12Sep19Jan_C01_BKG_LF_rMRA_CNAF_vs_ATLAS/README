@@ -1,0 +1,39 @@
+This working directory can be used to compare the performances of CNAF cluster vs ATLAS cluster
+
+README.ATLAS	: describes how to run this test on the ATLAS cluster
+README.CNAF	: describes how to run this test on the CNAF cluster
+README.bench	: describes how to produce final benchmarks
+
+
+The following lines show what are the input frame files used for this test
+
+
+// ---------------------------------------------------------
+// frame files lists
+// ---------------------------------------------------------
+
+// ATLAS
+input/L1_C01_ATLAS.frames -> /home/vedovato/O1/FRAMES/O1_12Sep19Jan_C01/L1.frames
+input/H1_C01_ATLAS.frames -> /home/vedovato/O1/FRAMES/O1_12Sep19Jan_C01/H1.frames
+
+// CNAF
+input/L1_C01_CNAF.frames -> /opt/exp_software/virgo/virgoDev/waveburst/O1/FRAMES/O1_12Sep19Jan_C01/L1.frames
+input/H1_C01_CNAF.frames -> /opt/exp_software/virgo/virgoDev/waveburst/O1/FRAMES/O1_12Sep19Jan_C01/H1.frames
+
+// ---------------------------------------------------------
+// veto lists
+// ---------------------------------------------------------
+
+// ATLAS
+input/L1_CAT0_C01.txt -> /home/vedovato/O1//DQvetos/O1_12Sep19Jan_C01/L1Cat0.txt
+input/H1_CAT0_C01.txt -> /home/vedovato/O1//DQvetos/O1_12Sep19Jan_C01/H1Cat0.txt
+input/L1_CAT1_C01.txt -> /home/vedovato/O1//DQvetos/O1_12Sep19Jan_C01/L1Cat1.txt
+input/H1_CAT1_C01.txt -> /home/vedovato/O1//DQvetos/O1_12Sep19Jan_C01/H1Cat1.txt
+
+// CNAF
+input/L1_CAT0_C01.txt -> /opt/exp_software/virgo/virgoDev/waveburst/O1/DQvetos/O1_12Sep19Jan_C01/L1Cat0.txt
+input/H1_CAT0_C01.txt -> /opt/exp_software/virgo/virgoDev/waveburst/O1/DQvetos/O1_12Sep19Jan_C01/H1Cat0.txt
+input/L1_CAT1_C01.txt -> /opt/exp_software/virgo/virgoDev/waveburst/O1/DQvetos/O1_12Sep19Jan_C01/L1Cat1.txt
+input/H1_CAT1_C01.txt -> /opt/exp_software/virgo/virgoDev/waveburst/O1/DQvetos/O1_12Sep19Jan_C01/H1Cat1.txt
+
+

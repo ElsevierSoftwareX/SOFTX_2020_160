@@ -1,0 +1,42 @@
+The following instruction show how to perform this test in the ATLAS cluster
+
+// ------------------------------------------------------
+// set WAT library configuration with watenv script
+// ------------------------------------------------------
+
+// ------------------------------------------------------
+// select cWB configuration
+// ------------------------------------------------------
+
+cp config/user_parameters_CNAF.C config/user_parameters.C
+
+// ------------------------------------------------------
+// build plugin
+// ------------------------------------------------------
+
+cwb_mplugin macro/CWB_Plugin_QLWveto_Gating.C $HOME_CWB/plugins/CWB_Plugin_QLWveto.C $HOME_CWB/plugins/CWB_Plugin_Gating.C
+
+// ------------------------------------------------------
+// compile plugin
+// ------------------------------------------------------
+
+root -l -b macro/CWB_Plugin_QLWveto_Gating.C++
+
+// ------------------------------------------------------
+// interactive test
+// ------------------------------------------------------
+
+cwb_inet 2
+
+// ------------------------------------------------------
+// create dag file
+// ------------------------------------------------------
+
+cwb_condor create
+
+// ------------------------------------------------------
+// submit 100 jobs
+// ------------------------------------------------------
+
+cwb_condor submit
+

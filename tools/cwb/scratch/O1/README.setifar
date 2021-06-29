@@ -1,0 +1,13 @@
+alias cwb_setifar            "${CWB_SCRIPTS}/cwb_setifar.csh" 
+
+ScanWAVE("rho[0]:far:bin","ifar!=0 && strstr(bin,\"chirp\")","goff")
+
+DrawWAVE("rho[0]:ifar:bin","ifar>(1000.*24.*3600.*365.) && strstr(bin,\"unmodeled\")","goff")
+
+cwb_setveto M1
+
+broot isetIFAR.C
+broot esetIFAR.C
+
+cwb_report M1.V_cat2LH_hvetoLH_cat3LH.S_unmodeled.S_constrained.S_chirp create
+cwb_report M1.V_cat2LH_hvetoLH_cat3LH.S_eunmodeled.S_econstrained.S_chirp create

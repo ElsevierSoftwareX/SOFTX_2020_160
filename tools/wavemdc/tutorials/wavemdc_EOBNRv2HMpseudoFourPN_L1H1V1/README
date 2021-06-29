@@ -1,0 +1,28 @@
+// edit wmdc_config.C
+
+// create segment file list 
+Segments/Chris-segs.txt
+
+wmdc_condor create
+
+condor_submit_dag wavemdc_EOBNRv2HMpseudoFourPN.dag
+
+// when condor is completed do
+wmdc_condor log
+
+// interactive
+setenv PID 1
+setenv WMDC_SEG_START 1
+setenv WMDC_SEG_STOP 1
+root -b -q -l ${WMDC_CONFIG} ${HOME_WAVEMDC}/WaveMDC.C
+root -n -l -b ${CWB_ROOTLOGON_FILE} ${WMDC_CONFIG} ${HOME_WAVEMDC}/wmdc_condor_log.C
+
+// checkk output
+FrDump -d 2 -i frames/L1H1V1-wavemdc_EOBNRv2HMpseudoFourPN-9310/L1H1V1-wavemdc_EOBNRv2HMpseudoFourPN-931072130-64.gwf
+cat frames/L1H1V1-wavemdc_EOBNRv2HMpseudoFourPN-9310/L1H1V1-wavemdc_EOBNRv2HMpseudoFourPN-931072130-64-Log.txt
+
+// display frame data
+root -l macro/ReadDisplayFrame.C
+
+// compare frames data
+root -l macro/CompareFrames.C   

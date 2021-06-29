@@ -1,0 +1,183 @@
+<head>
+<style type="text/css">
+.datagrid tr:hover td
+{
+        background-color:#F1F1F2;
+}
+</style>
+</head>
+
+<p>
+<a name="LiveTime"><h3>Live time: (after category 1, 2 and 4 (injections) DQ (flags)</h3></a>
+<b>
+  <ul>
+  <li> LIVETIME
+  <li> LIVETIM2
+  <li> <a target="_parent" href="PP_DATA_DIR/live.txt">live time for each lag</a>
+  </ul>
+</b>
+<br>
+<p>
+
+
+<!--CWB_DOC_URL
+<table width=100%>
+<tr>
+<td align="left">
+CWB_DOC_URL-->
+<a target="_parent" name="Full Plot List" href="PLOT_LIST"><h3>Full Plot List</h3></a>
+<!--CWB_DOC_URL
+</td>
+<td align="right">
+<a target="_parent"
+href="XCWB_DOC_URL/cwb/man/pp_webpages.html#background">infos</a>
+</td>
+</tr>
+</table>
+<hr>
+CWB_DOC_URL-->
+
+<p>
+<font color="red" style="font-weight:bold;"><center><p><h2>Detection Statistic Distributions</h2><p><center></font>
+<font color="black" ><center><p>PP_RHO_MIN  <  rho  <  PP_RHO_MAX<p><center></font>
+<p>
+<table cellspacing="0" cellpadding="6" border="0" align="center">
+<tr>
+<!--RHO_SUBNET
+<th>rho vs subnet</th>
+RHO_SUBNET-->
+<!--RHO_PF
+<th>rho vs penalty</th>
+RHO_PF-->
+<th>rho vs log10(chi2)</th>
+<th>rho vs cc</th>
+</tr>
+<tr>
+<!--RHO_SUBNET
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rho_subnet.gif">
+       <img src="PP_DATA_DIR/rho_subnet.gif" height=240></a></td>
+RHO_SUBNET-->
+<!--RHO_PF
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rho_pf.gif">
+       <img src="PP_DATA_DIR/rho_pf.gif" height=240></a></td>
+RHO_PF-->
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rho_pf.gif">
+       <img src="PP_DATA_DIR/rho_pf.gif" height=240></a></td>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rho_cc.gif">
+       <img src="PP_DATA_DIR/rho_cc.gif" height=240></a></td>
+</tr>
+</table>
+<p>
+<table cellspacing="0" cellpadding="6" border="0" align="center">
+<tr>
+<th>rho distributions</th>
+<!--NOVETO
+<th>rate vs rho</th>
+VETONO-->
+<!--VETO
+<th>rate vs rho</th>
+VETO-->
+<!--MULTI
+<th>rate vs rho</th>
+MULTI-->
+</tr>
+<tr>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rho.gif">
+       <img src="PP_DATA_DIR/rho.gif" height=240></a></td>
+<!--NOVETO
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rate_threshold.gif">
+       <img src="PP_DATA_DIR/rate_threshold.gif" height=240></a></td>
+VETONO-->
+<!--VETO
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rate_threshold_veto_compare.gif">
+       <img src="PP_DATA_DIR/rate_threshold_veto_compare.gif" height=240></a></td>
+VETO-->
+<!--MULTI
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rate_threshold_multi_compare.gif">
+       <img src="PP_DATA_DIR/rate_threshold_multi_compare.gif" height=240></a></td>
+MULTI-->
+</tr>
+</table>
+<br>
+<p>
+
+<hr>
+<font color="red" style="font-weight:bold;"><center><p><h2>Rates</h2><p><center></font>
+<p>
+<table cellspacing="0" cellpadding="6" border="0" align="center">
+<tr>
+<th>detector fraction</th>
+<th>live vs lag</th>
+<th>rate vs day</th>
+</tr>
+<tr>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/fraction_time.gif">
+       <img src="PP_DATA_DIR/fraction_time.gif" height=240 width=288></a></td>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/live_lag.gif">
+       <img src="PP_DATA_DIR/live_lag.gif" height=240></a></td>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rate_time.gif">
+       <img src="PP_DATA_DIR/rate_time.gif" height=240></a></td>
+</tr>
+</table>
+<p>
+
+<table cellspacing="0" cellpadding="6" border="0" align="center">
+<th>rate vs lag<br>
+after pp-cuts & rho > RH_OUT
+</th>
+<th>
+poisson check : number of events per lag<br> 
+after pp-cuts & rho > RH_OUT
+</th>
+</th>
+<tr>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rate_lag.gif">
+       <img src="PP_DATA_DIR/rate_lag.gif" height=240></a></td>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/Lag_PoissonFit.png">
+       <img src="PP_DATA_DIR/Lag_PoissonFit.png" height=286></a></td>     
+</tr>
+</table>
+<br>
+<p>
+<p>
+<hr>
+<font color="red" style="font-weight:bold;"><center><p><h2>Time and frequency dependence</h2><p><center></font>
+<font color="black" ><center><p>PP_RHO_MIN  <  rho  <  PP_RHO_MAX<p><center></font>
+<pt>
+<table cellspacing="0" cellpadding="6" border="0" align="center">
+<tr>
+<th>rho vs time
+</th>
+<!--<th>rho vs segments (after pp-cuts)</th>
+</th>-->
+<th>rho vs frequency (after pp-cuts)</th>
+</th>
+</tr>
+<tr>
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rho_time.gif">
+       <img src="PP_DATA_DIR/rho_time.gif" height=300></a></td>
+    <!--<td align="center"><a target="_parent" href="PP_DATA_DIR/rho_run.gif">
+       <img src="PP_DATA_DIR/rho_run.gif" height=300></a></td>-->
+    <td align="center"><a target="_parent" href="PP_DATA_DIR/rho_frequency.gif">
+       <img src="PP_DATA_DIR/rho_frequency.gif" height=300></a></td>
+</tr>
+</table>
+<br>
+<br>
+<!--<p>
+<a target="_parent" href="PP_DATA_DIR/noise_frequency.gif">average detector sensitivity</a>
+<p>
+<a target="_parent" href="PP_DATA_DIR/noise_network.gif">average network sensitivity</a>
+<pre>
+ 1        0.385
+--- = sum ------
+S(f)      S_k(f)
+</pre>
+-->
+<b>
+<hr>
+<font color="red" style="font-weight:bold;"><center><p><h2>Loudest Event List</h2><p><center></font>
+<a target=\"_parent\" href="PP_DATA_DIR/EVENTS.txt">(full list of events at rho > RH_OUT) </a>
+<br>
+<br>
+</html>

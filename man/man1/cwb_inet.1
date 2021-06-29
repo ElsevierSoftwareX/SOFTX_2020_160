@@ -1,0 +1,209 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_INET" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_inet \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.sp
+This page provides a description of the cwb_inet command.
+.nf
+
+\fBUsage\fP
+
+.in +2
+This command is used to run the pipeline in the interactive mode.
+
+.in -2
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_inet\fP (no arguments)
+Prints help
+.UNINDENT
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_inet jobid [gps_evt] [options] [mdc_factor] [lag] [ced_dir/uparms]\fP
+Runs the analysis in the interactive mode.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBFurther information\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+The following options can be passed to cwb_inet:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+jobid        : (mandatory) job number
+
+gps_evt      : the GPS time of the considered trigger. The pipeline analyses the data within a time window
+               centered around gps_evt
+
+options =  false       : cWB does not produce the CED of the events
+
+           true/ced    : with both options, cWB produces the CED of the events
+
+           \-\-tool psd \-\-ifo H1/L1/V1 \-\-type strain/mdc/white \-\-draw true/false    :  it draws the psd
+
+                    Stages :   STRAIN : strain/mdc, CSTRAIN : white
+                    Ex:    cwb_inet 1 0 \(aq\-\-tool psd \-\-ifo H1 \-\-type strain \-\-draw true\(aq
+                    Ex:    cwb_inet 1 0 \(aq\-\-tool psd \-\-ifo H1 \-\-type strain \-\-draw true \-\-save true\(aq
+
+           \-\-tool inj \-\-draw true/false \-> draw injections
+
+                    Stages :   STRAIN
+                    Ex:    cwb_inet 1 0 \(aq\-\-tool inj \-\-draw true\(aq
+
+           \-\-tool nRMS \-\-ifo H1/L1/V1 \-\-draw true/false    :  it draws the nRMS
+
+                    Stages :   CSTRAIN
+                    Ex:    cwb_inet 1 0 \(aq\-\-tool nrms \-\-ifo H1 \-\-draw true\(aq
+
+           \-\-tool frdisplay  \-\-ifo H1/L1/V1 \-\-type strain/mdc/white    :  it draws the data with frdisplay
+
+                    Stages :   STRAIN : strain/mdc, CSTRAIN : white
+                    Ex:    cwb_inet 1 0 \(aq\-\-tool frdisplay \-\-hpf 50 \-\-decimateby 16 \-\-ifo H1 \-\-type strain\(aq
+
+           \-\-tool wdm \-\-ifo H1/L1/V1 \-\-type strain/mdc/white \-\-draw true/false    :  it draws the wdm
+
+                    Stages :   STRAIN : strain/mdc, CSTRAIN : white
+                    Ex:    cwb_inet 1 0 \(aq\-\-tool wdm \-\-ifo H1 \-\-type white \-\-draw true\(aq
+
+           \-\-tool emax \-\-level xx (optional) \-\-draw true/false    :  it draws the maximum energy
+
+                    Stages :   COHERENCE
+                    Ex:    cwb_inet 1 0 \(aq\-\-tool emax \-\-level 7 \-\-draw true\(aq
+
+
+           \-\-tool sparse \-\-ifo H1/L1/V1 \-\-draw true/false    :  it draws the sparse
+
+                    Stages :   LIKELIHOOD
+                    Ex:   cwb_inet 1 0 \(aq\-\-tool sparse \-\-ifo H1 \-\-draw true\(aq
+
+           \-\-tool ced \-\-draw true/false    :  it draws the ced
+
+                    Stages :   LIKELIHOOD
+                    Ex:   cwb_inet 1 0 \(aq\-\-tool ced \-\-draw true\(aq
+
+mdc_factor     :  numerical factor used to rescale the amplitude of the injected MDC simulated signal
+
+lag            :  lag number [\-1 = select all lags defined in the user parameters file]
+
+ced_dir/uparms :  if it is a directory than it is the directory where the CED is generated (default : data)
+                  if it is a file than it is used instead of the user_parameters.C (default) file
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+The following command line launches the analysis of the job number 1:
+.INDENT 2.0
+.INDENT 3.5
+\fBcwb_inet 1\fP
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+The following command line generates the CED for all the events identified in job 1:
+.INDENT 2.0
+.INDENT 3.5
+\fBcwb_inet 1 0 true\fP
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+The following command line generates the CED for all the events identified in job 1 by applying a specific amplitude factor:
+.INDENT 2.0
+.INDENT 3.5
+\fBcwb_inet 1 0 true factor\fP
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+The following command line generates the CED of the event reconstructed at GPS time event_gps_time:
+.INDENT 2.0
+.INDENT 3.5
+\fBcwb_inet 1 event_gps_time true\fP
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+The following command line generates the CED of the event reconstructed at GPS time event_gps_time by applying a specific amplitude factor:
+.INDENT 2.0
+.INDENT 3.5
+\fBcwb_inet 1 event_gps_time true factor\fP
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+The following command line generates the CED of the event reconstructed at GPS time event_gps_time by applying a specific amplitude factor, and the CED is saved in the output directory my_output (instead of data):
+.INDENT 2.0
+.INDENT 3.5
+\fBcwb_inet 1 event_gps_time true factor 0 my_output\fP
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+The following link reports the example of a complete, interactive multistages analysis conducted with the cWB 2G pipeline: 
+.sp
+\fI\%How to do an interactive multistages 2G analysis\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

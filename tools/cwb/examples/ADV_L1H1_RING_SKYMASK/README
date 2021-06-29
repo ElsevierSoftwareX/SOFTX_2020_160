@@ -1,0 +1,6 @@
+This example shows how to use a custom skymask which is defined on the fly in cwb plugin
+The custom skymask is a ring shape skymask 
+
+To see the options do :
+make help
+

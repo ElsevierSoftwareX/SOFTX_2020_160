@@ -1,0 +1,43 @@
+//--------------------------------------------------------
+// create dirs and copy plugin
+//--------------------------------------------------------
+
+make setup
+
+//--------------------------------------------------------
+// 2G supercluster stage
+//--------------------------------------------------------
+
+cwb_inet2G config/user_parameters.C SUPERCLUSTER 1
+
+produce 
+
+data/supercluster_931158208_60_ADV_SIM_EOBNRv2_L1H1V1_2G_NN_job1.root
+
+//--------------------------------------------------------
+// 2G likelihood stage
+//--------------------------------------------------------
+
+cwb_inet2G data/supercluster_931158208_60_ADV_SIM_EOBNRv2_L1H1V1_2G_NN_job1.root LIKELIHOOD config/user_parameters.C
+
+produce
+
+data/wave_931158208_60_ADV_SIM_EOBNRv2_L1H1V1_2G_NN_17.3205_job1.root
+
+//--------------------------------------------------------
+// Convert netcluster principal components to 
+// NN (Neural Network) frames (NDIMxNDIM pixels)
+//--------------------------------------------------------
+
+root 'macro/ClusterToFrame.C+("data/wave_931158208_60_ADV_SIM_EOBNRv2_L1H1V1_2G_NN_17.3205_job1.root","data/nn_931158208_60_ADV_SIM_EOBNRv2_L1H1V1_2G_NN_17.3205_job1.root")'
+
+produce
+
+data/nn_931158208_60_ADV_SIM_EOBNRv2_L1H1V1_2G_NN_17.3205_job1.root
+
+//--------------------------------------------------------
+// Draw "Monster Event Display" vs "NN Frame Display"
+//--------------------------------------------------------
+
+root 'macro/DisplayFrame.C("data/nn_931158208_60_ADV_SIM_EOBNRv2_L1H1V1_2G_NN_17.3205_job1.root",1)'
+

@@ -1,0 +1,65 @@
+#
+# this example illustrates how to produce segments with overlap
+#
+# This is the structure of the overlap scheme
+#
+# -----------------------------------------------------------------------
+#
+# |x| = segEdge : |+| = segOverlap : |-| = segLen
+#
+# A1  B1                  C1     D1  E1
+# |xxx|-------------------|++++++|xxx|
+#                     |xxx|-------------------|++++++|xxx|
+#                     A2  B2                  C2     D2  E2
+#
+# -----------------------------------------------------------------------
+#
+# In the config/user_parameters.C the parameters are :
+#
+#  segLen     = 60;
+#  segEdge    = 8;
+#  segOverlap = 15;
+#
+# first create setup :
+
+make setup
+
+# run the first 2 jobs
+
+cwb_inet 1
+cwb_inet 2
+
+job1 : 
+A1 =           931158215
+B1 = A1 + 8  = 931158223
+C1 = B1 + 60 = 931158283
+D1 = C1 + 15 = 931158298
+E1 = D1 + 8  = 931158306
+
+The injected events are :
+
+0 mdcTime 931158235.34035
+1 mdcTime 931158266.99958
+2 mdcTime 931158296.69816
+
+
+job2 : 
+A1 =           931158275
+B1 = A1 + 8  = 931158283
+C1 = B1 + 60 = 931158343
+D1 = C1 + 15 = 931158358
+E1 = D1 + 8  = 931158366
+
+The injected events are :
+
+0 mdcTime 931158296.69816
+1 mdcTime 931158326.85306
+2 mdcTime 931158357.80148
+
+The event :
+
+mdcTime 931158296.69816
+
+is in the job1/2 overlap range.
+
+ 

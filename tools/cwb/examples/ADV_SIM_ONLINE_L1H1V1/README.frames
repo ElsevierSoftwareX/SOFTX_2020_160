@@ -1,0 +1,91 @@
+// =============================================================================
+// Use this example to produce frame to be used for the online cwb pipeline
+//
+// make directories for cwb
+//
+// generate frames (ADV L1/H1/V1 detectors + MDC) 4sec duration under frames dir
+//
+// -----------------------------------------------------------------------------
+
+1) to setup the parameters for mdc production use
+
+   macro/CWB_Plugin_OnlineFrame_Config.C
+
+2) to change network configuration, strain/mdc channel names, frame output labels use
+
+   config/frame_parameters.C 
+
+3) We use two frame generation modes :
+
+   mode SIM   : frFiles[n+nIFO] must be not declared 
+                strain & mdc are written into separated channels 
+                !!! MDC are created with 'NETWORK SNR=1'
+                    NETWORK SNR = SquareRoot[ SumOverDetector [ Square[detector SNR] ] ]  
+
+   mode ZPROD : set frFiles[n+nIFO]="ADD_TO_STRAIN"  
+                only one channel, factors[0]*mdc is added to the strain  
+
+   In the example config/frame_parameters.C the generation mode is set to SIM.
+   To switch to mode=ZPROD uncomment lines :
+
+     strcpy(frFiles[3],"ADD_TO_STRAIN");
+     strcpy(frFiles[4],"ADD_TO_STRAIN");
+     strcpy(frFiles[5],"ADD_TO_STRAIN");
+
+   In mode=SIM (strain, mac in 2 separate channels) the channels names are :
+ 
+     strain channels : {L1:FAKE_STRAIN, H1:FAKE_STRAIN, V1:FAKE_16384Hz}
+     mdc channels    : {L1:FAKE-STRAIN_BURST, H1:FAKE-STRAIN_BURST, V1:FAKE-STRAIN_BURST}
+
+   In mode=ZPROD (strain+mdc in one channel) the channels names are :
+ 
+     strain channels : {L1:FAKE_STRAIN, H1:FAKE_STRAIN, V1:FAKE_16384Hz}
+
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// initalization
+// -----------------------------------------------------------------------------
+
+1) to generate directories do 
+
+   make setup
+
+// -----------------------------------------------------------------------------
+// generation of 150 frames with length=4 sec for the interactive tests 
+// see README.analysis
+// -----------------------------------------------------------------------------
+
+1) to generate frames for the second frame job do    
+   
+   make frame
+
+2) frames are crated under 'frames' directory
+
+   frames/H1/*.gwf
+   frames/L1/*.gwf
+   frames/V1/*.gwf
+   frames/logs
+
+   the file 'frames/logs/Log-L1H1V1-FrameOnline-job2.txt' contains the injection list
+
+// -----------------------------------------------------------------------------
+// generation of frames with condor for the online analysis
+// -----------------------------------------------------------------------------
+
+1) create 100 jobs(600s) ~ 16hours (each job produce 150 frames lasting 4sec )
+   jobs are created according the 'input/burst.in' file
+
+   make batch
+
+2) submit condor jobs : 'frames' & 'mdc-logs' are created under 'frames' & 'frames/logs' directories
+
+   make submit
+
+3) merge 'mdc-logs' + 'list-frames-files' + 'waveforms'
+   merged log file is created under 'frames' directory
+
+   make mlog
+
+   the output log file is 'frames/Log-L1H1V1-FrameOnline.txt' and it must be used in analysis
+   user parameters file for mdc injections  : strcpy(injectionList,"frames/Log-L1H1V1-FrameOnline.txt");

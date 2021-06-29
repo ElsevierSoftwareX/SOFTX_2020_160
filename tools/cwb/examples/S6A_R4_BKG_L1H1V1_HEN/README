@@ -1,0 +1,252 @@
+
+// =====================================================================
+// This example shown how to run L1H1V1 time shift for GWHEN analysis
+// See https://forge.in2p3.fr/projects/skymaskcwb/wiki/S6A_neutrino1
+// RUN S6A
+// all files used in this examples are here:
+// $HOME_WAT/tools/cwb/examples/S6A_R4_BKG_L1H1V1_HEN
+// NOTE :: ALL COMMANDS MUST BE EXECUTED UNDER THE WORKING DIRECTORY !!!
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// For a quick test use the Makefile
+// Here is the way how to do :
+// ---------------------------------------------------------------------
+
+cp -r $HOME_WAT/tools/cwb/examples/S6A_R4_BKG_L1H1V1_HEN .
+cd S6A_R4_BKG_L1H1V1_HEN
+make SETUP        // create working directories & copy input files & copy HEN plugins
+make CONFIG       // create HEN DQ files (used in user_parameters.C)
+make JOB          // test 1 job in interactive mode
+
+make CONDOR       // create condor stuff
+make SUBMIT       // submit condor jobs
+make MERGE        // merge final outputs
+make REPORT       // create final report
+
+// ---------------------------------------------------------------------
+// In the following we describe the detailed procedure step by step
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// Make working directory  (EX : S6A_R4_BKG_L1H1V1_HEN)
+//
+// NOTE : The name must unique because it is used to to label every file
+// ---------------------------------------------------------------------
+
+cwb_mkdir S6A_R4_BKG_L1H1V1_HEN
+
+
+  // the following directories are created
+
+  config     	// cwb configuration files
+  input      	// input data files
+  condor   	// condor files (dag,sub)
+  tmp       	// dir for temporary job files
+  log         	// condor log files
+  output    	// output job files
+  merge    	// merge of output job files
+  report    	// dir for data to be pubblished on web
+  macro    	// user macros
+  data       	// user output job files
+
+// ---------------------------------------------------------------------
+// Copy HEN plugins 
+//
+// ---------------------------------------------------------------------
+
+cp $HOME_WAT/tools/cwb/plugins/CWB_Plugin_HEN_BKG.C macro/
+cp $HOME_WAT/tools/cwb/plugins/CWB_Plugin_HEN_BKG_Config.C macro/
+
+// ---------------------------------------------------------------------
+// Setup input files 
+//
+// NOTE : all input files and veto lists must be in the input directory
+// ---------------------------------------------------------------------
+
+cp $HOME_WAT/tools/cwb/examples/S6A_R4_BKG_L1H1V1/input/* input/
+
+// VETO FILE LISTS (for processing)
+
+input/S6A_OFFLINE_H1SCIENCE.txt
+input/S6A_OFFLINE_H1_DQCAT1SEGMENTS.txt
+input/S6A_OFFLINE_H1_DQCAT2SEGMENTS.txt
+input/S6A_OFFLINE_H1_DQCAT3SEGMENTS.txt
+input/S6A_OFFLINE_H1_DQCAT4SEGMENTS.txt
+
+input/S6A_OFFLINE_L1SCIENCE.txt
+input/S6A_OFFLINE_L1_DQCAT1SEGMENTS.txt
+input/S6A_OFFLINE_L1_DQCAT2SEGMENTS.txt
+input/S6A_OFFLINE_L1_DQCAT3SEGMENTS.txt
+input/S6A_OFFLINE_L1_DQCAT4SEGMENTS.txt
+
+input/S6A_OFFLINE_V1SCIENCE.txt
+input/S6A_OFFLINE_V1_DQCAT1SEGMENTS.txt
+input/S6A_OFFLINE_V1_DQCAT2SEGMENTS.txt
+input/S6A_OFFLINE_V1_DQCAT3SEGMENTS.txt
+input/S6A_OFFLINE_V1_DQCAT4SEGMENTS.txt
+
+// FRAME FILE LISTS (for processing)
+
+input/S6A_R1_V1_HrecV3.frames
+input/S6A_R3_H1_LDAS_C02_L2.frames
+input/S6A_R3_L1_LDAS_C02_L2.frames
+
+// VETO FILE LISTS (for post-processing)
+
+input/H1-HVETO_COMBINED_VETO_SEGS_BOTH-930960000-4838400.txt
+input/L1-HVETO_COMBINED_VETO_SEGS_BOTH-930960000-4233600_1.2.txt
+input/V1_KW_HVETO_S6A.txt
+
+
+// ---------------------------------------------------------------------
+// Setup analysis for processing 
+//
+// NOTE : the analysis use has defaut parameters.C the $CWB_PARAMETERS_FILE
+// The user must provide its own file, name must be config/user_parameters.C
+// do not declare the type, it is already declared in $CWB_PARAMETERS_FILE
+// ---------------------------------------------------------------------
+
+// copy the example
+cp $HOME_WAT/tools/cwb/examples/S6A_R4_BKG_L1H1V1_HEN/config/user_parameters.C config/
+
+declare in the config/user_parameters.C the frame and veto files
+
+// FRAME FILES
+
+
+  strcpy(frFiles[0],"input/S6A_R3_L1_LDAS_C02_L2.frames");
+  strcpy(frFiles[1],"input/S6A_R3_H1_LDAS_C02_L2.frames");
+  strcpy(frFiles[2],"input/S6A_R1_V1_HrecV3.frames");
+
+// VETO FILES
+
+  // dq file list
+  // {ifo, dqcat_file, dqcat[0/1/2], shift[sec], inverse[false/true], 4columns[true/false]}
+
+  nDQF=14;
+  dqfile dqf[nDQF]={
+                    {"L1" ,"input/S6A_OFFLINE_L1SCIENCE.txt",         CWB_CAT0, 0., false, false},
+                    {"L1" ,"input/S6A_OFFLINE_L1_DQCAT1SEGMENTS.txt", CWB_CAT1, 0., true, false},
+                    {"L1" ,"input/S6A_OFFLINE_L1_DQCAT2SEGMENTS.txt", CWB_CAT2, 0., true, false},
+                    {"L1" ,"input/S6A_OFFLINE_L1_DQCAT4SEGMENTS.txt", CWB_CAT1, 0., true, false},
+                    {"H1" ,"input/S6A_OFFLINE_H1SCIENCE.txt",         CWB_CAT0, 0., false, false},
+                    {"H1" ,"input/S6A_OFFLINE_H1_DQCAT1SEGMENTS.txt", CWB_CAT1, 0., true, false},
+                    {"H1" ,"input/S6A_OFFLINE_H1_DQCAT2SEGMENTS.txt", CWB_CAT2, 0., true, false},
+                    {"H1" ,"input/S6A_OFFLINE_H1_DQCAT4SEGMENTS.txt", CWB_CAT1, 0., true, false},
+                    {"V1" ,"input/S6A_OFFLINE_V1SCIENCE.txt",         CWB_CAT0, 0., false, false},
+                    {"V1" ,"input/S6A_OFFLINE_V1_DQCAT1SEGMENTS.txt", CWB_CAT1, 0., true, false},
+                    {"V1" ,"input/S6A_OFFLINE_V1_DQCAT2SEGMENTS.txt", CWB_CAT2, 0., true, false},
+                    {"V1" ,"input/S6A_OFFLINE_V1_DQCAT4SEGMENTS.txt", CWB_CAT1, 0., true, false},
+
+                    {"L1" ,"input/HEN_S6A_L1H1V1_OnSource_Segments_Cat1.txt",CWB_CAT1, 0., false, false},
+                    {"L1" ,"input/HEN_S6A_L1H1V1_OnSource_Segments_Cat2.txt",CWB_CAT2, 0., false, false} 
+                   };
+
+  // LEGEND
+  // ifo        :  ifo name
+  // dqcat_file :  veto file name
+  // dqcat      :  dq category (CWB_CAT0,CWB_CAT1,CWB_CAT2,CWB_CAT4)
+  // inverse    :  if 'false/true' the good data are inside/outside the time ranges
+  // 4columns   :  if 'true/false' data format are (#N start stop lenght)/(start stop) 
+
+  NOTE : search is type 'g' -> circulary polarized signals
+
+  search = 'g';       // see description in parameters.C
+
+  NOTE : regulators must be disable when skymask is applied !!!
+
+  delta = 0.0;       // -1/0/1/2 - soft/weak/mild/hard regulator
+  gamma = 0.0;
+
+  NOTE : we use super lags -> all segments  have the same length
+
+  slagSize   = 40;    // number of super lags (simulation=1) - if slagSize=0 -> Igor Segments
+  slagMin    = 0;     // if slagMax=0 -> slagMin must be < slagMax
+  slagMax    = 6;     // if slagMax=0 -> slagMax=slagSegs
+
+
+  NOTE : The last 2 files :
+
+  input/HEN_S6A_L1H1V1_OnSource_Segments_Cat1.txt
+  input/HEN_S6A_L1H1V1_OnSource_Segments_Cat2.txt 
+
+  are the on source periods (1000s) corresponding to the HEN triggers in the L1H1V1 S6A time
+  These files are created starting from the file HEN list :
+  config/HEN_list_2009_2010.txt
+  Run the macro : 
+  root -l -b macro/CreateSegmentHEN_S6A_L1H1V1.C
+
+  NOTE : 
+  The file 
+  config/HEN_list_2009_2010.txt
+  is used by the plugins to set 'On The Fly' the skyMaskCC around  the HEN trigger directions
+
+// ---------------------------------------------------------------------
+// Create & submit condor files 
+//
+// NOTE : create dag/sub condor files under condor directories
+// output root files are copied under output directory
+// ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// Create & submit condor files 
+//
+// NOTE : create dag/sub condor files under condor directories
+// output root files are copied under output directory
+// ---------------------------------------------------------------------
+
+// create dag/sub files
+cwb_condor create
+
+// submit dag file
+cwb_condor submit
+
+// list jobs in dag
+cwb_condor list
+
+// status 
+cwb_condor status
+
+// check finished/unfinished jobs (read history inside output root files)
+cwb_condor check
+
+// recovery jobs (create dag of unfinished jobs)
+// new file dag : condor/S6A_R4_BKG_L1H1V1_HEN.dag.recovery.1
+cwb_condor recovery
+// to submit recovery dag file
+cwb_condor submit condor/S6A_R4_BKG_L1H1V1_HEN.dag.recovery.1
+
+
+// ---------------------------------------------------------------------
+// Merge output root files 
+//
+// NOTE : create automatically a version [start from M1]
+// merged files are create under merge directory
+// ---------------------------------------------------------------------
+
+// the label should be M#
+cwb_merge M1
+
+  // the following file are created
+  merge/wave_S6A_R4_BKG_L1H1V1_HEN_M1.root  // waveburst root files
+  merge/live_S6A_R4_BKG_L1H1V1_HEN_M1.root  // live time root files
+  merge/merge_S6A_R4_BKG_L1H1V1_HEN_M1.lst  // list of merged files
+
+
+// ---------------------------------------------------------------------
+// create reports 
+//
+// NOTE : reports are created under report/postprod directory
+// first of all must be created the post-production config
+// config/user_pparameters.C
+// ---------------------------------------------------------------------
+
+// copy the example
+cp $HOME_WAT/tools/cwb/examples/S6A_R4_BKG_L1H1V1_HEN/config/user_pparameters.C config/
+
+// in the config/user_pparameters.C the user can declare the thresholds 
+// and veto list for post-production
+// in the example the vetoes are disabled
+cwb_report M1 create
+

@@ -1,0 +1,95 @@
+<html>
+<!--
+<iframe src="https://ldas-jobs.ligo.caltech.edu/~waveburst/title.html" width="100%" height="25%"></iframe>
+-->
+<center>
+<h1>TITLE</h1>
+<h2><font color="red"> RUN_LABEL </font></h2>
+<h2>Job Status : JOB_MERGE/JOB_CONDOR - <a target="_parent" href="PP_DATA_DIR/job_status.html">JOB_PERCENTAGE</a></h2>
+<h5> build  : <font color="red"> BUILD_DATE </font></h5>  
+</center>
+<p>
+
+<hr>
+<!--CWB_DOC_URL
+<table width=100%>
+<tr>
+<td align="left"> 
+CWB_DOC_URL-->
+<h3>Run parameters</h3>  
+<!--CWB_DOC_URL
+</td>
+<td align="right"> 
+<a target="_parent" href="XCWB_DOC_URL/cwb/man/pp_webpages.html#run-parameters">infos</a> 
+</td>
+</tr>
+</table>
+CWB_DOC_URL-->
+<b>
+  <ul>
+  <li> pr-wat : <font color="red"> PR_WAT_GIT </font> - 
+       pp-wat : <font color="red"> PP_WAT_GIT </font> - 
+       pr-cfg : <font color="red"> PR_CFG_VER </font> - 
+       pp-cfg : <font color="red"> PP_CFG_VER </font> - 
+       lal : <font color="red"> PR_LAL_VER </font> - 
+       framelib : <font color="red"> PR_FRAMELIB_VER </font> - 
+       root : <font color="red"> PR_ROOT_VER </font>  
+  <li> pipeline : <font color="red"> PIPELINE </font> - 
+       search : <font color="red"> SEARCH </font> - 
+       sim : <font color="red"> SIMULATION </font> - 
+       subnet/delta/gamma : <font color="red"> SUBNET/DELTA/GAMMA </font> - 
+       bpp : <font color="red"> BPP </font> - netRHO : <font color="red"> NETRHO </font> -
+       netCC : <font color="red"> NETCC </font> 
+  <li> resampling down to <font color="red"> FRESAMPLE Hz </font> : this defines the bandwidth and the resolution of time delay filters
+  <li> frequency band: <font color="red"> FLOW - FHIGH Hz </font>  
+  <li> skymap segmentation : <font color="red"> SKYMAPRES </font> 
+  <li> time-frequency resolutions [Hz x sec]: <font color="red"> TFRES </font> 
+  <li> cluster:<font color="red"> SITE_CLUSTER </font> - work dir: <font color="red"> WORK_DIR </font> 
+  <!--CWB1G_PARAMETERS 
+  <li> <a target="_parent" href="data/cwb1G_parameters.C.html"> cwb default production parameters</a> 
+  CWB1G_PARAMETERS-->
+  <!--CWB2G_PARAMETERS 
+  <li> <a target="_parent" href="data/cwb2G_parameters.C.html"> cwb default production parameters</a> 
+  CWB2G_PARAMETERS-->
+  <li> <a target="_parent" href="data/user_parameters.C.html"> cwb user production parameters</a> 
+  <!--CWB_PLUGIN <li> <a target="_parent" href="data/CWB_Plugin.C.html"> user production plugin</a> CWB_PLUGIN-->
+  <!--CWB_CONF_PLUGIN <li> <a target="_parent" href="data/CWB_configPlugin.C.html"> user production plugin config</a> CWB_CONF_PLUGIN-->
+  </ul>
+</b>
+
+<p>
+<!--CWB_DOC_URL
+<table width=100%>
+<tr>
+<td align="left"> 
+CWB_DOC_URL-->
+<a name="Post-Production"><h3>Post-production selection cuts</h3></a> 
+<!--CWB_DOC_URL
+</td>
+<td align="right"> 
+<a target="_parent" href="XCWB_DOC_URL/cwb/man/pp_webpages.html#post-production-selection-cuts">infos</a> 
+</td>
+</tr>
+</table>
+CWB_DOC_URL-->
+<b>
+  <ul>
+  <li> effective coherent amplitude       :  <font color="red"> rho=rho[PP_IRHO] &gt; ST_CUT </font>
+  <li> network correlation coefficient    :  <font color="red"> cc=netcc[PP_INETCC]  &gt; ST_COR </font>
+  <li> subnetwork consistency coefficient :  <!--CUT_SCC <font color="red"> subnet=netcc[3] &gt; ST_SCC </font> CUT_SCC-->
+  <li> network energy disbalance          :  <!--CUT_NED <font color="red"> neted &lt; svED </font> CUT_NED-->
+  <li> likelihood penalty factor          :  <!--CUT_PEN <font color="red"> penalty &gt; sPEN </font> CUT_PEN-->
+  <li> inverse false alarm rate (years)   :  <!--CUT_IFAR <font color="red"> ifar &gt; sIFAR </font> CUT_IFAR-->
+  <li> vetoes                             :  <!--CUT_PP_VETOES <font color="red"> sPP_VETOES </font> CUT_PP_VETOES-->
+  <li> user frequencies band cuts (Hz)    :  <font color="red"> PP_FREQ_BAND_CUTS </font> 
+<!--CUT_WIN
+  <li> time window cut (sec)              :  <font color="red"> sWIN </font> 
+CUT_WIN-->
+  <li> merge cuts                         :  <font color="red"> MERGE_CUTS </font> 
+  <li> <a target="_parent" href="data/cwb_pparameters.C.html"> cwb default post-production parameters</a> 
+  <li> <a target="_parent" href="data/user_pparameters.C.html"> cwb user post-production parameters</a> 
+  </ul>
+</pre>
+</b>
+
+</html>

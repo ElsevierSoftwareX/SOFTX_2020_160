@@ -1,0 +1,20 @@
+This example show how to use the easy CED to produce the CED of BigDog and the 
+comparison with the injected signal.
+A CWB Plugin is used to correct the wrong sign of the L1,H1 HW injections.
+The plugin uses the file :
+config/CBC_BLINDINJ_968654558_adj.xml
+to generate with LAL the injected signals which is used for comparison with the reconstructed signal.
+
+use config/user_parameters_*.C to change analysis parameters (EX: search type)
+
+The command to generate the 2G analysis CED 
+
+cwb_eced2G "--gps 968654557 --cfg config/user_parameters_WP5.C --tag _BigDog_WP5" \
+       "--ifo L1 --type L1_LDAS_C02_L2" "--ifo H1 --type H1_LDAS_C02_L2" "--ifo V1 --type HrecV2"
+
+cwb_eced2G "--gps 968654557 --cfg config/user_parameters_2G_iMRA.C --tag _BigDog_2G_iMRA" \
+       "--ifo L1 --type L1_LDAS_C02_L2" "--ifo H1 --type H1_LDAS_C02_L2" "--ifo V1 --type HrecV2"
+
+cwb_eced2G "--gps 968654557 --cfg config/user_parameters_2G_ISRA.C --tag _BigDog_2G_ISRA" \
+       "--ifo L1 --type L1_LDAS_C02_L2" "--ifo H1 --type H1_LDAS_C02_L2" "--ifo V1 --type HrecV2"
+

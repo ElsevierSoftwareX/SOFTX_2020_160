@@ -1,0 +1,38 @@
+// KAGRA
+
+home : http://gwcenter.icrr.u-tokyo.ac.jp/en/researcher/parameter
+file : bLCGT_v1.dat
+down : https://granite.phys.s.u-tokyo.ac.jp/trac/LCGT/browser/trunk/sensitivity/spectrum
+
+// VIRGO
+
+home : https://wwwcascina.virgo.infn.it/advirgo/
+file : advVIRGO_sensitivity_12May09_8khz_one_side.txt
+
+// aLIGO
+
+file : advLIGO_NSNS_Opt_8khz_one_side.txt
+down : https://dcc.ligo.org/cgi-bin/private/DocDB/ShowDocument?docid=9764
+
+// ET
+
+file : ET_D_data_2c.txt
+down : http://www.et-gw.eu/etsensitivities
+
+// CBC MDC Set 1
+https://www.lsc-group.phys.uwm.edu/ligovirgo/cbcnote/CBC%20MDC%20Set%201
+
+// Early aLIGO Configurations
+https://dcc.ligo.org/cgi-bin/private/DocDB/ShowDocument?docid=93068
+
+// Data files for advanced Virgo sensitivities used in MDC1
+https://dcc.ligo.org/cgi-bin/private/DocDB/ShowDocument?docid=100710
+
+// O1 LIGO Design (Used in the PRC 2014 Paper)
+2015_LIGO.txt
+
+// O2 LIGO Design (Used in the PRC 2014 Paper)
+2016_LIGO.txt
+
+// O2 Virgo Design (Used in the PRC 2014 Paper)
+2016_Virgo.txt

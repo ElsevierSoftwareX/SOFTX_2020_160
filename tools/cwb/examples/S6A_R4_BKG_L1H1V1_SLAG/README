@@ -1,0 +1,99 @@
+
+// =====================================================================
+// This example shown how to run the cwb pipeline for time shift analysis using slags
+// RUN S6A
+// all files used in this examples are here:
+// $HOME_WAT/tools/cwbpipe/tutorials/S6A_R4_BKG_L1H1V1
+// NOTE :: ALL COMMANDS MUST BE EXECUTED UNDER THE WORKING DIRECTORY !!!
+// =====================================================================
+
+mkdir S6A_R4_BKG_L1H1V1
+cd S6A_R4_BKG_L1H1V1
+
+mkdir config
+// edit config/user_parameters.C
+// edit config/user_pparameters.C
+
+// create working subdirectories
+cwb_mkdir .
+
+cd input
+
+// set dq file lists
+// copy into input dir from :
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1SCIENCE.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT1SEGMENTS.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT2SEGMENTS.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT3SEGMENTS.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT4SEGMENTS.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1SCIENCE.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT1SEGMENTS.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT2SEGMENTS.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT3SEGMENTS.txt
+/home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT4SEGMENTS.txt
+
+// set detector's frame lists, mdc frame lists)
+// copy into input dir from :
+/home/salemi/S6/coherent/offline/SEGMENTS/lists/S6A_R3_L1_LDAS_C02_L2.frames
+/home/salemi/S6/coherent/offline/SEGMENTS/lists/S6A_R3_H1_LDAS_C02_L2.frames
+/home/salemi/S6/coherent/offline/SEGMENTS/lists/S6A_R1_V1_HrecV3.frames
+
+// dump the standard job list is here (only for info purposes)
+cwb_dump job
+report/dump/S6A_R4_BKG_L1H1V1.job
+
+// dump the extended job list (with slag) is here (only for info purposes)
+cwb_dump sjob
+report/dump/S6A_R4_BKG_L1H1V1.sjob
+
+// dump lag list (only for info purposes)
+cwb_dump lag 
+
+// dump slag list (only for info purposes)
+cwb_dump slag 
+
+// create condor daq/sub
+// S6A_R4_BKG_L1H1V1.dag
+// S6A_R4_BKG_L1H1V1.sub
+cwb_condor create
+
+// start condor
+// root/txt create in the output dir
+// condor log files created in the log dir
+condor_submit submit 
+or
+cd condor
+condor_submit_dag S6A_R4_BKG_L1H1V1.dag
+
+// merge (create automatically a version [start from R1])
+// wave_S6A_R4_BKG_L1H1V1_M1.root
+// live_S6A_R4_BKG_L1H1V1_M1.root
+// merge_S6A_R4_BKG_L1H1V1_M1.lst
+cwb_merge M1
+
+// add slag if output root file do not contains slag
+// obsolete
+cwb_fix_slag_missed M1 
+cwb_fix_live_slag_missed M1
+
+// list merge
+cwb_report list merge 
+
+// veto
+cwb_setveto M1.FIX  // if original data are without slag
+// live_S6A_R4_BKG_L1H1V1.M1.FIX.VhvetoV_cat3LHV.root
+// wave_S6A_R4_BKG_L1H1V1.M1.FIX.VhvetoV_cat3LHV.root
+
+// reports
+cwb_report M1.FIX.VhvetoV_cat3LHV create 
+
+// produce ced of loudest events (listed in report M1.FIX.VhvetoV_cat3LHV)
+cd condor
+condor_submit_dag S6A_R4_BKG_L1H1V1.M1.FIX.VhvetoV_cat3LHV.R200_2048_hveto_cat3_cc60_rho35.ced.dag
+
+// publish ~/WWW/LSC/reports/S6A_R4_BKG_L1H1V1
+cwb_publish M1.FIX.VhvetoV_cat3LHV.R200_2048_hveto_cat3_cc60_rho35  
+
+// ZERO LAG
+cwb_report M1.FIX.VhvetoV_cat3LHV create 0 0
+// M1.FIX.VhvetoV_cat3LHV.R200_2048_hveto_cat3_cc60_rho35_lag0_slag0

@@ -1,0 +1,442 @@
+
+# ------------------------------------------------------------
+# cwb_pereport input options
+# Ex:
+# GW=S190408an
+# SIDE=full/left/right/ccut/rcut
+# UTAG=maxl_tst4
+# CONFIG=Makefile.pe_config.user_tag
+# ------------------------------------------------------------
+
+# ---> GW: event name
+ifndef GW
+$(error : missing GW option Ex: GW=S190521g)
+else
+GW_NAME = ${GW}
+endif
+
+# ---> SYNC: synchronization type -> sytp(time,phase)/syp(phase)/syt(time)
+ifndef SYNC
+PE_SYNC = none
+else
+PE_SYNC = ${SYNC}
+endif
+
+# ---> SIDE: full/left/right
+ifndef SIDE
+PE_SIDE = full
+else
+PE_SIDE = ${SIDE}
+endif
+
+# ---> NIFO: 2/3
+ifndef NIFO
+PE_NIFO = 2
+else
+PE_NIFO = ${NIFO}
+endif
+
+ifneq ($(PE_SIDE),full)
+ifneq ($(PE_SIDE),left)
+ifneq ($(PE_SIDE),right)
+ifneq ($(PE_SIDE),ccut)
+ifneq ($(PE_SIDE),rcut)
+$(error : error, wrong input SIDE parameter must be full/left/right/ccut/rcut)
+endif
+endif
+endif
+endif
+endif
+
+# ---> IFAR: ifar threshold used to select the reconstructed events for the pe analysis
+ifndef IFAR
+PE_IFAR = 0
+else
+PE_IFAR = ${IFAR}
+endif
+
+# ---> UTAG: user tag, used for the output analysis directory name
+ifndef UTAG
+PE_UTAG = tag1
+else
+PE_UTAG = ${UTAG}
+endif
+
+# ---> FDR: FALSE DISMISSAL RATE (used for the P-value Plot)
+ifndef FDR
+PE_FDR = 0
+else
+PE_FDR = ${FDR}
+endif
+
+# ---> PLOT_TYPE: time/phase/frequency/spectrum/envelope, used by the pewave option
+ifndef PLOT_TYPE
+PE_PLOT_TYPE = time
+else
+PE_PLOT_TYPE = ${PLOT_TYPE}
+endif
+
+# ------------------------------------------------------------
+# ---> defaul definitions (can be overwritten by user configuration)
+# ------------------------------------------------------------
+
+CWB_PE_REPORT_MACRO_PATH = $(CWB_MACROS)/cwb_pereport.C
+CWB_PE_REPORT_MACRO = $(shell basename $(CWB_PE_REPORT_MACRO_PATH))
+
+MERGE_DATA_PE_MACRO_PATH       = $(CWB_MACROS)/MergeDataPE.C
+DRAW_MATCH_PE_MACRO_PATH       = $(CWB_MACROS)/DrawMatchPE.C
+DRAW_PVALUES_PE_MACRO_PATH     = $(CWB_MACROS)/DrawPvaluesPE.C
+DRAW_SENSITIVITY_PE_MACRO_PATH = $(CWB_MACROS)/DrawSensitivityPE.C
+MAKE_HTML_PE_MACRO_PATH        = $(CWB_MACROS)/MakeHtmlPE.C
+
+# ---> data tag, can be overwritter by user config
+PE_MTAG = M1.C_U.C_bin1_cut
+
+PE_NCYCLES      = 800
+PE_SENSITIVITY 	= false
+PE_USE_ONSRC  	= none
+PE_MAKE_ONSRC 	= true
+PE_TCOA_SHIFT 	= 0.0
+PE_PLOT_ZOOM 	= 1.0
+PE_CCUT 	= *:*:*:*:*
+PE_RCUT 	= *:*
+PE_OFF_EVENT 	= 0.0
+PE_LOGL 	= *:*:*:*:*:*
+PE_RSTAT 	= false:median:0:0
+PE_MAKE_FF	= true
+PE_MAKE_OF	= false
+PE_MAKE_RE	= true
+PE_MAKE_NE	= false
+PE_PLOT_99PERC  = false
+PE_RESIDUALS  	= false
+
+# ------------------------------------------------------------
+# ---> include user config
+# ------------------------------------------------------------
+
+ifneq ("$(wildcard $(CONFIG))","")
+include $(CONFIG)
+export
+else
+$(error : missing CONFIG Ex: CONFIG=Makefile.pe_config.user_tag)
+endif
+
+ifneq ($(PE_NIFO),2)
+ifneq ($(PE_NIFO),3)
+$(error : only PE_NIFO=2,3 are implemented)
+endif
+endif
+
+ifneq ($(PE_SYNC),none)
+ifneq ($(PE_SYNC),sytp)
+ifneq ($(PE_SYNC),syt)
+ifneq ($(PE_SYNC),syp)
+$(error : error, wrong input PE_SYNC parameter must be none/sytp/syt/syp)
+endif
+endif
+endif
+endif
+
+# ------------------------------------------------------------
+# ---> check if input/config parameters are defined
+# ------------------------------------------------------------
+
+ifneq ($(GW_NAME),ALL)
+
+# ---> GW_GPS: event gps time
+ifndef GW_GPS
+$(error : missing GW_GPS config parameter Ex: GW_GPS=1243533585.09)
+endif
+
+# ---> PE_TSTEP: injection step time (sec)
+ifndef PE_TSTEP
+$(error : missing PE_TSTEP config parameter Ex: PE_TSTEP=150.)
+endif
+
+# ---> PE_ONPATH: onsource working dir
+ifndef PE_ONPATH
+$(error : missing PE_ONPATH config parameter)
+endif
+
+# ---> PE_OFFPATH: offsource working dir
+ifndef PE_OFFPATH
+$(error : missing PE_OFFPATH config parameter)
+endif
+
+# ---> PR_JTAG: used to select the onsource job (Ex: PE_JTAG = job588)
+ifndef PE_JTAG
+PE_JTAG = job
+endif
+
+# ---> onsource working dir - Ex: O3_K06_C01_LH_IMBHB_SIM_OFSPE_S190521g_EXP2_maxl_run1
+PE_SDIR = $(shell basename $(PE_ONPATH))
+# ---> offsource working dir - Ex: O3_K06_C01_LH_IMBHB_SIM_OFSPE_S190521g_EXP2_run1
+PE_WDIR = $(shell basename $(PE_OFFPATH))
+# ---> data tag - Ex: M1.C_U.S_bin1_cut
+PE_DTAG = $(PE_WDIR).$(PE_MTAG)
+
+else	# GW_NAME=ALL
+
+# ---> PE_WWW is the dir used to public final reports
+ifndef PE_WWW
+$(error : missing PE_WWW config parameter)
+endif
+
+endif
+
+# ------------------------------------------
+# PESTAT
+# ------------------------------------------
+
+ifeq ($(PE_SYNC),none)
+PE_STAT    = pestat_${PE_UTAG}
+SYNC_TIME  = false
+SYNC_PHASE = false
+endif
+
+ifeq ($(PE_SYNC),sytp)
+PE_STAT    = pestat_sytp_${PE_UTAG}
+SYNC_TIME  = true
+SYNC_PHASE = true
+endif
+
+ifeq ($(PE_SYNC),syp)
+PE_STAT    = pestat_syp_${PE_UTAG}
+SYNC_TIME  = false
+SYNC_PHASE = true
+endif
+
+ifeq ($(PE_SYNC),syt)
+PE_STAT    = pestat_syt_${PE_UTAG}
+SYNC_TIME  = true
+SYNC_PHASE = false
+endif
+
+PE_STAT_RDIR        = ${PE_STAT}/$(PE_SIDE)/distributions
+PE_MATCH_RDIR       = $(PE_STAT)/$(PE_SIDE)/matching
+PE_PVALUE_RDIR      = $(PE_STAT)/$(PE_SIDE)/pvalues
+PE_SENSITIVITY_RDIR = $(PE_STAT)/$(PE_SIDE)/sensitivity
+PE_CED_RDIR         = $(PE_STAT)/ced
+PE_POSTPROD_RDIR    = $(PE_STAT)/postprod
+
+# PE Output Statistic report path
+PE_STAT_RPATH = $(PE_OFFPATH)/report/dump/$(PE_STAT_RDIR)
+
+# ------------------------------------------
+# WAVEFORMS
+# ------------------------------------------
+
+ifeq ($(PE_SYNC),none)
+PE_WAVE      = pestat_${PE_UTAG}
+PE_WAVE_RDIR = pestat_${PE_UTAG}/wave/$(PE_PLOT_TYPE)
+SYNC_TIME  = false
+SYNC_PHASE = false
+endif
+
+ifeq ($(PE_SYNC),sytp)
+PE_WAVE      = pestat_sytp_${PE_UTAG}
+PE_WAVE_RDIR = pestat_sytp_${PE_UTAG}/wave/$(PE_PLOT_TYPE)
+SYNC_TIME  = true
+SYNC_PHASE = true
+endif
+
+ifeq ($(PE_SYNC),syp)
+PE_WAVE      = pestat_syp_${PE_UTAG}
+PE_WAVE_RDIR = pestat_syp_${PE_UTAG}/wave/$(PE_PLOT_TYPE)
+SYNC_TIME  = false
+SYNC_PHASE = true
+endif
+
+ifeq ($(PE_SYNC),syt)
+PE_WAVE      = pestat_syt_${PE_UTAG}
+PE_WAVE_RDIR = pestat_syt_${PE_UTAG}/wave/$(PE_PLOT_TYPE)
+SYNC_TIME  = true
+SYNC_PHASE = false
+endif
+
+# PE Output Waveform report path
+PE_WAVE_RPATH = $(PE_OFFPATH)/report/dump/$(PE_WAVE_RDIR)
+
+
+# -------------------------------------
+# GW cWB procedures
+# -------------------------------------
+
+define check_not_dir
+	if [ ! -d $(1) ]; then 									\
+	  echo    "";										\
+	  echo    "The off-source directory";							\
+	  echo    "";										\
+	  echo    "$(1)";									\
+	  echo    "";										\
+	  echo    "not exist";									\
+	  echo    "";										\
+          exit 1; 										\
+        fi
+endef
+
+define check_dir
+	if [ -d $(1) ]; then 									\
+	  echo    "";										\
+	  echo    "The output directory";							\
+	  echo    "";										\
+	  echo    "$(1)";									\
+	  echo    "";										\
+	  echo    "already exist";								\
+	  echo    "";										\
+          echo -n "Do you want to overwrite it? [y/N] " && read ans && [ $${ans:-N} = y ] ; 	\
+        fi
+endef
+
+pestat:
+	@echo ""
+	@echo "--> MAKE STAT ..."
+	@echo ""
+	echo $(PE_OFFPATH)/merge
+	$(call check_not_dir,$(PE_OFFPATH)/merge)
+	cd $(PE_OFFPATH)/merge; unlink wave_*_job0.root; ln -sf $(PE_ONPATH)/output/wave_*$(PE_SDIR)*$(PE_JTAG)*root wave_$(PE_DTAG)_job0.root
+	$(call check_dir,$(PE_STAT_RPATH))
+	if [ ! -d $(PE_STAT_RPATH) ]; then mkdir -p $(PE_STAT_RPATH) ; fi;	
+	rm -f $(PE_STAT_RPATH)/*.txt	
+	rm -f $(PE_STAT_RPATH)/*.png	
+	if cmp -s $(CWB_PE_REPORT_MACRO_PATH) $(PE_OFFPATH)/tmp/$(CWB_PE_REPORT_MACRO) ; then	\
+	  echo "Nothing changed";								\
+	else											\
+	  cp $(CWB_PE_REPORT_MACRO_PATH) $(PE_OFFPATH)/tmp/.;					\
+	fi
+	cd  $(PE_STAT_RPATH); 		\
+	root l -b '$(PE_OFFPATH)/tmp/$(CWB_PE_REPORT_MACRO)+("--gw_name=$(GW_NAME) --data_label=$(PE_DTAG) --gps_event=$(GW_GPS) --gps_error=0.1 --inj_time_step=$(PE_TSTEP) --off_event=$(PE_OFF_EVENT) --wave_dir=$(PE_OFFPATH)/merge --nifo=$(PE_NIFO) --ifar_thr=${PE_IFAR} --plot_fname=pestat --sync_phase=$(SYNC_PHASE) --sync_time=$(SYNC_TIME) --statistics=true --make_ff=$(PE_MAKE_FF) --make_of=$(PE_MAKE_OF) --make_re=$(PE_MAKE_RE) --make_ne=$(PE_MAKE_NE) --residuals=$(PE_RESIDUALS) --efraction=0.1 --side=$(PE_SIDE) --make_onsrc=$(PE_MAKE_ONSRC) --use_onsrc=$(PE_USE_ONSRC) --tcoa_shift=$(PE_TCOA_SHIFT) --ccut=$(PE_CCUT) --rcut=$(PE_RCUT) --sensitivity=$(PE_SENSITIVITY) --rstat=$(PE_RSTAT)")'
+	cd $(PE_OFFPATH)/report/dump; $(HOME_CWB)/scripts/cwb_mkhtml.csh $(PE_STAT_RDIR);	\
+	sed -i '/<\/head>/{ N; s/<br>/<br><div align="center"><font color="blue"><h2>PE Statistic <br> $(PE_WDIR) <br> ($(PE_STAT) - $(PE_SIDE)) <\/h2><\/font>/; }'  $(PE_STAT_RDIR)/png_html_index/index.html
+	@echo ""
+	@echo "Created directory:" $(PE_STAT_RPATH)
+	@echo ""
+
+pewave:
+	@echo ""
+	@echo "--> MAKE WAVE ..."
+	@echo ""
+	echo $(PE_OFFPATH)/merge
+	$(call check_not_dir,$(PE_OFFPATH)/merge)
+	cd $(PE_OFFPATH)/merge; unlink wave_*_job0.root; ln -sf $(PE_ONPATH)/output/wave_*$(PE_SDIR)*$(PE_JTAG)*root wave_$(PE_DTAG)_job0.root
+	$(call check_dir,$(PE_WAVE_RPATH))
+	if [ ! -d $(PE_WAVE_RPATH) ]; then mkdir -p $(PE_WAVE_RPATH) ; fi;	
+	rm -f $(PE_WAVE_RPATH)/*.txt	
+	rm -f $(PE_WAVE_RPATH)/*.png	
+	rm -f $(PE_WAVE_RPATH)/*.root	
+	if cmp -s $(HOME_CWB)/macros/$(CWB_PE_REPORT_MACRO) $(PE_OFFPATH)/tmp/$(CWB_PE_REPORT_MACRO) ; then	\
+	  echo "Nothing changed";										\
+	else													\
+	  cp $(HOME_CWB)/macros/$(CWB_PE_REPORT_MACRO) $(PE_OFFPATH)/tmp/.;					\
+	fi
+	cd  $(PE_WAVE_RPATH); 		\
+	root l -b '$(PE_OFFPATH)/tmp/$(CWB_PE_REPORT_MACRO)+("--gw_name=$(GW_NAME) --data_label=$(PE_DTAG) --gps_event=$(GW_GPS) --gps_error=0.1 --inj_time_step=$(PE_TSTEP) --off_event=0 --wave_dir=$(PE_OFFPATH)/merge --nifo=$(PE_NIFO) --ifar_thr=${PE_IFAR} --plot_type=$(PE_PLOT_TYPE) --plot_fname=pewave --sync_phase=$(SYNC_PHASE) --sync_time=$(SYNC_TIME) --efraction=0.1 --plot_99perc=$(PE_PLOT_99PERC)  --tcoa_shift=$(PE_TCOA_SHIFT) --plot_zoom=$(PE_PLOT_ZOOM) --ccut=$(PE_CCUT) --rcut=$(PE_RCUT) --ncycles=$(PE_NCYCLES) --logl=$(PE_LOGL)")'
+	cd $(PE_OFFPATH)/report/dump; $(HOME_CWB)/scripts/cwb_mkhtml.csh $(PE_WAVE_RDIR);	\
+	sed -i '/<\/head>/{ N; s/<br>/<br><div align="center"><font color="blue"><h2>PE Waveform <br> $(PE_WDIR) <br> ($(PE_WAVE))<\/h2><\/font>/; }'  $(PE_WAVE_RDIR)/png_html_index/index.html
+	@echo ""
+	@echo "Created directory:" $(PE_WAVE_RPATH)
+	@echo ""
+
+report: sreport 
+
+sreport: make_dirs draw_match draw_pvalues draw_sensitivity make_stat_html
+
+make_dirs:
+	@echo ""
+	@echo "--> MERGE DATA ..."
+	@echo ""
+	$(call check_dir,$(PE_WWW)/$(PE_STAT_RDIR))
+	$(call check_dir,$(PE_WWW)/$(PE_MATCH_RDIR))
+	$(call check_dir,$(PE_WWW)/$(PE_PVALUE_RDIR))
+	$(call check_dir,$(PE_WWW)/$(PE_SENSITIVITY_RDIR))
+	if [ ! -d $(PE_WWW)/$(PE_STAT_RDIR) ];        then mkdir -p $(PE_WWW)/$(PE_STAT_RDIR) ;        fi;
+	if [ ! -d $(PE_WWW)/$(PE_MATCH_RDIR) ];       then mkdir -p $(PE_WWW)/$(PE_MATCH_RDIR) ;       fi;
+	if [ ! -d $(PE_WWW)/$(PE_PVALUE_RDIR) ];      then mkdir -p $(PE_WWW)/$(PE_PVALUE_RDIR) ;      fi;
+	if [ ! -d $(PE_WWW)/$(PE_SENSITIVITY_RDIR) ]; then mkdir -p $(PE_WWW)/$(PE_SENSITIVITY_RDIR) ; fi;
+	root -b -l '$(MERGE_DATA_PE_MACRO_PATH)("$(PE_SIDE)", "$(PE_WWW)/$(PE_STAT_RDIR)", "$(CONFIG)")'
+	@echo "merge output directory: " $(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy.txt
+	@echo "merge output directory: " $(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor.txt
+	@echo "merge output directory: " $(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor.txt
+	@echo ""
+	@echo "--> MAKE PLOTS ..."
+	@echo ""
+	rm -f $(PE_WWW)/$(PE_MATCH_RDIR)/*.png
+	rm -f $(PE_WWW)/$(PE_PVALUE_RDIR)/*.png
+	rm -f $(PE_WWW)/$(PE_SENSITIVITY_RDIR)/*.png
+
+draw_match:
+	root -b -l -q '$(DRAW_MATCH_PE_MACRO_PATH)("$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor.txt","$(PE_WWW)/$(PE_MATCH_RDIR)","fitting factors - $(SIDE)")'
+
+draw_pvalues:
+	if [ $(PE_MAKE_NE) == 'true' ] ; then \
+	  root -b -l -q '$(DRAW_PVALUES_PE_MACRO_PATH)("$(PE_WWW)/$(PE_STAT_RDIR)/NullEnergy.txt","$(PE_WWW)/$(PE_PVALUE_RDIR)","$(SIDE)","residual - $(SIDE)",true,$(PE_FDR))';	\
+	fi
+	if [ $(PE_MAKE_RE) == 'true' ] ; then \
+	  root -b -l -q '$(DRAW_PVALUES_PE_MACRO_PATH)("$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy.txt","$(PE_WWW)/$(PE_PVALUE_RDIR)","$(SIDE)","residual - $(SIDE)",true,$(PE_FDR))';	\
+	fi
+	if [ $(PE_MAKE_FF) == 'true' ] ; then \
+	  root -b -l -q '$(DRAW_PVALUES_PE_MACRO_PATH)("$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor.txt","$(PE_WWW)/$(PE_PVALUE_RDIR)","$(SIDE)","matching - $(SIDE)",true,$(PE_FDR))';	\
+	fi
+	if [ $(PE_MAKE_OF) == 'true' ] ; then \
+	  root -b -l -q '$(DRAW_PVALUES_PE_MACRO_PATH)("$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor.txt","$(PE_WWW)/$(PE_PVALUE_RDIR)","$(SIDE)","overlap - $(SIDE)",true,$(PE_FDR))';	\
+	fi
+
+draw_sensitivity:
+	if [ $(PE_SENSITIVITY) == 'true' ] ; then 	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("phase","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("time","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("amp","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("dphase50","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("dtime50","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("damp50","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("dphase90","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("dtime90","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	  root -b -l -q '$(DRAW_SENSITIVITY_PE_MACRO_PATH)("damp90","$(PE_WWW)/$(PE_STAT_RDIR)/FittingFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/OverlapFactor_sensitivity.txt","$(PE_WWW)/$(PE_STAT_RDIR)/ResidualEnergy_sensitivity.txt","$(PE_WWW)/$(PE_SENSITIVITY_RDIR)","$(SIDE)")';	\
+	fi
+
+make_stat_html:
+	@echo ""
+	@echo "--> MAKE HTML STAT ..."
+	@echo ""
+	root -b -l '$(MAKE_HTML_PE_MACRO_PATH)("$(PE_SIDE)","$(PE_WWW)/$(PE_STAT_RDIR)","$(PE_SIDE)","$(CONFIG)")'
+	cd $(PE_WWW); $(HOME_CWB)/scripts/cwb_mkhtml.csh $(PE_MATCH_RDIR);   \
+	sed -i '/<\/head>/{ N; s/<br>/<br><div align="center"><font color="blue"><h2>Math-Match <br> ($(PE_STAT) - $(PE_SIDE)) <\/h2><\/font>/; }'  $(PE_MATCH_RDIR)/png_html_index/index.html; \
+	sed -i 's/"1000"/"700"/g'  $(PE_MATCH_RDIR)/png_html_index/index.html
+	@echo ""
+	@echo "Created index:" $(PE_WWW)/$(PE_MATCH_RDIR)/png_html_index/index.html
+	@echo ""
+	cd $(PE_WWW); $(HOME_CWB)/scripts/cwb_mkhtml.csh $(PE_PVALUE_RDIR);   \
+	sed -i '/<\/head>/{ N; s/<br>/<br><div align="center"><font color="blue"><h2>P-values <br> ($(PE_STAT) - $(PE_SIDE)) <\/h2><\/font>/; }'  $(PE_PVALUE_RDIR)/png_html_index/index.html
+	@echo ""
+	@echo "Created index:" $(PE_WWW)/$(PE_PVALUE_RDIR)/png_html_index/index.html
+	@echo ""
+	@echo ""
+	if [ $(PE_SENSITIVITY) == 'true' ] ; then 	\
+	  cd $(PE_WWW); $(HOME_CWB)/scripts/cwb_mkhtml.csh $(PE_SENSITIVITY_RDIR);   \
+	  sed -i '/<\/head>/{ N; s/<br>/<br><div align="center"><font color="blue"><h2>Sensitivity <br> ($(PE_STAT) - $(PE_SIDE)) <\/h2><\/font>/; }'  $(PE_SENSITIVITY_RDIR)/png_html_index/index.html;	\
+	  @echo "";	\
+	  @echo "Created index:" $(PE_WWW)/$(PE_SENSITIVITY_RDIR)/png_html_index/index.html;	\
+	  @echo "";	\
+	fi
+
+wreport:
+	@echo ""
+	@echo "--> MAKE WAVE STAT ..."
+	@echo ""
+	if [ ! -d $(PE_WWW)/$(PE_WAVE_RDIR) ];   then mkdir -p $(PE_WWW)/$(PE_WAVE_RDIR) ;        fi;
+	root -b -l '$(MAKE_HTML_PE_MACRO_PATH)("wave","$(PE_WWW)/$(PE_WAVE_RDIR)","wave","$(CONFIG)")'
+
+creport:
+	@echo ""
+	@echo "--> MAKE HTML CED ..."
+	@echo ""
+	if [ ! -d $(PE_WWW)/$(PE_CED_RDIR) ];    then mkdir -p $(PE_WWW)/$(PE_CED_RDIR) ;        fi;
+	root -b -l '$(MAKE_HTML_PE_MACRO_PATH)("ced","$(PE_WWW)/$(PE_CED_RDIR)","ced","$(CONFIG)")'
+
+preport:
+	@echo ""
+	@echo "--> MAKE HTML POSTPROD ..."
+	@echo ""
+	if [ ! -d $(PE_WWW)/$(PE_POSTPROD_RDIR) ]; then mkdir -p $(PE_WWW)/$(PE_POSTPROD_RDIR) ;        fi;
+	root -b -l '$(MAKE_HTML_PE_MACRO_PATH)("postprod","$(PE_WWW)/$(PE_POSTPROD_RDIR)","report","$(CONFIG)")'
+

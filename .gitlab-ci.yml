@@ -1,0 +1,49 @@
+image: registry.gitlab.com/gwburst/public/cwb_docker:production
+
+variables:
+  GIT_DEPTH: "10"
+  GIT_SUBMODULE_STRATEGY: recursive
+
+#####################################
+#                                   #
+#  Build library and deploy Doxygen #
+#                                   #
+#####################################
+
+stages:
+  - build
+  - deploy
+
+
+build-cWB:
+  stage: build
+  only:
+    - tags
+    - triggers
+      #- schedules
+  except:
+    - schedules
+  script:
+    - source /home/cWB_docker/git/cWB/library/docker_watenv.sh
+    - mkdir -p public
+    - make -j3 
+    - make winstall ODIR=public
+
+pages:
+  stage: deploy
+  only:
+    - tags
+    - triggers
+      #- schedules
+  except:
+    - schedules
+  script:
+    - source /home/cWB_docker/git/cWB/library/docker_watenv.sh
+    - mkdir -p public     
+    - cd doxygen
+    - make doxygen
+   
+  artifacts:
+    paths:
+      - public
+

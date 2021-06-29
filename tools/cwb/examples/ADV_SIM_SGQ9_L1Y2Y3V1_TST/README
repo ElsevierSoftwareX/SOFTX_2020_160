@@ -1,0 +1,22 @@
+// 1G Analysis with user define detectors with V shape (45 degrees) topology
+
+// Y2 and Y3 are user define detectors
+// Y2,Y3 are in the H1 site with LCI topology (V shape 45 degrees)
+
+1) make directories for cwb
+
+2) generate frames for ADV ifos L1 Y2 Y3 V1
+   to change the default vaules edit macro/CreateFramesNOISE.C
+
+3) generate SGQ9 MDC frames for ifos L1 Y2 Y3 V1
+   to change the default vaules edit macro/CreateFramesMDC.C
+
+to generate all necessary stuff do "make setup"
+  
+to change the cwb parameters edit config/user_parameters.C
+
+to run cwb pipeline do "make cwb"
+
+to run ced do "make ced"
+
+to reset the directory do "make clean"

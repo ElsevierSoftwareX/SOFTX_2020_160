@@ -1,0 +1,256 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_LSF" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_lsf \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.sp
+This page provides a description of the cwb_lsf command.
+.nf
+
+\fBUsage\fP
+
+.in +2
+This command prepares and submits the analysis jobs on the considered computing cluster by using the LSF batch system. The functionality is similar to the ones provided by the \fI\%cwb_condor\fP command.
+.in -2
+.fi
+.sp
+.nf
+
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_lsf\fP (without arguments)
+Prints help
+.IP \(bu 2
+\fBcwb_lsf action [lsf_file/cwb_stage] [input_dir]\fP
+Prepares and submits the jobs
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBFurhter informations\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+The following options can be passed to cwb_lsf:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+action =     create         : it creates the lsf and tgz files under the condor directory
+
+             submit         : it submits the jobs to the considered computing cluster
+
+             recovery       : it compares the list of jobs in the dag file and checks the number
+                              of jobs completed (from history).
+                              It produces the dag file data_label.dag.recovery.x (x = recovery version).
+
+             benchmark      : it shows the computation load and related statistics (see cwb_condor benchmark).
+
+             queue          : it shows the lsf queue status.
+
+             status         : it shows the jobs status.
+
+             status jobID   : it shows the log job (jobID is the ID reported with the status option).
+
+             status jobName : it dumps the log job (jobName is the name reported with the status option).
+
+             kill           : kill all jobs.
+
+             kill jobID     : kill one job (jobID is the ID reported with the status option).
+
+             stop           : suspend all jobs.
+
+             stop jobID     : suspend one job (jobID is the ID reported with the status option).
+
+             resume         : resume all jobs.
+
+             resume jobID   : resume one job (jobID is the ID reported with the status option).
+
+             utar dir_name  : uncompress tgz files produced by the jobs in the output directory
+                              (the output is compressed and must be uncompress manually).
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+lsf_file/cwb_stage (optional) =
+
+
+                         lsf_file   : path to the dag file dag_file to be submitted
+                                      (used as cwb_lsf submit lsf_file).
+
+                         cwb_stage  : used in the 2G analysis
+                                      [FULL(default)/INIT/STRAIN/CSTRAIN/COHERENCE/SUPERCLUSTER/LIKELIHOOD]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+input_dir (optional)  : it is used with the recovery option. The default input directory is the
+                        output_dir directory defined in cwb_parameters.C
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+To see how the cwb_lsf works see the examples reported for the \fI\%cwb_condor\fP command.
+The working directory used for this example is in the svn directory :
+.UNINDENT
+.UNINDENT
+.nf
+tools/cwb/examples/O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS
+The instructions are in the README* files
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+.nf
+The following command lines launch a \fBfull stage analysis\fP:
+.in +2
+\fBcwb_lsf create\fP
+
+\-> files created
+
+output lsf file : O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf
+output tgz file : condor/O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.tgz
+
+\fBcwb_lsf submit\fP
+
+\-> console output
+
+input dag file : O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.dag
+output lsf file : O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf
+LSFFILE = O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf
+Job <13907643> is submitted to queue <virgo>.
+
+
+Your LSF jobs has been submitted
+To monitor the jobs do : cwb_lsf status
+To monitor the queue : cwb_lsf queue
+To kill the all jobs do : cwb_lsf kill
+To resubmit paused jobs do : cwb_lsf resume
+To suspend all jobs do : cwb_lsf stop
+
+\fBcwb_lsf queue\fP
+
+QUEUE_NAME PRIO STATUS MAX JL/U JL/P JL/H NJOBS PEND RUN SUSP
+virgo 30 Open:Active 1200 \- \- 4 2173 973 1200 0
+
+.in -2
+.fi
+.sp
+.nf
+\fBcwb_lsf status\fP
+
+.in +2
+\-> console output
+
+JOBID USER STAT QUEUE FROM_HOST EXEC_HOST JOB_NAME SUBMIT_TIME
+13907643 vedovat PEND virgo ui01\-virgo A9 Jan 29 13:48
+
+\fBcwb_lsf status 13907643\fP
+
+\-> show log produced by the cwb job
+
+When job finish the final output file are :
+
+\-> output root file
+
+output/9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf.tgz
+
+\-> output log err/out files
+
+log/9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf.err
+log/9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf.out
+
+\fBcwb_lsf utar output\fP
+
+\-> files are uncompressed in the output directory
+
+output/supercluster_xxx_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf_job9.root
+output/wave_xxx_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf_slag0_lag0_1_job9.root
+
+.in -2
+.fi
+.sp
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+the supercluster root file is optional it is produced only if the config/user_parameters.C file contains the following option :
+jobfOptions 
+.nf
+|
+.fi
+= CWB_JOBF_SAVE_TRGFILE;
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

@@ -1,0 +1,251 @@
+Toolbox-1.2.0
+
+- move develop dir under wat tools/toolbox
+
+- add config_dir to cwb_parameters.C
+
+- add message to CWB::Toolbox::checkFile(TString fName, bool question, TString message)
+
+- add check to www_dir in cwb_mkdir  (www must be unique)
+
+- add eDisbalance,nSky to cwb_net.C,cwb_parameters.C
+
+- add Psize to netevent netburst(nIFO,Psize); in cwb_net.C
+
+- add some checks ro cedDir
+
+- add display job_elapsed_time at the end of cwb_net.C
+
+- add brms,bvar to CWB::Toolbox::mergeCWBTrees and macro/cwb_merge.*
+
+CWBToolbox-1.2.0
+
+- move all labels in name files and inside files
+  ecwb -> cwb
+  ECWB -> CWB
+
+- add to cwb_init.csh and cwb_rootlogon.C the STFT library 
+
+CWBToolbox-1.1.2
+
+- Fix : ecwb_condor_create_ced.C 
+  * import in sub creation the modifications of applied in CWBToolbox-1.1.1 (condor sub)  
+  * the jobs dag file is create with sequential ID, before was refered to jobID (possible double definitions) 
+
+- Add JOB-TYPE (net/ced) in ecwb_condor_status.csh
+
+- Fix : CWBToolbox::setVeto - now save history of the previous stage
+
+- Add : CWBToolbox::setMultiplicity - Add Multiplicity infos -> leafs Msize(multiplicity),Mid(id of multiplicity) 
+
+- Add : CWBToolbox::getRate - Compute the correct rate and error rate (take into account the multiplicity) 
+
+- Add : CWBToolbox::getRate in ecwb_netplot_gen_2.C : produce a new "rate vs rho" plot with no multiplicity
+
+- compiled with XIFO=9 (makeAll.sh)
+
+- Fix bug in CWB::Toolbox::getSlagList when nIFO=2
+
+- Insert check in CWB::Toolbox::readSegList when ndqf=0
+
+- Fix in CWB::Toolbox::readSegList read in 4columns int -> float
+
+- Fix in ecwb_simplot.C line [ if(fabs(sMDC.data[j]-ww.strain[1])<0.001*mm.strain ]
+  and f4->SetParLimits(0,..
+
+- Add in ecwb_mkeff.C the label ECWB_MKEFF_LINX, if it defined in user_pparameters.C the plots has LINX axis  
+
+- Fix vector<slag> getSlagList : replicate DQF inside the method to avoid modification of the structure DQF
+
+- Add in ecwb_simplot.C the parameter ECWB_SIMPLOT_USE_FACTOR, it is used to plot efficiencies respect 
+  to the standard candle which value is defined by ECWB_SIMPLOT_USE_FACTOR
+
+- Fix ecwb_netplot_gen_2.C when no events are selected (for example in zero lag)
+- Change scratchdays ecwb_netplot_gen_1.C ecwb_netplot_gen_2.C
+
+- Extended in CWB::Toolbox::readFrames the management of FR DATA TYPES
+
+CWBToolbox-1.1.1
+
+- Add struct ifoparms  (contains ifo user define parameters)
+- Add CWB::Toolbox::convertSampleRate
+- Fix CWBToolbox::getSimNoise  (generate coloured gussian noise)
+- Fix (nIFO>3) CWB::Toolbox::getSlagIndex
+  must be checked when nIFO>3
+- Add ecwb_draw_antpat
+- Insert HEALpix library into ecwb_rootlogon.C
+- Fix : used nfactor in ecwb_mkhtml_header.C & ecwb_merge.C
+- Fix ecwb_net.C : change id -> job for output simulation files 
+- Fix ecwb_init.C setenv ROOT,glue env is done only if it doesn't exist in PATH and LD_LIBRARY_PATH envs 
+- Use FrDisplay 1.0.8
+- Cleanup CBBToolbox 
+   - remove compilation warning !!!
+   - remove inline definitions
+- Change HOME_WAVEBURST : eced-1.2 to eced-1.3
+- Modify condor sub 
+  on_exit_hold = ( ExitCode != 0 )
+  request_memory = 3000
+- removed exit(0) from ecwb_net.sh
+
+CWBToolbox-1.1.0
+
+- Fix : CWB::Toolbox::getSlagList(vector<slag>
+        CWB::Toolbox::getSegList(slag SLAG
+  Correct the jobSlagList, before was computed with shifted dq1List
+  Correct MSEG
+
+  Speedup the execution
+
+- Add : User Tag parameter in ecwb_condor_create.C ecwb_condor_rescue.C        
+  This parameter allows to create multiple daq files within a working directory
+
+- Change ecwb_dump_slag.C 
+  now dump only the non zero jobs 
+
+- Fix : CWB::Toolbox::getSlagList(size_t  nIFO
+  slagMin, the minimum difference betwnen segment is correctly taken into account
+  before was slagMin+1
+
+- New macro to check the number of process terminated
+  ecwb_condor check
+
+- Add new parameter segTHR in ecwb_parameters.C 
+  segTHR = Minimum Segment Length After DQ_CAT2 [sec]
+
+- now ecwb_condor  and  "ecwb_dump slag" reject segments with length < segTHR after CWB_CAT2
+
+- Fix : vector<slag> getSlagList(size_t  nIFO
+  Now slagId are unique
+  slagMin : is the minimum slag distance between segments 
+  slagMax : is the maximum slag distance between segments 
+  slagOff : is the first slagId of the slagList
+
+- Add in net.C the extension lag_%d_%d (lagOff,lagSize+lagOff)
+
+- Add 'ecwb_dump history file_name'
+
+- Add CWB::Toolbox::getZeroLiveTime
+
+- 'ecwb_dump slag' dumps 2 files *.slag & *.lagslag 
+
+- Add methods : 
+  vector<int> getCondorJobList(TString condor_dir, TString label, TString tag="");
+  vector<int> getMergeJobList(TString merge_dir, TString label, int version);
+
+- Add Job Status in html pages [ job_merge / job_condor ]
+
+- Set unset in net.sh (for safety)
+
+- FIX "ecwb_condor rescue" 
+
+- Add symbolic link condor/ced.h
+
+- Add : CWB::Toolbox::makeSpectrum
+
+- Add : ecwb_dump sensitivity #job
+- Add : ecwb_draw_sensitivity name_file
+
+- Fix : ecwb_condor_rescue.C  (file size err >0)
+- Add : ecwb_condor_recovery.C (root not produced)
+
+- Add : 'ecwb_condor status' 
+
+- Add CWBToolbox::getSimNoise
+
+CWBToolbox-1.0.9
+
+- user_pparameters.C splitted in two parts : user_pparameters.C & ecwb_epparameters.C
+
+- Fix : memory leakage in CWB::Toolbox::readSegList
+
+- Add : slag dump
+
+- Fix slagFound in ecwb_netplot_gen_2.C (used net instead of liv)
+
+- Fix : in post production the plot freq range use only the selected range
+
+- Add slag management in post production macros (excluded setVeto)
+
+- Add ecwb_fix_live_slag_missed.* to fix live root file if it do not contains slag leaf
+
+- Add ecwb_fix_slag_missed.* to fix live & wave root files if they do not contains slag leaf
+
+CWBToolbox-1.0.8
+
+- Substituite in ecwb_net_*.C "date" with "/bin/data"
+  Jobs needs more time to search the command "date" in the cluster
+
+- Fix :     
+  change
+  DQF[i].shift=-segLen*(SLAG.segId[ifoID]-SLAG.segId[0]);  // apply slag shift to dq
+  with
+  DQF[i].shift+=-segLen*(SLAG.segId[ifoID]-SLAG.segId[0]);  // apply slag shift to dq
+  this fix preserve the user defined shift
+
+CWBToolbox-1.0.7
+
+- Change format of the mdc inj file
+  flow fhigh -> fcentral fbandwidth
+  WARNING: not back compatible
+
+- changed ecwb_rootlogon.C and ecwb_init.csh
+  Now all setting are in ecwb_init.csh
+
+- insert in ecwb_net_mlag_rsm.C the history of the ecwb env
+
+- insert in ecwb_rootlogon.C the check of working dir env variable ECWB_WORKDIR
+
+- Fix : building postprod dir with an extra label [Ex: 200-2048] (ecwb_pparameters.C, user_pparameters.C) 
+
+- Add copy ecwb_init.csh to report dir (ecwb_mkhtml_header.C)
+
+- Add eff_vs_freq in report sim
+
+- Add stat to freq,time sim hists
+
+- New format eser_pparameters.C
+
+- Add check if veto leaf are present in tree (netplot)
+
+- Change data -> tmp , data is used as local output (ecwb_inet)
+
+- Add ecwb_frdisplay
+
+- Add condor submit of loudest events
+
+- max ifo number 20 (before 5)
+
+CWBToolbox-1.0.5
+
+- Add History in CWB::Toolbox::mergeCWBTrees
+
+- Modify methods
+  int createDagFile(vector<waveSegment> jobList, TString condor_dir, TString label, int jobmin=0, int jobmax=0);
+  int createSlagDagFile(vector<slag> slagList, TString condor_dir, TString label, int jobmin=0, int jobmax=0);
+  int createSlagSubFile(TString label, TString condor_dir, TString out_dir, TString err_dir, TString log_dir);
+  warning - is no more back compatible
+
+
+CWBToolbox-1.0.4
+
+- Modified
+  vector<waveSegment> getSegList(int jobId, int nIFO,
+                                 double segLen, double segMLS, double segEdge,
+                                 vector<waveSegment> dqList);
+  vector<waveSegment> getSegList(slag SLAG, vector<TString> ifos,
+                                 double segLen, double segMLS, double segEdge,
+                                 vector<waveSegment> dqList);
+  warning - is no more back compatible
+
+
+CWBToolbox-1.0.3
+
+- add slagMin to the method CWB::Toolbox::getSlagList
+  warning - is no more back compatible
+
+- condor_dir to the method CWB::Toolbox::createSlagSubFile
+  warning - is no more back compatible
+
+- renamed CWB::Toolbox::setShifts in CWB::Toolbox::setSlagShifts
+
+- add getSegList  (Igor style)

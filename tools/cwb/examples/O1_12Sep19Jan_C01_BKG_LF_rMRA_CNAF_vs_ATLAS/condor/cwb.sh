@@ -1,0 +1,1 @@
+/home/vedovato/Y2/coherent/SVN/watrepo/wat/trunk/tools/cwb/scripts/cwb_net.sh

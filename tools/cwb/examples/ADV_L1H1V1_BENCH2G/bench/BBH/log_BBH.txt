@@ -1,0 +1,1145 @@
+if [ -d condor ]; then rm -f condor/*.dag*;rm -f condor/*.sub*; fi;
+if [ -d log ]; then rm -f log/* ; fi;
+if [ -d output ]; then rm -f output/* ; fi;
+if [ -d merge ]; then rm -f merge/* ; fi;
+if [ -d report/postprod ]; then rm -rf report/postprod/* ; fi;
+if [ -d report/dump ]; then rm -rf report/dump/* ; fi;
+if [ -d report/ced ]; then rm -rf report/ced/* ; fi;
+if [ -d data ]; then rm -rf data/* ; fi;
+if [ -d tmp ]; then rm -rf tmp/* ; fi;
+/bin/tcsh /home/waveburst/SOFT/WAT/trunk/tools/cwb/scripts/cwb_inet.csh 25
+
+Processing $CWB_ROOTLOGON_FILE...
+
+OS : Linux
+
+
+ROOT/WAT/CWB initialization starting...
+
+Set Include Paths...
+Load Libraries...
+Loading LAL Suite     : /home/waveburst/SOFT/LAL/lalsuite_lal-v6.13.2 ...
+Loading cvode         : /home/waveburst/SOFT/CVODE/cvode-2.7.0/dist ...
+Loading cfitsio       : /home/waveburst/SOFT/CFITSIO/cfitsio-3.34 ...
+Loading HEALPix       : /home/waveburst/SOFT/HEALPix/Healpix_3.00 ...
+Loading WAT           : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/wavelet.so ...
+Loading Frame         : /home/waveburst/SOFT/FRAMELIB/libframe-8.21_root-v5-34-25 ...
+Loading eBBH          : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/eBBH.so ...
+Loading STFT          : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/STFT.so ...
+Loading gwat          : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/gwat.so ...
+Loading Toolbox       : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/Toolbox.so ...
+Loading History       : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/History.so ...
+Loading Bicoherence   : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/Bicoherence.so ...
+Loading Filter        : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/Filter.so ...
+Loading CWB FRAME     : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/frame.so ...
+Loading cwb           : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/cwb.so ...
+Loading wavegraph     : /home/waveburst/SOFT/WAT/trunk/tools/install/lib/wavegraph.so ...
+
+     ****************************************************
+     *                                                  *
+     *             W E L C O M E  to  C W B             *
+     *                                                  *
+     *             WAT    Version  6.0.3 (XIFO=4)       *
+     *                   Revision  4470M                *
+     *                 Branch/Tag  trunk                *
+     *             LAL    Version  6.13.2               *
+     *             FRLIB  Version  8.21                 *
+     *                                                  *
+     *             Based  on ROOT  5.34/25              *
+     *                                                  *
+     *                                                  *
+     *             DEVELOPMENT VERSION : 1              *
+     *                                                  *
+     ****************************************************
+
+Last Changed Date: 2015-07-30 15:47:20 +0200 (Thu, 30 Jul 2015)
+   Compiled on Linux x86_64 atlas7.atlas.local
+                 Fri Jul 31 12:46:05 UTC 2015 
+
+Processing $CWB_PARAMETERS_FILE...
+www_dir    : /home/waveburst/WWW/LSC/reports
+data_label : ADV_L1H1V1_BENCH2G
+condor_log : /atlas/user/atlas7/waveburst/condor
+nodename   : atlas7.atlas.local
+nodedir    : /atlas/user/atlas7.atlas.local/waveburst
+Processing $CWB_UPARAMETERS_FILE...
+Processing $CWB_EPARAMETERS_FILE...
+Processing /home/waveburst/SOFT/WAT/trunk/tools/cwb/macros/cwb_xnet.C("./config/user_parameters.C")...
+Filter length = 6.00049 (sec)
+Filter length = 3.00049 (sec)
+Filter length = 1.50049 (sec)
+Filter length = 0.750488 (sec)
+Filter length = 0.375488 (sec)
+Filter length = 0.187988 (sec)
+Filter length = 0.0942383 (sec)
+Filter length = 0.0473633 (sec)
+cwb2G::Init - Loading catalog of WDM cross-talk coefficients ... 
+/home/waveburst/SOFT/WAT/filters/wdmXTalk/OverlapCatalog8-1024.bin
+layers[0] = 8
+layers[1] = 16
+layers[2] = 32
+layers[3] = 64
+layers[4] = 128
+layers[5] = 256
+layers[6] = 512
+layers[7] = 1024
+
+level : 10	 rate(hz) : 2	 layers : 1024	 df(hz) : 1	 dt(ms) : 500
+level : 9	 rate(hz) : 4	 layers : 512	 df(hz) : 2	 dt(ms) : 250
+level : 8	 rate(hz) : 8	 layers : 256	 df(hz) : 4	 dt(ms) : 125
+level : 7	 rate(hz) : 16	 layers : 128	 df(hz) : 8	 dt(ms) : 62.5
+level : 6	 rate(hz) : 32	 layers : 64	 df(hz) : 16	 dt(ms) : 31.25
+level : 5	 rate(hz) : 64	 layers : 32	 df(hz) : 32	 dt(ms) : 15.625
+level : 4	 rate(hz) : 128	 layers : 16	 df(hz) : 64	 dt(ms) : 7.8125
+level : 3	 rate(hz) : 256	 layers : 8	 df(hz) : 128	 dt(ms) : 3.90625
+
+job ID   : 25
+output   : data
+label    : ADV_L1H1V1_BENCH2G
+nodedir  : tmp
+Pid      : 22162
+
+cwb::LoadPlugin - Load pre-compiled plugin ...
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 0
+
+
+--------------------------------------------------------------------
+cwb::InitNetwork
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:40:37 UTC Fri
+Job   Elapsed Time -  00:00:00 (hh:mm:ss)
+Stage Elapsed Time -  00:00:00 (hh:mm:ss)
+Memory             -  virtual : 370 (mb)  rss  : 132 (mb)
+Job File Size      -  0 (bytes) : 0 (kb) : 0 (mb)
+--------------------------------------------------------------------
+GPS:1122396054-JOB:25-STG:1-FCT:-1-JET:0-SET:0-MEM:370-JFS:0
+--------------------------------------------------------------------
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 1
+
+Fri Jul 31 16:40:38 UTC 2015
+atlas7.atlas.local
+
+--------------------------------------------------------------------
+cwb::PrintAnalysis
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:40:38 UTC Fri
+Job   Elapsed Time -  00:00:01 (hh:mm:ss)
+Stage Elapsed Time -  00:00:01 (hh:mm:ss)
+Memory             -  virtual : 467 (mb)  rss  : 195 (mb)
+Job File Size      -  0 (bytes) : 0 (kb) : 0 (mb)
+--------------------------------------------------------------------
+GPS:1122396055-JOB:25-STG:1-FCT:-1-JET:1-SET:1-MEM:467-JFS:0
+--------------------------------------------------------------------
+
+
+                               jobID : 25
+
+                            Analysis : 2G
+                               stage : FULL
+
+                           detectors : L1 H1 V1 
+                              search : circular polarisation(g)-MRA
+                          simulation : 2
+maximum time delay between detectors : 0.0264483
+       maximum time delay difference : 0.0264483
+                       HEALPix order : 7
+        levelR, rateANA, fLow, fHigh : 3, 2048, 32, 1024
+                          bpp, Acore : 0.001, 1.7
+                    netRHO and netCC : 5, 0.5
+        clustering TFgap, Tgap, Fgap : 6, 0, 0
+      regulator subnet, delta, gamma : 0.6, 0.5, 0.5
+
+
+--------------------------------------------------------------------
+cwb::InitHistory
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:40:38 UTC Fri
+Job   Elapsed Time -  00:00:01 (hh:mm:ss)
+Stage Elapsed Time -  00:00:00 (hh:mm:ss)
+Memory             -  virtual : 467 (mb)  rss  : 195 (mb)
+Job File Size      -  0 (bytes) : 0 (kb) : 0 (mb)
+--------------------------------------------------------------------
+GPS:1122396055-JOB:25-STG:1-FCT:-1-JET:1-SET:0-MEM:467-JFS:0
+--------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------
+cwb::InitJob
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:40:38 UTC Fri
+Job   Elapsed Time -  00:00:01 (hh:mm:ss)
+Stage Elapsed Time -  00:00:00 (hh:mm:ss)
+Memory             -  virtual : 467 (mb)  rss  : 195 (mb)
+Job File Size      -  0 (bytes) : 0 (kb) : 0 (mb)
+--------------------------------------------------------------------
+GPS:1122396055-JOB:25-STG:1-FCT:-1-JET:1-SET:0-MEM:467-JFS:0
+--------------------------------------------------------------------
+
+
+Toolbox::getJobList : lost livetime after building of the standard job list = 0 sec
+
+Segment type = LAG
+segLen       = 1400 sec
+segMLS       = 700 sec
+segOverlap   = 0 sec
+
+detSegs_dq1[L1] GPS range : 1096860612-1096862012
+detSegs_dq1[H1] GPS range : 1096860612-1096862012
+detSegs_dq1[V1] GPS range : 1096860612-1096862012
+
+detSegs_dq2[0]  GPS range : 1096860612-1096862012
+
+live time after cat 2 : 1400 sec
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 9
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 9
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 9
+
+temporary job file : tmp/job_1096860612_ADV_L1H1V1_BENCH2G_25_22162.root
+
+--------------------------------------------------------------------
+cwb2G::ReadData
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:40:38 UTC Fri
+Job   Elapsed Time -  00:00:01 (hh:mm:ss)
+Stage Elapsed Time -  00:00:00 (hh:mm:ss)
+Memory             -  virtual : 467 (mb)  rss  : 195 (mb)
+Job File Size      -  0 (bytes) : 0 (kb) : 0 (mb)
+--------------------------------------------------------------------
+GPS:1122396055-JOB:25-STG:2-FCT:-1-JET:1-SET:0-MEM:467-JFS:0
+--------------------------------------------------------------------
+
+
+WDM filter length for regression = 6.00048828125 (sec)
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 2
+
+CWB::Toolbox::getSimNoise - scratch : 184 osize : 1608
+start=1096860600.000000 duration=1424.000000 rate=2048.000000
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 3
+
+Execute CWB_Plugin_MDC_OTF.C : Inject On The Fly MDC ...
+Execute CWB_Plugin_MDC_OTF_Config_BBH.C ...
+CWB::mdc::SetInspiral - Read options ...
+--time-step = 150.0
+--time-interval = 0
+--dir = tmp
+--waveform = EOBNRv2pseudoFourPN
+/home/waveburst/SOFT/LAL/lalsuite_lal-v6.13.2/bin/lalapps_inspinj --time-step 150.0 --time-interval 0 --gps-start-time 1096827000 --gps-end-time 1096967000   --l-distr fixed --longitude 45 --latitude 45 --d-distr uniform --m-distr totalMassRatio --i-distr uniform --f-lower 32.000000 --min-mtotal 20. --max-mtotal 20. --min-mratio 1.0 --max-mratio 1.0 --min-distance 200000.0 --max-distance 200000.0 --waveform EOBNRv2pseudoFourPN --disable-spin --taper-injection start --seed 123456789 --output tmp/inspiral_157660119.xml --gps-start-time 900000000 --gps-end-time 900000000
+
+
+/home/waveburst/SOFT/LAL/lalsuite_lal-v6.13.2/bin/lalapps_inspinj --time-step 150.0 --time-interval 0 --gps-start-time 1096827000 --gps-end-time 1096967000   --l-distr fixed --longitude 45 --latitude 45 --d-distr uniform --m-distr totalMassRatio --i-distr uniform --f-lower 32.000000 --min-mtotal 20. --max-mtotal 20. --min-mratio 1.0 --max-mratio 1.0 --min-distance 200000.0 --max-distance 200000.0 --waveform EOBNRv2pseudoFourPN --disable-spin --taper-injection start --seed 123456789 --output tmp/inspiral_904730927.xml
+CWB::mdc::GetInspiral : Read 9 injection(s) from the file 'tmp/inspiral_904730927.xml'
+CWB::mdc::GetInspiral : Generating injection for: L1
+0 mdcList file  1  0  0  -0.401342  1.70306  0.707107  5.83396  3.41332  1096860600  1096860750.000000000  BBH  0  0  0  L1 1096860749.986894492 6.388331e-01 1.874843e-01 528.509  H1 1096860749.989776614 -4.263361e-01 -4.444109e-01 655.576  V1 1096860749.980868008 -6.532620e-01 6.270985e-01 439.408  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+1 mdcList file  1  0  0  0.250641  6.05954  0.707107  5.82302  6.03251  1096860600  1096860900.000000000  BBH  0  0  0  L1 1096860899.986766480 1.690164e-01 6.487313e-01 1076.68  H1 1096860899.989663641 1.598560e-01 -5.974187e-01 1161.74  V1 1096860899.980938835 -8.713379e-01 -2.352842e-01 428.469  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+2 mdcList file  1  0  0  0.594814  5.44028  0.707107  5.81208  5.69448  1096860600  1096861050.000000000  BBH  0  0  0  L1 1096861049.986639137 -2.670946e-01 6.198896e-01 487.021  H1 1096861049.989550603 4.936222e-01 -3.768490e-01 497.071  V1 1096861049.981010702 -5.423206e-01 -7.176500e-01 355.235  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+3 mdcList file  1  0  0  -0.352087  1.74116  0.707107  5.80114  2.03111  1096860600  1096861200.000000000  BBH  0  0  0  L1 1096861199.986512477 -6.734032e-01 9.130874e-02 526.588  H1 1096861199.989437513 5.808125e-01 2.270839e-01 595.139  V1 1096861199.981083602 3.327354e-01 -8.324225e-01 575.282  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+4 mdcList file  1  0  0  0.167885  1.56864  0.707107  5.7902  1.09494  1096860600  1096861350.000000000  BBH  0  0  0  L1 1096861349.986386517 1.038471e-01 -6.762052e-01 1594.24  H1 1096861349.989324384 -3.816612e-01 4.964838e-01 938.174  V1 1096861349.981157524 7.026730e-01 5.516900e-01 536.302  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+5 mdcList file  1  0  0  0.950505  2.76299  0.707107  5.77927  5.56247  1096860600  1096861500.000000000  BBH  0  0  0  L1 1096861499.986261271 -4.044678e-01 5.573987e-01 305.395  H1 1096861499.989211230 5.677050e-01 -2.704525e-01 334.259  V1 1096861499.981232461 -3.724755e-01 -8.085855e-01 236.301  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+6 mdcList file  1  0  0  0.555431  3.81107  0.707107  5.76833  4.4455  1096860600  1096861650.000000000  BBH  0  0  0  L1 1096861649.986136755 -2.010979e-01 -6.634136e-01 511.162  H1 1096861649.989098064 -1.252131e-01 6.189104e-01 565.949  V1 1096861649.981308403 8.666373e-01 1.894569e-01 346.812  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+7 mdcList file  1  0  0  0.865023  5.62818  0.707107  5.75739  1.83799  1096860600  1096861800.000000000  BBH  0  0  0  L1 1096861799.986012983 -6.846664e-01 -1.344628e-01 328.037  H1 1096861799.988984900 4.917250e-01 4.003178e-01 362.34  V1 1096861799.981385341 5.705244e-01 -6.751532e-01 260.422  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+8 mdcList file  1  0  0  -0.606555  0.223946  0.707107  5.74645  3.86975  1096860600  1096861950.000000000  BBH  0  0  0  L1 1096861949.985889969 5.174553e-01 -4.747609e-01 438.337  H1 1096861949.988871752 -6.156894e-01 1.622345e-01 462.483  V1 1096861949.981463267 2.064494e-01 8.561874e-01 371.624  insp  distance 200  mass1 10  mass2 10  mchirp 8.70551  spin1 0 0 0  spin2 0 0 0  freq 32 205
+
+0 mdcTime 1096860749.9898
+1 mdcTime 1096860899.9897
+2 mdcTime 1096861049.9896
+3 mdcTime 1096861199.9895
+4 mdcTime 1096861349.9894
+5 mdcTime 1096861499.9892
+6 mdcTime 1096861649.9891
+7 mdcTime 1096861799.989
+8 mdcTime 1096861949.9889
+0 mdcType BBH
+start=1096860600.000000 duration=1424.000000 rate=2048.000000
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 2
+
+CWB::Toolbox::getSimNoise - scratch : 184 osize : 1608
+start=1096860600.000000 duration=1424.000000 rate=2048.000000
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 3
+
+Execute CWB_Plugin_MDC_OTF.C : Inject On The Fly MDC ...
+Execute CWB_Plugin_MDC_OTF_Config_BBH.C ...
+CWB::mdc::SetInspiral - Read options ...
+--time-step = 150.0
+--time-interval = 0
+--dir = tmp
+--waveform = EOBNRv2pseudoFourPN
+/home/waveburst/SOFT/LAL/lalsuite_lal-v6.13.2/bin/lalapps_inspinj --time-step 150.0 --time-interval 0 --gps-start-time 1096827000 --gps-end-time 1096967000   --l-distr fixed --longitude 45 --latitude 45 --d-distr uniform --m-distr totalMassRatio --i-distr uniform --f-lower 32.000000 --min-mtotal 20. --max-mtotal 20. --min-mratio 1.0 --max-mratio 1.0 --min-distance 200000.0 --max-distance 200000.0 --waveform EOBNRv2pseudoFourPN --disable-spin --taper-injection start --seed 123456789 --output tmp/inspiral_126650508.xml --gps-start-time 900000000 --gps-end-time 900000000
+
+
+/home/waveburst/SOFT/LAL/lalsuite_lal-v6.13.2/bin/lalapps_inspinj --time-step 150.0 --time-interval 0 --gps-start-time 1096827000 --gps-end-time 1096967000   --l-distr fixed --longitude 45 --latitude 45 --d-distr uniform --m-distr totalMassRatio --i-distr uniform --f-lower 32.000000 --min-mtotal 20. --max-mtotal 20. --min-mratio 1.0 --max-mratio 1.0 --min-distance 200000.0 --max-distance 200000.0 --waveform EOBNRv2pseudoFourPN --disable-spin --taper-injection start --seed 123456789 --output tmp/inspiral_874242296.xml
+CWB::mdc::GetInspiral : Read 9 injection(s) from the file 'tmp/inspiral_874242296.xml'
+CWB::mdc::GetInspiral : Generating injection for: H1
+start=1096860600.000000 duration=1424.000000 rate=2048.000000
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 2
+
+CWB::Toolbox::getSimNoise - scratch : 184 osize : 1608
+start=1096860600.000000 duration=1424.000000 rate=2048.000000
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 3
+
+Execute CWB_Plugin_MDC_OTF.C : Inject On The Fly MDC ...
+Execute CWB_Plugin_MDC_OTF_Config_BBH.C ...
+CWB::mdc::SetInspiral - Read options ...
+--time-step = 150.0
+--time-interval = 0
+--dir = tmp
+--waveform = EOBNRv2pseudoFourPN
+/home/waveburst/SOFT/LAL/lalsuite_lal-v6.13.2/bin/lalapps_inspinj --time-step 150.0 --time-interval 0 --gps-start-time 1096827000 --gps-end-time 1096967000   --l-distr fixed --longitude 45 --latitude 45 --d-distr uniform --m-distr totalMassRatio --i-distr uniform --f-lower 32.000000 --min-mtotal 20. --max-mtotal 20. --min-mratio 1.0 --max-mratio 1.0 --min-distance 200000.0 --max-distance 200000.0 --waveform EOBNRv2pseudoFourPN --disable-spin --taper-injection start --seed 123456789 --output tmp/inspiral_149545997.xml --gps-start-time 900000000 --gps-end-time 900000000
+
+
+/home/waveburst/SOFT/LAL/lalsuite_lal-v6.13.2/bin/lalapps_inspinj --time-step 150.0 --time-interval 0 --gps-start-time 1096827000 --gps-end-time 1096967000   --l-distr fixed --longitude 45 --latitude 45 --d-distr uniform --m-distr totalMassRatio --i-distr uniform --f-lower 32.000000 --min-mtotal 20. --max-mtotal 20. --min-mratio 1.0 --max-mratio 1.0 --min-distance 200000.0 --max-distance 200000.0 --waveform EOBNRv2pseudoFourPN --disable-spin --taper-injection start --seed 123456789 --output tmp/inspiral_539189289.xml
+CWB::mdc::GetInspiral : Read 9 injection(s) from the file 'tmp/inspiral_539189289.xml'
+CWB::mdc::GetInspiral : Generating injection for: V1
+start=1096860600.000000 duration=1424.000000 rate=2048.000000
+0 mdcFactor : 0.020380786913443
+1 mdcFactor : 0.027944448596793
+2 mdcFactor : 0.016905790793316
+3 mdcFactor : 0.021093687990044
+4 mdcFactor : 0.032430484697254
+5 mdcFactor : 0.011025271610856
+6 mdcFactor : 0.017647842881439
+7 mdcFactor : 0.011919691629149
+8 mdcFactor : 0.016105948770394
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 11
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 11
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 11
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 14
+
+
+---> Start processing factor[0]=20
+
+output file on the node : tmp/wave_1096860612_1400_ADV_L1H1V1_BENCH2G_20_job25_22162.root
+final output file name  : data/wave_1096860612_1400_ADV_L1H1V1_BENCH2G_20_job25.root
+temporary output file   : tmp/wave_1096860612_1400_ADV_L1H1V1_BENCH2G_20_job25_22162.root.tmp
+
+--------------------------------------------------------------------
+cwb2G::DataConditioning - factor[0]=20
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:46:00 UTC Fri
+Job   Elapsed Time -  00:05:23 (hh:mm:ss)
+Stage Elapsed Time -  00:05:22 (hh:mm:ss)
+Memory             -  virtual : 605 (mb)  rss  : 335 (mb)
+Job File Size      -  70634734 (bytes) : 68979 (kb) : 67 (mb)
+--------------------------------------------------------------------
+GPS:1122396377-JOB:25-STG:3-FCT:0-JET:323-SET:322-MEM:605-JFS:70634734
+--------------------------------------------------------------------
+
+
+WDM filter max length = 6.00048828125 (sec)
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 4
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 5
+
+After L1 data conditioning
+Fri Jul 31 16:46:17 UTC 2015
+Memory             -  virtual : 742 (mb)  rss  : 471 (mb)
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 4
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 5
+
+After H1 data conditioning
+Fri Jul 31 16:46:31 UTC 2015
+Memory             -  virtual : 766 (mb)  rss  : 495 (mb)
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 4
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 5
+
+After V1 data conditioning
+Fri Jul 31 16:46:46 UTC 2015
+Memory             -  virtual : 743 (mb)  rss  : 473 (mb)
+lagSize : 1 lagOff : 0
+     lag          ifoL1         ifoH1         ifoV1
+       0        0.00000       0.00000       0.00000
+
+--------------------------------------------------------------------
+cwb2G::Coherence - factor[0]=20
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:46:46 UTC Fri
+Job   Elapsed Time -  00:06:09 (hh:mm:ss)
+Stage Elapsed Time -  00:00:45 (hh:mm:ss)
+Memory             -  virtual : 721 (mb)  rss  : 451 (mb)
+Job File Size      -  70634734 (bytes) : 68979 (kb) : 67 (mb)
+--------------------------------------------------------------------
+GPS:1122396423-JOB:25-STG:4-FCT:0-JET:369-SET:45-MEM:721-JFS:70634734
+--------------------------------------------------------------------
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 0
+type 6
+
+level : 10	 rate(hz) : 2	 layers : 1024	 df(hz) : 1	 dt(ms) : 500
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.04	1025	0.001	4.400	4.429	8.632	8.608	11.616	11.456	0.118		0.983
+
+thresholds in units of noise variance: Eo=7.0393 Emax=14.079
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|132|221 
+Coherence Elapsed Time for this level :  00:00:24 (hh:mm:ss)
+
+level : 9	 rate(hz) : 4	 layers : 512	 df(hz) : 2	 dt(ms) : 250
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.09	513	0.001	4.583	4.617	8.823	8.858	11.757	11.736	0.259		0.982
+
+thresholds in units of noise variance: Eo=7.3065 Emax=14.613
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|113|267 
+Coherence Elapsed Time for this level :  00:00:23 (hh:mm:ss)
+
+level : 8	 rate(hz) : 8	 layers : 256	 df(hz) : 4	 dt(ms) : 125
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.18	257	0.001	4.925	4.951	9.244	9.303	12.250	12.234	0.497		0.981
+
+thresholds in units of noise variance: Eo=7.8418 Emax=15.684
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|111|367 
+Coherence Elapsed Time for this level :  00:00:23 (hh:mm:ss)
+
+level : 7	 rate(hz) : 16	 layers : 128	 df(hz) : 8	 dt(ms) : 62.5
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.35	129	0.001	5.541	5.576	9.977	10.125	12.999	13.151	0.900		0.977
+
+thresholds in units of noise variance: Eo=8.7453 Emax=17.491
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|111|413 
+Coherence Elapsed Time for this level :  00:00:22 (hh:mm:ss)
+
+level : 6	 rate(hz) : 32	 layers : 64	 df(hz) : 16	 dt(ms) : 31.25
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.61	65	0.001	6.510	6.518	11.106	11.344	14.183	14.505	1.429		0.969
+
+thresholds in units of noise variance: Eo=10.035 Emax=20.07
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|101|407 
+Coherence Elapsed Time for this level :  00:00:21 (hh:mm:ss)
+
+level : 5	 rate(hz) : 64	 layers : 32	 df(hz) : 32	 dt(ms) : 15.625
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+2	33	0.001	7.880	7.906	12.597	13.108	15.728	16.455	2.079		0.939
+
+thresholds in units of noise variance: Eo=11.734 Emax=23.469
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|74|423 
+Coherence Elapsed Time for this level :  00:00:22 (hh:mm:ss)
+
+level : 4	 rate(hz) : 128	 layers : 16	 df(hz) : 64	 dt(ms) : 7.8125
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+2.5	17	0.001	9.625	9.655	14.405	15.289	17.542	18.849	2.749		0.882
+
+thresholds in units of noise variance: Eo=13.666 Emax=27.332
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|46|456 
+Coherence Elapsed Time for this level :  00:00:23 (hh:mm:ss)
+
+level : 3	 rate(hz) : 256	 layers : 8	 df(hz) : 128	 dt(ms) : 3.9062
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+3.06	9	0.001	11.560	11.585	16.433	17.653	19.706	21.428	3.355		0.778
+
+thresholds in units of noise variance: Eo=15.696 Emax=31.391
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 0|27|398 
+Coherence Elapsed Time for this level :  00:00:22 (hh:mm:ss)
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 0
+type 13
+
+
+--------------------------------------------------------------------
+cwb2G::SuperCluster - factor[0]=20
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:49:51 UTC Fri
+Job   Elapsed Time -  00:09:14 (hh:mm:ss)
+Stage Elapsed Time -  00:03:05 (hh:mm:ss)
+Memory             -  virtual : 716 (mb)  rss  : 439 (mb)
+Job File Size      -  74562616 (bytes) : 72815 (kb) : 71 (mb)
+--------------------------------------------------------------------
+GPS:1122396608-JOB:25-STG:5-FCT:0-JET:554-SET:185-MEM:716-JFS:74562616
+--------------------------------------------------------------------
+
+
+Loading sparse TF map ... 
+
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 7
+
+-----------------------------------------------------
+-> Processing  factor[0]=20 ...
+   --------------------------------------------------
+   coher  clusters|pixels      :    715|2952
+   super  clusters|pixels      :     81|2394
+   subnet clusters|pixels      :      8|1688
+   defrag clusters|pixels      :      8|1688
+
+
+Supercluster done
+total  clusters|pixels|frac :      8|1688|0.7051
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 17
+
+----------------- FINAL SPARSE STATISTIC / DETECTOR -------------------
+npix_core_tot|npix_cluster_tot|3*npix_cluster_tot|ccluster_tot|ratio : 
+5064 | 104082 | 312246 | 1350360 | 0.23123
+
+
+--------------------------------------------------------------------
+cwb2G::Likelihood - factor[0]=20
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:50:10 UTC Fri
+Job   Elapsed Time -  00:09:32 (hh:mm:ss)
+Stage Elapsed Time -  00:00:18 (hh:mm:ss)
+Memory             -  virtual : 827 (mb)  rss  : 517 (mb)
+Job File Size      -  76054969 (bytes) : 74272 (kb) : 72 (mb)
+--------------------------------------------------------------------
+GPS:1122396627-JOB:25-STG:6-FCT:0-JET:572-SET:18-MEM:827-JFS:76054969
+--------------------------------------------------------------------
+
+
+Loading sparse TF map ... 
+
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 0
+type 12
+
+-------------------------------------------------------
+-> Processing 8 clusters in factor[0]=20
+   ----------------------------------------------------
+mchirp : 1 1 9.10e+00 0.178 0.979 0.890 0.911 
+
+   cluster-id|pixels:     3|204	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 2 1 8.89e+00 0.228 0.973 0.958 0.970 
+
+   cluster-id|pixels:     9|190	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 3 1 8.94e+00 0.345 0.977 0.918 0.926 
+
+   cluster-id|pixels:    12|176	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 4 1 8.90e+00 0.258 0.968 0.923 0.942 
+
+   cluster-id|pixels:    18|185	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 5 1 8.70e+00 0.218 0.972 0.811 0.858 
+
+   cluster-id|pixels:    21|243	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 6 1 9.50e+00 0.162 0.978 0.895 0.905 
+
+   cluster-id|pixels:    23|265	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 7 1 9.10e+00 0.193 0.981 0.907 0.930 
+
+   cluster-id|pixels:    27|234	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 8 1 9.50e+00 0.248 0.986 0.948 0.954 
+
+   cluster-id|pixels:    41|191	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+
+
+
+Search done
+reconstructed events: 8
+ 0     1 vol= 204 size=  10 like=1.98e+02 rate=  32 time= 149.928 To= 149.928 freq=   98
+ 0     2 vol= 190 size=   7 like=1.59e+02 rate=  32 time= 449.907 To= 449.907 freq=   64
+ 0     3 vol= 176 size=   9 like=1.65e+02 rate=  64 time= 599.947 To= 599.947 freq=   54
+ 0     4 vol= 185 size=   8 like=1.45e+02 rate=  16 time= 749.879 To= 749.879 freq=   57
+ 0     5 vol= 243 size=  11 like=2.11e+02 rate=  16 time= 899.905 To= 899.905 freq=   67
+ 0     6 vol= 265 size=  11 like=2.42e+02 rate=  64 time=1049.938 To=1049.938 freq=  101
+ 0     7 vol= 234 size=  10 like=2.08e+02 rate=  64 time=1199.928 To=1199.928 freq=   53
+ 0     8 vol= 191 size=  12 like=2.01e+02 rate=  16 time=1349.928 To=1349.928 freq=   59
+
+--------------------------------------------------------------------
+Data Save - factor[0]=20
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:50:46 UTC Fri
+Job   Elapsed Time -  00:10:08 (hh:mm:ss)
+Stage Elapsed Time -  00:00:35 (hh:mm:ss)
+Memory             -  virtual : 988 (mb)  rss  : 668 (mb)
+Job File Size      -  76054975 (bytes) : 74272 (kb) : 72 (mb)
+--------------------------------------------------------------------
+GPS:1122396663-JOB:25-STG:7-FCT:0-JET:608-SET:35-MEM:988-JFS:76054975
+--------------------------------------------------------------------
+
+
+
+---> Start processing factor[1]=30
+
+output file on the node : tmp/wave_1096860612_1400_ADV_L1H1V1_BENCH2G_30_job25_22162.root
+final output file name  : data/wave_1096860612_1400_ADV_L1H1V1_BENCH2G_30_job25.root
+temporary output file   : tmp/wave_1096860612_1400_ADV_L1H1V1_BENCH2G_30_job25_22162.root.tmp
+
+--------------------------------------------------------------------
+cwb2G::DataConditioning - factor[1]=30
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:50:46 UTC Fri
+Job   Elapsed Time -  00:10:09 (hh:mm:ss)
+Stage Elapsed Time -  00:00:00 (hh:mm:ss)
+Memory             -  virtual : 837 (mb)  rss  : 528 (mb)
+Job File Size      -  76054975 (bytes) : 74272 (kb) : 72 (mb)
+--------------------------------------------------------------------
+GPS:1122396663-JOB:25-STG:3-FCT:1-JET:609-SET:0-MEM:837-JFS:76054975
+--------------------------------------------------------------------
+
+
+WDM filter max length = 6.0005 (sec)
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 4
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 5
+
+After L1 data conditioning
+Fri Jul 31 16:51:02 UTC 2015
+Memory             -  virtual : 851 (mb)  rss  : 544 (mb)
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 4
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 5
+
+After H1 data conditioning
+Fri Jul 31 16:51:17 UTC 2015
+Memory             -  virtual : 823 (mb)  rss  : 517 (mb)
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 4
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 5
+
+After V1 data conditioning
+Fri Jul 31 16:51:31 UTC 2015
+Memory             -  virtual : 796 (mb)  rss  : 489 (mb)
+lagSize : 1 lagOff : 0
+
+--------------------------------------------------------------------
+cwb2G::Coherence - factor[1]=30
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:51:33 UTC Fri
+Job   Elapsed Time -  00:10:55 (hh:mm:ss)
+Stage Elapsed Time -  00:00:46 (hh:mm:ss)
+Memory             -  virtual : 773 (mb)  rss  : 467 (mb)
+Job File Size      -  5421941 (bytes) : 5294 (kb) : 5 (mb)
+--------------------------------------------------------------------
+GPS:1122396710-JOB:25-STG:4-FCT:1-JET:655-SET:46-MEM:773-JFS:5421941
+--------------------------------------------------------------------
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 1
+type 6
+
+level : 10	 rate(hz) : 2	 layers : 1024	 df(hz) : 1	 dt(ms) : 500
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.04	1025	0.001	4.400	4.429	8.641	8.608	11.667	11.456	0.118		0.983
+
+thresholds in units of noise variance: Eo=7.0545 Emax=14.109
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|196|515 
+Coherence Elapsed Time for this level :  00:00:25 (hh:mm:ss)
+
+level : 9	 rate(hz) : 4	 layers : 512	 df(hz) : 2	 dt(ms) : 250
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.09	513	0.001	4.583	4.617	8.836	8.858	11.851	11.736	0.259		0.982
+
+thresholds in units of noise variance: Eo=7.3348 Emax=14.67
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|131|657 
+Coherence Elapsed Time for this level :  00:00:25 (hh:mm:ss)
+
+level : 8	 rate(hz) : 8	 layers : 256	 df(hz) : 4	 dt(ms) : 125
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.18	257	0.001	4.924	4.951	9.255	9.303	12.338	12.234	0.497		0.981
+
+thresholds in units of noise variance: Eo=7.868 Emax=15.736
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|114|642 
+Coherence Elapsed Time for this level :  00:00:23 (hh:mm:ss)
+
+level : 7	 rate(hz) : 16	 layers : 128	 df(hz) : 8	 dt(ms) : 62.5
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.35	129	0.001	5.540	5.576	9.986	10.125	13.111	13.151	0.900		0.977
+
+thresholds in units of noise variance: Eo=8.7788 Emax=17.558
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|111|660 
+Coherence Elapsed Time for this level :  00:00:23 (hh:mm:ss)
+
+level : 6	 rate(hz) : 32	 layers : 64	 df(hz) : 16	 dt(ms) : 31.25
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+1.61	65	0.001	6.508	6.518	11.117	11.344	14.297	14.505	1.429		0.969
+
+thresholds in units of noise variance: Eo=10.069 Emax=20.139
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|102|662 
+Coherence Elapsed Time for this level :  00:00:22 (hh:mm:ss)
+
+level : 5	 rate(hz) : 64	 layers : 32	 df(hz) : 32	 dt(ms) : 15.625
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+2	33	0.001	7.879	7.906	12.612	13.108	15.874	16.455	2.079		0.939
+
+thresholds in units of noise variance: Eo=11.778 Emax=23.556
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|67|725 
+Coherence Elapsed Time for this level :  00:00:23 (hh:mm:ss)
+
+level : 4	 rate(hz) : 128	 layers : 16	 df(hz) : 64	 dt(ms) : 7.8125
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+2.5	17	0.001	9.623	9.655	14.423	15.289	17.770	18.849	2.749		0.882
+
+thresholds in units of noise variance: Eo=13.734 Emax=27.469
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|45|828 
+Coherence Elapsed Time for this level :  00:00:22 (hh:mm:ss)
+
+level : 3	 rate(hz) : 256	 layers : 8	 df(hz) : 128	 dt(ms) : 3.9062
+
+m	M	bpp	0.2(D)	0.2(G)	0.01(D)	0.01(G)	bpp(D)	bpp(G)	N*log(m)	fff
+3.06	9	0.001	11.558	11.585	16.450	17.653	19.897	21.428	3.355		0.778
+
+thresholds in units of noise variance: Eo=15.753 Emax=31.506
+live time in zero lag: 90
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 16
+
+ifactor|clusters|pixels 1|26|661 
+Coherence Elapsed Time for this level :  00:00:20 (hh:mm:ss)
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 1
+type 13
+
+
+--------------------------------------------------------------------
+cwb2G::SuperCluster - factor[1]=30
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:54:38 UTC Fri
+Job   Elapsed Time -  00:14:01 (hh:mm:ss)
+Stage Elapsed Time -  00:03:05 (hh:mm:ss)
+Memory             -  virtual : 784 (mb)  rss  : 481 (mb)
+Job File Size      -  10452734 (bytes) : 10207 (kb) : 9 (mb)
+--------------------------------------------------------------------
+GPS:1122396895-JOB:25-STG:5-FCT:1-JET:841-SET:185-MEM:784-JFS:10452734
+--------------------------------------------------------------------
+
+
+Loading sparse TF map ... 
+
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 7
+
+-----------------------------------------------------
+-> Processing  factor[1]=30 ...
+   --------------------------------------------------
+   coher  clusters|pixels      :    792|5350
+   super  clusters|pixels      :     72|4822
+   subnet clusters|pixels      :      9|4371
+   defrag clusters|pixels      :      9|4371
+
+
+Supercluster done
+total  clusters|pixels|frac :      9|4371|0.90647
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 17
+
+----------------- FINAL SPARSE STATISTIC / DETECTOR -------------------
+npix_core_tot|npix_cluster_tot|3*npix_cluster_tot|ccluster_tot|ratio : 
+13113 | 231642 | 694926 | 3457242 | 0.20101
+
+
+--------------------------------------------------------------------
+cwb2G::Likelihood - factor[1]=30
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:54:49 UTC Fri
+Job   Elapsed Time -  00:14:12 (hh:mm:ss)
+Stage Elapsed Time -  00:00:10 (hh:mm:ss)
+Memory             -  virtual : 860 (mb)  rss  : 559 (mb)
+Job File Size      -  4808046 (bytes) : 4695 (kb) : 4 (mb)
+--------------------------------------------------------------------
+GPS:1122396906-JOB:25-STG:6-FCT:1-JET:852-SET:10-MEM:860-JFS:4808046
+--------------------------------------------------------------------
+
+
+Loading sparse TF map ... 
+
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo 1
+type 12
+
+-------------------------------------------------------
+-> Processing 9 clusters in factor[1]=30
+   ----------------------------------------------------
+mchirp : 1 1 8.73e+00 0.144 0.973 0.860 0.887 
+
+   cluster-id|pixels:     3|513	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 2 1 8.99e+00 0.139 0.978 0.883 0.917 
+
+   cluster-id|pixels:     4|440	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 3 1 9.00e+00 0.140 0.972 0.875 0.916 
+
+   cluster-id|pixels:     8|454	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 4 1 8.60e+00 0.121 0.975 0.876 0.903 
+
+   cluster-id|pixels:    11|450	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 5 1 8.80e+00 0.153 0.967 0.876 0.911 
+
+   cluster-id|pixels:    15|500	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 6 1 8.60e+00 0.110 0.974 0.805 0.860 
+
+   cluster-id|pixels:    18|532	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 7 1 9.10e+00 0.167 0.971 0.878 0.891 
+
+   cluster-id|pixels:    20|489	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 8 1 8.80e+00 0.122 0.976 0.854 0.890 
+
+   cluster-id|pixels:    24|547	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+mchirp : 9 1 9.20e+00 0.138 0.979 0.900 0.915 
+
+   cluster-id|pixels:    30|446	 -> SELECTED !!!
+
+-----> CWB_Plugin_GenNoise.C
+ifo 
+type 8
+
+
+
+
+Search done
+reconstructed events: 9
+ 0     1 vol= 513 size=  13 like=4.42e+02 rate=  32 time= 149.921 To= 149.921 freq=   89
+ 0     2 vol= 440 size=  11 like=4.01e+02 rate=  16 time= 299.928 To= 299.928 freq=   64
+ 0     3 vol= 454 size=  12 like=4.26e+02 rate=  32 time= 449.917 To= 449.917 freq=   54
+ 0     4 vol= 450 size=  14 like=4.30e+02 rate=  64 time= 599.926 To= 599.926 freq=   61
+ 0     5 vol= 500 size=  14 like=4.30e+02 rate=  16 time= 749.885 To= 749.885 freq=   64
+ 0     6 vol= 532 size=  15 like=4.89e+02 rate=  16 time= 899.908 To= 899.908 freq=   93
+ 0     7 vol= 489 size=  16 like=5.37e+02 rate=  64 time=1049.933 To=1049.933 freq=   91
+ 0     8 vol= 547 size=  13 like=4.47e+02 rate=  64 time=1199.902 To=1199.902 freq=   74
+ 0     9 vol= 446 size=  13 like=4.26e+02 rate=  16 time=1349.934 To=1349.934 freq=   63
+
+--------------------------------------------------------------------
+Data Save - factor[1]=30
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:56:23 UTC Fri
+Job   Elapsed Time -  00:15:46 (hh:mm:ss)
+Stage Elapsed Time -  00:01:33 (hh:mm:ss)
+Memory             -  virtual : 1010 (mb)  rss  : 713 (mb)
+Job File Size      -  498 (bytes) : 0 (kb) : 0 (mb)
+--------------------------------------------------------------------
+GPS:1122397000-JOB:25-STG:7-FCT:1-JET:946-SET:93-MEM:1010-JFS:498
+--------------------------------------------------------------------
+
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo L1
+type 10
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo H1
+type 10
+
+
+-----> CWB_Plugin_GenNoise.C
+ifo V1
+type 10
+
+
+
+
+--------------------------------------------------------------------
+Job Finished
+--------------------------------------------------------------------
+UTC                -  2015-07-31 16:56:24 UTC Fri
+Job   Elapsed Time -  00:15:46 (hh:mm:ss)
+Stage Elapsed Time -  00:00:00 (hh:mm:ss)
+Memory             -  virtual : 860 (mb)  rss  : 563 (mb)
+Job File Size      -  41998 (bytes) : 41 (kb) : 0 (mb)
+--------------------------------------------------------------------
+GPS:1122397001-JOB:25-STG:8-FCT:-1-JET:946-SET:0-MEM:860-JFS:41998
+--------------------------------------------------------------------
+
+
+
+Job Speed Factor - 1.48X
+

@@ -1,0 +1,194 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_SETIFAR" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_setifar \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.nf
+
+\fBUsage\fP
+
+This command adds a new ifar (inverse false alarm rate) leaf to the
+selected entries in the merged simulation root file.
+For each selected entry a new leaf is created "ifar" which value is
+obtained from the background FAR vs RHO file.
+It is a text file which contains a corrispondence between far and rho (from background estimation)
+
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_setifar mlabel/list tsel farfile ilabel mode\fP
+.IP \(bu 2
+\fBmlabel/lists\fP same label used by cwb_merge, if the user writes
+lists it list the available labels
+.IP \(bu 2
+.INDENT 2.0
+.TP
+\fBtsel\fP treen selections, only wave tree
+must contains only leaf of waveburst tree (not the leaf run)
+the syntax is the the same as the one used for the selection TTree
+.UNINDENT
+.IP \(bu 2
+\fBilabel\fP label that will be added to the new merged files names (M1 \-> M1.S_ilabel)
+.IP \(bu 2
+.INDENT 2.0
+.TP
+\fBmode\fP inclusive/exclusive
+inclusive : if a previous ifar is already associated to the entry
+then it is updated if the new ifar is greatar
+exclusive : the ifar is updated regardless what is is the old one
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBAlternative Syntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_setifar mlabel/list options\fP
+.IP \(bu 2
+\fBmlabel/lists\fP same label used by cwb_merge
+.IP \(bu 2
+\fBoptions\fP options (options must be declared inside \(aq...\(aq) : see previous definitions
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fB\-\-label ilabel\fP default=""
+.IP \(bu 2
+\fB\-\-tsel tsel\fP default="" : tsel is the name or a logical
+expression of names of TCut selections defined in
+user_pparameters.C
+.IP \(bu 2
+\fB\-\-file file\fP default="" : file is the name of the far file
+defined in user_pparameters.C, name can be an element of an array
+(Ex: name[2])
+.IP \(bu 2
+\fB\-\-mode mode\fP default=""
+.IP \(bu 2
+\fB\-\-xtsel xtsel\fP default="" : the tsel are explicitly defined
+(must be used as alternative to \-\-tsel)
+.IP \(bu 2
+\fB\-\-xfile xfile\fP default="" : the far file path is declared
+explicitly (must be used as alternative to \-\-file)
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+label, tsel/xtsel, file/xfile, mode are mandatory
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+farfile is produced by the background report, and it is saved under the report data dir and its name is far_rho.txt
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+examples of allowed logical expressions are X&&Y, (X||Y), !X, ((X||Y)&&Z)
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+* cwb_setifar M1 \(aqnetcc[1]>0.8\(aq /home/waveburst/work_dir/report/postprod/far_rho.txt cc1_gt_0d8 exclusive
+  \- add ifar leaf for all entries with ((netcc[1]>0.8)) in the wave file
+  \- far is read from /home/frank/work_dir/report/postprod/far_rho.txt : is a two columns file "rho far"
+
+  Alternative Syntax :
+
+  cwb_setifar M1 \(aq\-\-xtsel netcc[1]>0.8  \-\-label cc1_gt_0d8 \e
+              \-\-xfile /home/waveburst/work_dir/report/postprod/far_rho.txt \-\-mode exclusive\(aq
+
+  or :
+
+  cwb_setifar M1 \(aq\-\-tsel cc1_tsel  \-\-label cc1_gt_0d8 \-\-file farfile \-\-mode exclusive\(aq
+  \- cc1_tsel is the name of TCut selection defined in user_pparameters.C
+    Ex : TCut cc1_tsel("cc1_tsel","netcc[1]>0.8");
+  \- farfile  is the name of the far file defined in user_pparameters.C
+    Ex : TString farfile = "/home/waveburst/work_dir/report/postprod/far_rho.txt";
+
+  or :
+
+  cwb_setifar M1 \(aq\-\-tsel cc0_cut&&cc2_cut  \-\-label cc0_cc2_cut \-\-file farfile[2] \-\-mode exclusive\(aq
+  \- cc0_cut and cc2_cut are the names of TCut selections defined in user_pparameters.C
+    Ex : TCut cc0_cut("cc0_cut","netcc[0]>0.8");
+         TCut cc2_cut("cc2_cut","netcc[2]>0.8");
+  \- farfile[2] is the iname of the second element of the far file array defined in user_pparameters.C
+    Ex : TString farfile[3];
+         farfile[0] = "/home/waveburst/work_dir_0/report/postprod/far_rho.txt";
+         farfile[1] = "/home/waveburst/work_dir_1/report/postprod/far_rho.txt";
+         farfile[2] = "/home/waveburst/work_dir_2/report/postprod/far_rho.txt";
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

@@ -1,0 +1,60 @@
+// This example shows how to use the 2G multistage cwb analysis
+
+1) make directories for cwb
+
+2) generate frames for ADV ifos L1 H1 V1
+   to change the default vaules edit macro/CreateFramesNOISE.C
+
+3) generate SGQ9 MDC frames for ifos L1 H1 V1
+   to change the default vaules edit macro/CreateFramesMDC.C
+
+to generate all necessary stuff do "make setup"
+  
+to change the cwb parameters edit config/user_parameters.C
+
+to run full cwb pipeline do "make full"
+
+to reset the directory do "make clean"
+
+-----------------------------------------
+2G analysis
+-----------------------------------------
+
+# make full analysis without CED
+make cwb
+
+# make full analysis with CED
+make ced
+
+-----------------------------------------
+2G multistage analysis
+-----------------------------------------
+
+# produce root job file with all initialization infos (config, network, frames file names)
+make init
+# read frames (strain,mdc) 
+make strain
+# apply data conditioning
+make cstrain
+# apply coherence and produce clusters
+make coherence
+# produce superclusters
+make supercluster
+# apply likelihood and produce events
+make likelihood
+
+# ---------------------------------------
+# multistage from CINT
+# ---------------------------------------
+the macro 
+macro/TestMustiStage.C 
+show how to perform the multistage analysis from CINT
+
+root -l 'macro/TestMultiStage.C(1,CWB_STAGE_INIT)'
+root -l 'macro/TestMultiStage.C(1,CWB_STAGE_STRAIN)'
+root -l 'macro/TestMultiStage.C(1,CWB_STAGE_CSTRAIN)'
+root -l 'macro/TestMultiStage.C(1,CWB_STAGE_COHERENCE)'
+root -l 'macro/TestMultiStage.C(1,CWB_STAGE_SUPERCLUSTER)'
+root -l 'macro/TestMultiStage.C(1,CWB_STAGE_LIKELIHOOD)'
+
+

@@ -1,0 +1,33 @@
+
+gw_data_find --observatory=H --type=H1_RDS_R_L1 --gps-start-time=942449000 --gps-end-time=942570372 --url-type=file > input/H1_RDS_R_L1.frl
+gw_data_find --observatory=H --type=H1_LDAS_C02_L2 --gps-start-time=942449000 --gps-end-time=942470372 --url-type=file > input/H1_LDAS_C02_L2.frl
+
+FrDisplayADC -i ldf -o H -s H1_RDS_R_L1 -f 968654057 -l 968654957
+FrDisplayADC -t H1:SUS-ETMX_COIL_LL -i /atlas/data/d21/LSC/H/94245/H-H1_RDS_R_L1-942459648-64.gwf
+FrDisplayADC -t H1:SUS-ETMX_COIL_LL -i /atlas/data/d21/LSC/H/94245/H-H1_RDS_R_L1-94245*-64.gwf -x "-decimateby 8"
+FrDisplayADC -i /atlas/data/d21/LSC/H/94245/H-H1_RDS_R_L1-942459648-64.gwf
+FrDisplayADC -i /atlas/data/d21/LSC/H/94245/H-H1_RDS_R_L1-942459648-64.gwf | grep H1:SUS-ETMX_COIL_LL
+//  ADC- 126:              H1:SUS-ETMX_COIL_LL - rate:         2048.00 - size:     131072
+
+FrDisplayPROC -t H1:LDAS-STRAIN -i /atlas/data/d10/LSC/H/94244/H-H1_LDAS_C02_L2-94244*-128.gwf  -k "-Bu -Hp -o 6 -a 50" -x "-decimateby 32"
+
+FrDisplayPROC -t H1:LDAS-STRAIN -i /atlas/data/d10/LSC/H/94244/H-H1_LDAS_C02_L2-94244*-128.gwf -k "-Bu -Hp -o 6 -a 50" -x "-decimateby 128" -downmix 50 
+
+FrDisplayPROC -i ldf -o H -s H1_LDAS_C02_L2 -t H1:LDAS-STRAIN -f 942449664 -l 943449664  -k "-Bu -Hp -o 6 -a 50" -x "-decimateby 8" 
+FrDisplayADC -i ldf -o H -s H1_RDS_R_L1 -t H1:SUS-ITMX_COIL_LL -f 942449664 -l 943449664 
+
+source ../../toolbox/macro/cwb_init.csh
+
+//#define CHNAME_2 "H1:SUS-ETMX_COIL_LL"
+//#define CHNAME_2 "H1:SUS-ETMX_COIL_LR"
+//#define CHNAME_2 "H1:SUS-ETMX_COIL_UL"
+//#define CHNAME_2 "H1:SUS-ETMX_COIL_UR"
+
+//#define CHNAME_2 "H1:SUS-ITMX_COIL_LL"
+//#define CHNAME_2 "H1:SUS-ITMX_COIL_LR"
+//#define CHNAME_2 "H1:SUS-ITMX_COIL_UL"
+//#define CHNAME_2 "H1:SUS-ITMX_COIL_UR"
+
+root -l 'TestBico_H1_RDS_R_L1_4.C("H1:SUS-ITMX_COIL_LL")'
+
+root -l BicoConfig.C MakeBicoherence.C

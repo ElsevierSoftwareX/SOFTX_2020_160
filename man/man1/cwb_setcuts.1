@@ -1,0 +1,207 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_SETCUTS" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_setcuts \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.nf
+
+\fBUsage\fP
+
+This command applies thresholds on tree leaves to select events with certain characteristics defined by the user.
+We remind that for each merge label we have two files type: the wave and the mdc/live, with different structure but some leafs are in common.
+So when choosing selection cuts, you should distinguish between the cuts that should be applied only to wave tree from the ones that will be
+applied also to mdc/live. One example of the former cut is a selection on rho or cc, on the contray a selection on the run is an example of the latter.
+
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_setcuts mlabel/list wcuts clabel jcuts(opt) mcuts(opt) lcuts(opt)\fP
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBmlabel/lists\fP same label used by cwb_merge, if the user writes lists it list the available labels
+.IP \(bu 2
+\fBclabel\fP label that will be added to the new merged files names (M1 \-> M1.C_clabel)
+.IP \(bu 2
+\fBwcuts\fP selections for only wave tree must contains only leaf of waveburst tree (not the leaf run) the syntax is the the same as the one used for the selection TTree
+.IP \(bu 2
+\fBjcuts\fP job selection for wave & mdc trees must contains only the leaf run the syntax is the the same as the one used for the selection TTree
+.IP \(bu 2
+\fBmcuts\fP selections for only mdc tree must contains only leaf of mdc tree (not the leaf run) the syntax is the the same as the one used for the selection TTree
+.IP \(bu 2
+\fBlcuts\fP selections of lag/slag : is applied only to wave and livetime tree must contains only lag/slag leafs the syntax is the the same as the one used for the selection TTree
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBAlternative Syntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_setcuts mlabel/list options\fP
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBmlabel/lists\fP same label used by cwb_merge
+.IP \(bu 2
+\fBoptions\fP options (options must be declared inside \(aq...\(aq) : see previous definitions
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_setcuts mlabel/list wcuts clabel jcuts(opt) mcuts(opt) lcuts(opt)\fP
+.IP \(bu 2
+\fB\-\-label clabel\fP default=""
+.IP \(bu 2
+\fB\-\-tcuts tcuts\fP default="" : tcuts is the name of TCut selection defined in user_pparameters.C, it is added to wcuts
+.IP \(bu 2
+\fB\-\-wcuts wcuts\fP default=""
+.IP \(bu 2
+\fB\-\-jcuts jcuts\fP default=""
+.IP \(bu 2
+\fB\-\-mcuts mcuts\fP default=""
+.IP \(bu 2
+\fB\-\-lcuts lcuts\fP default=""
+.IP \(bu 2
+\fB\-\-unique true/false\fP select from the root file a unique reconstructed event for each injected signal.
+.INDENT 2.0
+.INDENT 3.5
+The signal is selected from the reconstructed events which have the same injected gps time, the selected one has the maximum rho.
+When this option is used the label ".C_U" will be added to the new merged files names. (default=false)
+A new leaf is added to the waveburst tree : fsize=number of fragments found in the \fI\%iwindow\fP
+NOTE : this option can be applied only when simulation>0.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.TP
+not use \fB!expression\fP but \fB!(expression)\fP
+EX : ot use !veto_cat3_H1 but !(veto_cat3_H1)
+.TP
+use \fB!expression\fP instead of \fB"expression"\fP
+EX : use !veto_cat3_H1 instead of "!(veto_cat3_H1)"
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+* cwb_setcuts M1 \(aqnetcc[1]>0.8\(aq  cc1_gt_0d8_run_lt_100 \(aqrun<100\(aq
+  \- apply the cut ((netcc[1]>0.8)&&(run<100)) to wave file
+  \- apply the cut (run<100) to the live file
+
+  if the input file is with name: merge/wave_S6A_BKG_L1H1_run1.M1.root
+  the output file assumes the name: merge/wave_S6A_BKG_L1H1_run1.M1.C_cc1_gt_0d8_run_lt_100.root
+  and the same for live file.
+
+  Alternative Syntax :
+  cwb_setcuts M1 \(aq\-\-wcuts netcc[1]>0.8  \-\-label cc1_gt_0d8_run_lt_100 \-\-jcuts run<100\(aq
+
+* cwb_setcuts M1.C_rho0_gt6.V_cat2LH_hvetoLH_cat3LH  \(aq!(veto_cat3_H1) && !(veto_cat3_L1)\(aq nohwinj
+
+* cwb_setcuts M1 \(aqnetcc[2]>0.45\(aq  cc2_gt_0d45_lag1_eq_0 \(aq\(aq \(aq\(aq \(aqlag[1]==0\(aq
+  \- apply the cut ((netcc[2]>0.45)&&(lag[1]==0)) to wave file
+  \- apply the cut (lag[1]==0) to the live file
+
+  Alternative Syntax :
+  cwb_setcuts M1 \(aq\-\-wcuts netcc[2]>0.45 \-\-label cc2_gt_0d45_lag1_eq_0 \-\-lcuts lag[1]==0\(aq
+
+* cwb_setcuts M1 \(aq\-\-unique true\(aq
+  \- apply unique selection of detected events
+
+  if the input file is with name: merge/wave_S6A_BKG_L1H1_run1.M1.root
+  the output file assumes the name: merge/wave_S6A_BKG_L1H1_run1.M1.C_U.root
+
+* cwb_setcuts M1 \(aq\-\-unique true \-\-wcuts netcc[2]>0.45  \-\-label cc2_gt_0d45\(aq
+  \- apply unique selection of detected events and tree cuts
+
+  if the input file is with name: merge/wave_S6A_BKG_L1H1_run1.M1.root
+  the output file assumes the name: merge/wave_S6A_BKG_L1H1_run1.M1.C_U.C_cc2_gt_0d45.root
+
+* cwb_setcuts M1 \(aq\-\-tcuts MyTCut \-\-wcuts netcc[2]>0.45 \-\-label cc2_gt_0d45_mytcut\(aq
+  \- select events with (MyTCut.GetTitle()) && (netcc[2]>0.45)
+
+  The MyTCut must be defined in user_pparameters.C
+  Ex : TCut MyTCut(\(aqMyTCut\(aq,\(aqrho[0]>6\(aq); // MyTCut.GetTitle() is \(aqrho[0]>6\(aq
+  or it can be defined in a file.hh and included in user_pparameters.C inside the brackets {}
+  Ex : #include "file.hh"
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

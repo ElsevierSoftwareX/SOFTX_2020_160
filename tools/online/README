@@ -1,0 +1,21 @@
+First version of online developed by Igor Yakusin and modifiedf by Marco Drago
+
+Changed setting:
+
+- Remind to set an enviroment variable
+  export CWB = PATHDIR 
+
+- the bin directory should be put in /home/$USER because it is called from many files
+
+- the *.sh files in RUN_CWB directory contains the definition of the local path that should be changed
+
+--------------------------------------------
+
+the configuration file for online is the cWB_conf.py, while the user_parameters.C is in RUN_cWB/config directory
+
+to create a new directory (zero lag only), use the command:
+./cwb_online.sh cWB_conf.py
+
+Then run the script in :
+- run.crontab for zero lag
+- web.crontab for preparation of web pages

@@ -1,0 +1,78 @@
+{
+  // NET setting
+  nIFO = 1;           // number of detectors from the array ifo[]
+  search = 'r';       // see description in parameters.C
+
+  strcpy(ifo[0],"H1");
+
+  strcpy(refIFO,"H1"); // reference IFO
+
+  // cWB settings
+  bpp   = 0.0001;     // probability for pixel selection
+  fLow  = 32.;        // low frequency of the search
+  fHigh = 2048.;      // high frequency of the search
+
+  netRHO= 3.5;        // threshold on rho
+  netCC = 0.5;        // threshold on network correlation
+
+  // wavelet transformation settings
+
+  levelR   = 2;        // resampling level
+  levelF   = 6;        // level where second LPR filter is applied
+  levelD   = 8;        // decomposition level
+  l_low    = 3;        // low frequency resolution level
+  l_high   = 8;        // high frequency resolution level
+
+  // lags
+  lagSize    = 1;     // number of lags (simulation=1)
+  lagStep    = 1.;    // time interval between lags [sec]
+  lagOff     = 0;     // first lag id (lagOff=0 - include zero lag )
+  lagMax     = 0;     // 0/>0 -  standard/extended lags
+  lagFile    = NULL;  // lag file list
+
+  // super lags
+  slagSize   = 0;     // number of super lags (simulation=1) - if slagSize=0 -> Igor Segments
+  slagMin    = 0;     // if slagMax=0 -> slagMin must be < slagMax
+  slagMax    = 0;     // if slagMax=0 -> slagMax=slagSegs
+
+  // segments
+  segLen     = 600.;  // Segment length [sec]
+  segMLS     = 600.;  // Minimum Segment Length after DQ_CAT1 [sec]
+  segTHR     = 30.;   // Minimum Segment Length after DQ_CAT2 [sec]
+  segEdge    = 32.;   // wavelet boundary offset [sec]
+
+  // simulation parameters
+  simulation = 0;     // 1 for simulation, 0 for production
+  nfactor = 1;        // number of strain factors
+  double FACTORS[] ={1.0}; // array of strain factors
+
+  for(int i=0;i<nfactor;i++) factors[i]=FACTORS[i];
+
+  // regulator
+  delta = 1.0;
+  gamma = 0.2;
+
+  // file dump mode
+  dump        = true;    // dump triggers into ascii file
+  cedDump     = false;   // dump ced plots with rho>cedRHO
+  cedRHO      = 4.0;
+
+  strcpy(channelNamesRaw[0],"H1:LDAS-STRAIN");
+
+  strcpy(channelNamesMDC[0],"H1:GW-H");
+
+  // frame files list (MDC must be declared in the nIFO+1 position)
+
+  strcpy(frFiles[0],"input/H1_LDAS_C02_L2_94200000_942100000.frl");
+
+  // dq file list
+  // {ifo, dqcat_file, dqcat[0/1/2], shift[sec], inverse[false/true], 4columns[true/false]}
+  nDQF=1;
+  dqfile dqf[nDQF]={
+                    {"H1" ,"input/period.txt",           CWB_CAT0, 0., false, false},
+                   };
+
+  for(int i=0;i<nDQF;i++) DQF[i]=dqf[i];
+
+  plugin = TMacro("macro/CWB_Plugin_Vaibhav_Regression_H1.C");        // Macro source
+}

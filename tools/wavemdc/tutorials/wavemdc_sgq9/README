@@ -1,0 +1,8 @@
+// edit wmdc_config.C
+
+wmdc_condor create
+
+condor_submit_dag 'frLabel'.dag
+
+// when condor is completed do
+wmdc_condor log

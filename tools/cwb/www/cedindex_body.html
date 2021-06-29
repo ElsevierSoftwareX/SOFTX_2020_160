@@ -1,0 +1,98 @@
+<html>
+<head>
+<title> coherent WaveBurst Event Display</title>
+<link rel="shortcut icon" href="/HOME_WWW/logo/cwb_logo_icon.png" type="image/png" />
+<link rel="icon" href="/HOME_WWW/logo/cwb_logo_icon.png" type="image/png" />
+<link rel="stylesheet" type="text/css" href="/HOME_CED_WWW/scripts/shadowbox/shadowbox.css">
+<script type="text/javascript" src="/HOME_CED_WWW/scripts/shadowbox/shadowbox.js"></script>
+<script type="text/javascript">
+Shadowbox.init();
+</script>
+<script type="text/javascript" src="/HOME_CED_WWW/scripts/ced/ced.js"></script>
+<script type="text/javascript"> preloadImages(); </script>
+
+<meta name="generator" content="CED-5.4.0" />
+<meta name="revised" content="2012-06-30" />
+<meta name="generator" content="WAT-5.4.0" />
+</head>
+<table width=100%>
+<tr>
+<td><center><font color="black" size=4><h1>Event Display</center></h1></font></td>
+</tr>
+</table>
+<hr width="1070px" align="center">
+<br>
+
+<table width="1070px" align="center">
+<tr>
+<td>
+<b>
+<ul>
+<li> <a href="#tf_maps">Time-Frequency Maps</a>
+<li> <a href="#l_tfmap">Likelihood Time-Frequency Map</a>
+<li> <a href="#det_resp">Reconstructed Detector Responses</a>
+<!--
+<li> <a href="HOME_CED_WWW/doc/ced-technote-20080210-1304.pdf">Documentation</a>
+-->
+<!--CWB_DOC_URL
+<li> <a target="_parent" href="XCWB_DOC_URL/cwb/man/ced.html">CED Manual</a>
+CWB_DOC_URL-->
+<li> <a href="eventDump.txt">Estimated Parameters</a>
+<li> <a href="cwb_parameters.C.html">CWB Default Parameters</a>
+<li> <a href="user_parameters.C.html">CWB User Parameters</a>
+</ul>
+</b>
+</td>
+<td align="right">
+<iframe src="jobSummary.html" name="jobSummary" width="590px" frameborder="0" marginwidth="0" marginheight="0"></iframe>
+</td>
+</tr>
+</table>
+<p><br></p>
+<table width="1070px" align="center">
+<td>
+<iframe src="eventSummary.html" name="eventSummary" width="1070px" height="70px" frameborder="0" marginwidth="0" marginheight="0"></iframe>
+</td>
+</table>
+<p><br></p>
+
+<font color="black" style="font-weight:bold;">
+<h2 align="center"><a id="tf_maps">Time-Frequency Maps</a></h2>
+</font>
+<P align="center">
+<font color="black"> <a>(whitened data)</a> </font>
+</P>
+<br>
+
+<!--TFMAP-->
+
+
+<!--LIKELIHOOD-->
+
+<!--POLARGRAM-->
+
+<font color="black" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">Reconstructed Detector Responses</a>
+</font>
+
+<td><a id="net_resp"> - ( NET PSD</a>
+<input id="L1_input_psd" type="checkbox" onclick="toggleVisible('NET_input_psd');" />
+<a id="net_resp"> )</a>
+</td>
+</h2>
+
+<div class="section" id="div_NET_input_psd" style="display: none;">
+<table align="center">
+<tr>
+<td align="center"><a id="NET_psd" href="NET_psd.png" rel="shadowbox[gallery]" title="NET - psd"><img id="NET_psd_img" title="NET_psd" alt="NET_psd"  src="NET_psd.png" width="1000px" /></a></td>
+</tr>
+</table>
+</div>
+<br><br>
+
+<!--SIGNAL-->
+
+<!--SKYMAP-->
+
+</html>
+

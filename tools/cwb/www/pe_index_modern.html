@@ -1,0 +1,696 @@
+<!--PE_HEADER_BEG-->
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--                                                                           -->
+<!-- Author: CWB team (http://www.virgo.lnl.infn.it/Wiki/index.php/Main_Page)  -->
+<!--                                                                           -->
+<!--   Date: Sun Jan 13 16:13:38 2013                                          -->
+<!--                                                                           -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>CWB Display</title>
+<meta name="rating" content="General" />
+<meta name="objecttype" content="Report" />
+<meta name="keywords" content="software development, GW, Analisys, Virgo, LIGO " />
+<meta name="description" content="CWB - An Framework For GW Burst Data Analysis." />
+<link rel="shortcut icon" href="/HOME_WWW/logo/cwb_logo_icon_modern.png" type="image/png" />
+<link rel="icon" href="/HOME_WWW/logo/cwb_logo_icon_modern.png" type="image/png" />
+<link rel="stylesheet" type="text/css" href="/HOME_WWW/root/scripts/ROOT_modern.css" id="CWBstyle" />
+<script type="text/javascript" src="/HOME_WWW/root/scripts/ROOT.js"></script>
+
+<script type="text/javascript">
+  function toggleVisible(division) {
+  if (document.getElementById("div_" + division).style.display == "none") {
+    document.getElementById("div_" + division).style.display = "block";
+    document.getElementById("input_" + division).checked = true;
+  } else {
+    document.getElementById("div_" + division).style.display = "none";
+    document.getElementById("input_" + division).checked = false;
+  }
+}
+</script>
+
+<script type="text/javascript">
+function onSearch() {
+var s='http://www.google.com/search?q=%s+site%3A%u+-site%3A%u%2Fsrc%2F+-site%3A%u%2Fexamples%2F';
+var ref=String(document.location.href).replace(/https?:\/\//,'').replace(/\/[^\/]*$/,'').replace(/\//g,'%2F');
+window.location.href=s.replace(/%u/ig,ref).replace(/%s/ig,escape(document.searchform.t.value));
+return false;}
+</script>
+
+</head>
+
+<body  onload="javascript:SetValuesFromCookie();"><div id="body_content">
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table bgcolor="#223E5F" cellspacing="0" cellpadding="0" width="100%" height="120px"  align="center">
+  <tr>
+    <td>  <img style="height:100px" alt="Logo" src="/HOME_WWW/banner/cwb-lbanner-modern.png" USEMAP="#cwb_lbanner_modern" />  </td>
+    <td style="width:45%"> </td>
+    <td align="middle" style="color: #FFFFFF" nowrap="nowrap"><font size="6">coherent WaveBurst</font> &#160;
+    <td style="width:55%"> </td>
+    <td> <img style="height:100px" alt="Logo" src="/HOME_WWW/logo/CLUSTER_SITE_LOGO" USEMAP="#cluster_site_logo_map" /> </td>
+  </tr>
+</table>
+</div>
+
+<map id="cwb_lbanner_modern" name="cwb_lbanner_modern"><area shape="rect" alt="" title="cWB Documentation" coords="0,90,300,0" href="/CWB_DOC_URL/cwb/man/" target="_
+blanck" /></map>
+
+<map id="cluster_site_logo_map" name="cluster_site_logo_map"><area shape="rect" alt="" title="CLUSTER_SITE_NAME1" coords="0,45,140,0" href="CLUSTER_SITE_URL1" target="_blanck" /><area shape="rect" alt="" title="CLUSTER_SITE_NAME2" coords="0,90,140,45" href="CLUSTER_SITE_URL2" target="_blanck" /></map>
+
+<div id="toplinks">
+<div class="descrhead"><div class="descrheadcontent">
+<span class="descrtitle">Quick Links:</span>
+<a class="descrheadentry" href="/CWB_DOC_URL/cwb/man/index.html">CWB Documentation</a>
+<a class="descrheadentry" href="/CWB_DOC_URL/cwb/man/library/html/files.html">CWB Reference</a>
+<a class="descrheadentry" href="/CWB_GIT_URL">CWB Repository</a>
+<a class="descrheadentry" href="/CWB_GIT_ISSUES_URL">CWB Issues</a>
+<a class="descrheadentry" href="http://root.cern.ch">ROOT Homepage</a>
+</div>
+</div>
+</div>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title>MAIN_Index</title>
+</head>
+
+<br>
+<!--PE_HEADER_END-->
+
+<!--PE_BODY_BEG-->
+<html>
+<head>
+<title> coherent WaveBurst Event Display</title>
+<link rel="shortcut icon" href="/HOME_WWW/logo/cwb_logo_icon.png" type="image/png" />
+<link rel="icon" href="/HOME_WWW/logo/cwb_logo_icon.png" type="image/png" />
+<!--PE_JSCRIPT_BEG-->
+<link rel="stylesheet" type="text/css" href="/HOME_CED_WWW/scripts/shadowbox/shadowbox.css">
+<script type="text/javascript" src="/HOME_CED_WWW/scripts/shadowbox/shadowbox.js"></script>
+<script type="text/javascript"> Shadowbox.init(); </script>
+<script type="text/javascript" src="/HOME_CED_WWW/scripts/ced/ced.js"></script>
+<script type="text/javascript"> preloadImages(); </script>
+<!--PE_JSCRIPT_END-->
+
+<!-- Include the tabber code -->
+<script type="text/javascript" src="tabber.js"></script>
+<link rel="stylesheet" href="tabber.css" TYPE="text/css" MEDIA="screen">
+<script type="text/javascript">
+document.write('<style type="text/css">.tabber{display:none;}</style>');
+</script>
+
+<meta name="generator" content="CED-5.4.0" />
+<meta name="revised" content="2012-06-30" />
+<meta name="generator" content="WAT-5.4.0" />
+</head>
+<table width=100%>
+<tr>
+<td><center><font color="black" size=4><h1>Event Display</center></h1></font></td>
+</tr>
+</table>
+<hr width="1070px" align="center">
+<br>
+
+<table width="1070px">
+<tr>
+<td>
+<b>
+<ul>
+<!--
+<li> <a href="#tf_maps">Time-Frequency Maps</a>
+<li> <a href="#l_tfmap">Likelihood Time-Frequency Map</a>
+<li> <a href="#det_resp">Reconstructed Detector Responses</a>
+<li> <a href="HOME_CED_WWW/doc/ced-technote-20080210-1304.pdf">Documentation</a>
+-->
+<!--CWB_DOC_URL
+<li> <a target="_parent" href="XCWB_DOC_URL/cwb/man/ced.html">CED Manual</a>
+CWB_DOC_URL-->
+<li> <a href="eventDump.txt">Estimated Parameters</a>
+<li> <a href="cwb_parameters.C.html">CWB Default Parameters</a>
+<li> <a href="user_parameters.C.html">CWB User Parameters</a>
+<li> <a href="pe_config.txt">PE Config</a>
+</ul>
+</b>
+</td>
+<td align="right">
+<iframe src="jobSummary.html" name="jobSummary" width="590px" frameborder="0" marginwidth="0" marginheight="0"></iframe>
+</td>
+</tr>
+</table>
+<p><br></p>
+<iframe src="eventSummary.html" name="eventSummary" width="1070px" height="70px" frameborder="0" marginwidth="0" marginheight="0"></iframe>
+<p><br></p>
+</html>
+<!--PE_BODY_END-->
+
+<!--PE_TFMAP_HEADER_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Time-Frequency Maps</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>Spectrogram</b> : is the Short Time Fourier Transform of the detector whitened data</a> </font><br>
+<font color="black" size="2"> <a><b>Scalogram</b> : is the Wilson-Daubechies-Meyer (WDM) of the detector whitened data @ the best resolution level (maximum energy selection)</a> </font><br>
+<font color="black" size="2"> <a><b>Likelihood</b> : are the WDM pixels of the signal reconstructed energy (is the sum over the superimposed pixels energy)</a> </font><br>
+<font color="black" size="2"> <a><b>Null</b> : are the WDM pixels of the residual energy (is the sum over the superimposed pixels energy)</a> </font><br>
+</P>
+<hr>
+<p><br /></p>
+<!--PE_TFMAP_HEADER_END-->
+
+<!--PE_TFMAP_BEG-->
+<font color="red" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">IFO</a></h2>
+</font>
+
+<table align="center">
+<tr  align="center">
+<td align="center">Plot Style: <a href="javascript:showImage('IFO_1','IFO','spectrogram','1');">Spectrogram</a> | <a href="javascript:showImage('IFO_1','IFO','spectrogram_logy','1');">Spectrogram-Logy</a> | <a href="javascript:showImage('IFO_1','IFO','scalogram','1');">Scalogram</a></td>
+<td align="center">Plot Style: <a href="javascript:showImage('IFO_0','IFO','spectrogram','0');">Spectrogram</a> | <a href="javascript:showImage('IFO_0','IFO','spectrogram_logy','0');">Spectrogram-Logy</a> | <a href="javascript:showImage('IFO_0','IFO','scalogram','0');">Scalogram</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_1_a" href="IFO_spectrogram_1.png" rel="shadowbox[gallery]" title=IFO""><img id="IFO_1_img" title="IFO" alt="IFO"  src="IFO_spectrogram_1.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_0_a" href="IFO_spectrogram_logy_0.png" rel="shadowbox[gallery]" title="IFO"><img id="IFO_0_img" title="IFO" alt="IFO"  src="IFO_spectrogram_logy_0.png" width="500px" /></a></td>
+</tr>
+<table>
+<!--PE_TFMAP_END-->
+
+<!--PE_LIKELIHOOD_BEG-->
+<table align="center">
+<tr>
+<a id="l_tfmap"></a>
+<th><h2>Likelihood</h2></th>
+<th><h2>Null</h2></th>
+</tr>
+<tr  align="center">
+<td align="center">Plot Style: <a href="javascript:showImage('tf_l','l','tfmap','scalogram');">Scalogram</a> | <a href="javascript:showImage1('tf_l','mchirp');">mchirp</a>
+<td>Plot Style: <a href="javascript:showImage('tf_n','n','tfmap','scalogram');">Scalogram</a>
+</tr>
+<tr>
+<td align="center"><a id="tf_l_a" href="l_tfmap_scalogram.png" rel="shadowbox[gallery]" title="likelihooh"><img id="tf_l_img" title="Likelihood TF Map" alt="Likelihood TF Map"  src="l_tfmap_scalogram.png" width="500px" /></a></td>
+<td><a id="tf_n_a" href="n_tfmap_scalogram.png" rel="shadowbox[gallery]" title="null"><img id="tf_n_img" title="NullTF Map" alt="Null TF Map"  src="n_tfmap_scalogram.png" width="500px" /></a></td>
+</tr>
+</table>
+<!--PE_LIKELIHOOD_END-->
+
+<!--PE_PCA_BEG-->
+<br><br><br><br><br><br>
+<table align="center">
+<tr>
+<a id="l_tfmap"></a>
+<th><h2>Principal Component Analysis : Likelihood</h2></th>
+</tr>
+<tr>
+<td align="center"><a id="tf_l_a" href="pca_l_tfmap_scalogram.png" rel="shadowbox[gallery]" title="pca_likelihooh"><img id="tf_l_img" title="Likelihood TF Map" alt="Likelihood TF Map"  src="pca_l_tfmap_scalogram.png" width="500px" /></a></td>
+</tr>
+</table>
+<!--PE_PCA_END-->
+
+<!--PE_POLARGRAM_BEG-->
+<h2 align="center"><a id="polargram">Polargrams</a>
+<input id="input_polargram" type="checkbox"
+       onclick="toggleVisible('input_polargram');" />
+</h2>
+
+<div class="section" id="div_input_polargram" style="display: none;">
+
+<table align="center">
+<tr>
+<a id="polargram"></a>
+<td align="center">projection on network plane (<font color="blue">blue</font>/<font color="red">red</font> : phase <font color="blue">0</font>/<font color="red">90</font>)</td>
+<td align="center">standard response (<font color="blue">blue</font>/<font color="red">red</font> : phase <font color="blue">0</font>/<font color="red">90</font>)</td>
+</tr>
+
+<tr>
+<td align="center"><a href="polargram_1.png" rel="shadowbox[gallery]" title="projection on network plane [blue/red]=[00/90] phase"><img id="polargram_1_img" title="projection on network plane" alt="projection on network plane" src="polargram_1.png" width="500px" /></a></td>
+<td align="center"><a href="polargram_2.png" rel="shadowbox[gallery]" title="standard response [blue/red]=[00/90] phase"><img id="polargram_2_img" title="standard response" alt="standard response" src="polargram_2.png" width="500px" /></a></td>
+</tr>
+</table>
+
+</div>
+<!--PE_POLARGRAM_END-->
+
+<!--PE_REC_SIGNAL_HEADER_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Reconstructed Detector Responses</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>Injection </b> : Whitened Injected Signal</a> - <a><b>Reconstructed Signal </b> : Whitened Reconstructed Signal</a></font><br>
+<font color="black" size="2"> <a><b>Note</b> : the amplitude ol the whitened reconstructed signals is normalized for a sample rate of xINRATE Hz</a> </font><br>
+</P>
+<hr>
+<p><br /></p>
+<!--PE_REC_SIGNAL_HEADER_END-->
+
+<!--PE_IFO_SIGNAL_BEG-->
+<font color="red" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">IFO</a></h2>
+</font>
+<!--PE_IFO_SIGNAL_END-->
+
+<!--PE_INJ_SIGNAL_BEG-->
+<table align="center">
+<br> <br> <br>
+<tr  align="center">
+<td align="center"><b>Injection</b>: <a href="javascript:showImage('IFO_0','IFO','injection_spectrogram','0');">Spectrogram</a> | <a href="javascript:showImage('IFO_0','IFO','injection_spectrogram_logy','0');">Spectrogram-Logy</a></a></td>
+<td align="center"><b>Reconstructed Signal</b>: <a href="javascript:showImage('IFO_1','IFO','signal_spectrogram','0');">Spectrogram</a> | <a href="javascript:showImage('IFO_1','IFO','signal_spectrogram_logy','0');">Spectrogram-Logy</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_0_a" href="IFO_injection_spectrogram_logy_0.png" rel="shadowbox[gallery]" title="IFO"><img id="IFO_0_img" title="IFO" alt="IFO"  src="IFO_injection_spectrogram_logy_0.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_1_a" href="IFO_signal_spectrogram_logy_0.png" rel="shadowbox[gallery]" title=IFO""><img id="IFO_1_img" title="IFO" alt="IFO"  src="IFO_signal_spectrogram_logy_0.png" width="500px" /></a></td>
+</tr>
+</table>
+<br><br><br>
+
+<table align="center">
+<tr  align="center">
+<td align="center">Injected (Black) vs Reconstructed (Red) Whitened Signal</td>
+<td align="center">Injected (Black) vs Reconstructed (Red) Whitened Signal</td>
+</tr>
+<tr  align="center">
+<td align="center">Time Plot</td>
+<td align="center">Frequency Plot</td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_cmp_a" href="IFO_wf_white_inj_rec.png" rel="shadowbox[gallery]" title="IFO - Injected (Black) vs Reconstructed (Red) Whitened Signal (Time Plot)"><img id="IFO_cmp_img" title="IFO_cmp" alt="IFO_ht"  src="IFO_wf_white_inj_rec.pn
+g" width="500px" /></a></td>
+<td align="center"><a id="IFO_cmp_a" href="IFO_wf_white_inj_rec_fft.png" rel="shadowbox[gallery]" title="IFO - Injected (Black) vs Reconstructed (Red) Whitened Signal (Frequency Plot)"><img id="IFO_cmp_img" title="IFO_cmp"alt="IFO_ht"  src="IFO_wf_white_inj_rec_fft.png" width="500px" /></a></td>
+</tr>
+</table>
+<br><br><br>
+<!--PE_INJ_SIGNAL_END-->
+
+<!--PE_REC_SIGNAL_BEG-->
+<table align="center">
+<tr>
+<td align="center">Whitened: <font color="red">Reconstructed Response</font> - <font color="black">Band Limited Output</font> <a href="javascript:showImage('IFO_sn','IFO','wf','signal');">time</a> | <a href="javascript:showImage('IFO_sn','IFO','wf_signal','fft');">fft</a> </td>
+<td align="center">Strain: <a href="javascript:showImage('IFO_ht','IFO','wf','strain');">full</a> | <a href="javascript:showImage('IFO_ht','IFO','wf_strain','zoom');">zoom</a> | <a href="javascript:showImage('IFO_ht','IFO','wf_strain','fft');">fft</a> | <a href="IFO_wf_strain.dat">dat</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_sn_a" href="IFO_wf_signal.png" rel="shadowbox[gallery]" title="IFO - Whitened: Reconstructed Response (Red) - Band Limited Output (Black)"><img id="IFO_sn_img" title="IFO_sn" alt="IFO_sn"  src="IFO_wf_signal.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_ht_a" href="IFO_wf_strain.png" rel="shadowbox[gallery]" title="IFO - strain"><img id="IFO_ht_img" title="IFO_ht" alt="IFO_ht"  src="IFO_wf_strain.png" width="500px" /></a></td>
+</tr>
+</table>
+<!--PE_REC_SIGNAL_END-->
+
+<!--PE_PSD_HEADER_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Power Spectral Density</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>Note </b> : The PSD is computed at the event time after lines' removal (regression)</a> </font><br>
+</P>
+<hr>
+<p><br /></p>
+
+<font color="blue" style="font-weight:bold;">
+<h2 align="center"><a id="net_resp">NET</a></h2>
+</font>
+
+<table align="center">
+<tr>
+<td align="center"><a id="NET_psd" href="NET_psd.png" rel="shadowbox[gallery]" title="NET - psd"><img id="NET_psd_img" title="NET_psd" alt="NET_psd"  src="NET_psd.png" width="1000px" /></a></td>
+</tr>
+</table>
+<br><br>
+<!--PE_PSD_HEADER_END-->
+
+<!--PE_IFO_PSD_BEG-->
+<font color="red" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">IFO</a></h2>
+</font>
+
+<table align="center">
+<tr>
+<td align="center">( <a href="IFO_psd.dat">data file</a> )</td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_psd" href="IFO_psd.png" rel="shadowbox[gallery]" title="IFO - psd"><img id="IFO_psd_img" title="IFO_psd" alt="IFO_psd"  src="IFO_psd.png" width="1000px" /></a></td>
+</tr>
+</table>
+<br><br>
+<!--PE_IFO_PSD_END-->
+
+<!--PE_SKYMAP_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="skymaps">Skymaps</a></h1>
+</font>
+<P align="center">
+<font color="black"> 
+<font color="black" size="2"> <a><b>white star</b> : injected direction / <b>black star</b> : reconstructed direction / <b>black dot</b> : detected direction </font><br>
+</font>
+</P>
+<hr>
+<br>
+
+<br>
+<table align="center">
+<tr>
+<td align="center">Sensitivity : Sqrt(F+^2+Fx^2)</td>
+<td align="center">Alignment : |Fx|/|F+|</td>
+</tr>
+<tr>
+<td><a href="sensitivity_plus.png" rel="shadowbox[gallery]" title="sensitivity plus"><img id="sens_plus_img" title="Sensitivity to Plus Polarisation" alt="Sensitivity to Plus Polarisation" src="sensitivity_plus.png" width="500px" /></a></td>
+<td><a href="sensitivity_cross.png" rel="shadowbox[gallery]" title="sensitivity cross"><img id="sens_cross_img" title="Sensitivity to Cross Polarisation" alt="Sensitivity to Cross Polarisation" src="sensitivity_cross.png" width="500px" /></a></td>
+</tr>
+<tr>
+<td align="center"><a href="javascript:showImage1('Prob','probability');">Sky Statistic</a> | <a href="javascript:showImage2('Prob','probability','circles');">Circles</a> | <a href="javascript:showImage1('Prob','skyprobcc');">skyprobcc</a> | <a href="skyprobcc.fits">fits</a> | ( <a href="http://aladin.u-strasbg.fr/java/nph-aladin.pl?script=grid+on;" target="_blank">aladin</a> | <a href="/CWB_DOC_URL/cwb/xman/faq.html?highlight=aladin#how-to-show-the-probability-skymap-with-aladin-sky-atlas" target="_blank">help</a> ) </td>
+<td align="center">Detection Statistic</td>
+</tr>
+<tr>
+<td><a id="Prob_a" href="probability.png" rel="shadowbox[gallery]" title="probability"><img id="Prob_img" title="Prob" alt="Prob"  src="probability.png" width="500px" /></a></td>
+<td><a href="skystat.png" rel="shadowbox[gallery]" title="skystat"><img id="skystat_img" title="Detection Statistic" alt="Detection Statistic" src="skystat.png" width="500px" /></a></td>
+</tr>
+<tr>
+<td align="center">Likelihood</td>
+<td align="center">Null Energy</td>
+</tr>
+<tr>
+<td><a href="likelihood.png" rel="shadowbox[gallery]" title="likelihood"><img id="like_img" title="Likelihood" alt="Likelihood" src="likelihood.png" width="500px" /></a></td>
+<td><a href="null_energy.png" rel="shadowbox[gallery]" title="null energy"><img id="nulle_img" title="Null Energy" alt="Null Energy" src="null_energy.png" width="500px" /></a></td>
+</tr>
+<tr>
+<td align="center">Correlated Energy</td>
+<td align="center">Correlation</td>
+</tr>
+<tr>
+<td><a href="corr_energy.png" rel="shadowbox[gallery]" title="corr energy"><img id="corre_img" title="Correlated Energy" alt="Correlated Energy" src="corr_energy.png" width="500px" /></a></td>
+<td><a href="correlation.png" rel="shadowbox[gallery]" title="correlation"><img id="corr_img" title="Correlation" alt="Correlation" src="correlation.png" width="500px" /></a></td>
+</tr>
+<tr>
+<td align="center">Likelihood Disbalance</td>
+<td align="center">Network Response Index</td>
+</tr>
+<tr>
+<td><a href="disbalance.png" rel="shadowbox[gallery]" title="disbalance"><img id="align_img" title="Energy Disbalance" alt="Energy Disbalance" src="disbalance.png" width="500px" /></a></td>
+<td><a href="netindex.png" rel="shadowbox[gallery]" title="netindex"><img id="nri_img" title="Network Response Index" alt="Network Response Index" src="netindex.png" width="500px" /></a></td>
+</tr>
+<tr>
+<td align="center">Polarization</td>
+<td align="center">Ellipticity</td>
+</tr>
+<tr>
+<td><a href="polarisation.png" rel="shadowbox[gallery]" title="polarization"><img id="pol_img" title="Polarization" alt="Polarization" src="polarisation.png" width="500px" /></a></td>
+<td><a href="ellipticity.png" rel="shadowbox[gallery]" title="ellipticity"><img id="eli_img" title="Ellipticity" alt="Ellipticity" src="ellipticity.png" width="500px" /></a></td>
+</tr>
+</table>
+<!--PE_SKYMAP_END-->
+
+
+<!--PE_REC_AVR_SIGNAL_HEADER_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Waveform Errors</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>PointEstimated</b> : reconstructed whitened waveform</a> </font><br>
+<font color="black" size="2"> <a><b>xMEAN, xSIGMA, x2SIGMA</b> : obtained with <b>xNTRIALS</b> trials</a> </font><br>
+<font color="black" size="2"> <a><b>Null</b> : selected_data-reconstructed whitened waveform</a> </font><br>
+<font color="black" size="2"> <a><b>Frequency</b> : istantaneous frequency computed with Hilbert Transform</a> </font><br>
+<font color="black" size="2"> <a><b>Note</b> : the amplitude ol the whitened reconstructed signals is normalized for a sample rate of xRATEANA Hz</a> </font><br>
+</P>
+<hr>
+<p><br /></p>
+<!--PE_REC_AVR_SIGNAL_HEADER_END-->
+
+
+<!--PE_REC_AVR_SIGNAL_BEG-->
+<font color="red" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">IFO</a></h2>
+</font>
+
+<table align="center">
+
+<br>
+<tr>
+<td align="center">Waveform : PointEstimated (red) vs xMEAN (white) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_1','IFO','vREC_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_1','IFO','vREC_vRMS','time_zoom');">zoom</a> | <a href="IFO_pe_wave.dat">dat</a> </td>
+<td align="center">Frequency : PointEstimated (red) vs xMEAN (white) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_3','IFO','fREC_fRMS','time');">full</a> | <a href="javascript:showImage('IFO_3','IFO','fREC_fRMS','time_zoom');">zoom</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_1_a" href="IFO_vREC_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Average"><img id="IFO_1_img" title="IFO_1" alt="IFO_1"  src="IFO_vREC_vRMS_time.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_3_a" href="IFO_fREC_fRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Average"><img id="IFO_3_img" title="IFO_3" alt="IFO_3"  src="IFO_fREC_fRMS_time.png" width="500px" /></a></td>
+</tr>
+
+<tr>
+<td align="center"><br><br>Waveform : PointEstimated minus xMEAN (red) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_2','IFO','vRECvAVR_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_2','IFO','vRECvAVR_vRMS','time_zoom');">zoom</a></td>
+<td align="center"><br><br>Waveform : PointEstimated (red) - Null (blue) <br> RMS (green) <a href="javascript:showImage('IFO_4','IFO','vREC_vDATvREC_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_4','IFO','vREC_vDATvREC_vRMS','time_zoom');">zoom</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_2_a" href="IFO_vRECvAVR_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed-Injection"><img id="IFO_2_img" title="IFO_2" alt="IFO_2"  src="IFO_vRECvAVR_vRMS_time.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_4_a" href="IFO_vREC_vDATvREC_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Data"><img id="IFO_4_img" title="IFO_4" alt="IFO_4"  src="IFO_vREC_vDATvREC_vRMS_time.png" width="500px" /></a></td>
+</tr>
+
+</table>
+<!--PE_REC_AVR_SIGNAL_END-->
+
+
+<!--PE_REC_INJ_SIGNAL_0_HEADER_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Reconstructed vs Injected</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>PointEstimated</b> : reconstructed whitened waveform</a> </font><br>
+<font color="black" size="2"> <a><b>Injected</b> : injected whitened waveform</a> </font><br>
+<font color="black" size="2"> <a><b>xMEAN, xSIGMA, x2SIGMA</b> : obtained with <b>xNTRIALS</b> trials</a> </font><br>
+<font color="black" size="2"> <a><b>Frequency</b> : istantaneous frequency computed with Hilbert Transform</a> </font><br>
+<font color="black" size="2"> <a><b>Note</b> : the amplitude ol the whitened reconstructed signals is normalized for a sample rate of xRATEANA Hz</a> </font><br>
+</P>
+<hr>
+<p><br /></p>
+<!--PE_REC_INJ_SIGNAL_0_HEADER_END-->
+
+
+<!--PE_REC_INJ_SIGNAL_0_BEG-->
+<font color="red" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">IFO</a></h2>
+</font>
+
+<table align="center">
+
+<br>
+<tr>
+<td align="center">Waveform : Injected (red) vs xMEAN (white) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_1','IFO','vINJ_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_1','IFO','vINJ_vRMS','time_zoom');">zoom</a> | <a href="IFO_inj_pe.dat">inj</a> </td>
+<td align="center"><br><br>Frequency : xMEAN minus Injected (red) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_3','IFO','fINJ_fRMS','time');">full</a> | <a href="javascript:showImage('IFO_3','IFO','fINJ_fRMS','time_zoom');">zoom</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_1_a" href="IFO_vINJ_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Injection"><img id="IFO_1_img" title="IFO_1" alt="IFO_1"  src="IFO_vINJ_vRMS_time.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_3_a" href="IFO_fINJ_fRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Injection"><img id="IFO_3_img" title="IFO_3" alt="IFO_3"  src="IFO_fINJ_fRMS_time.png" width="500px" /></a></td>
+</tr>
+
+<br>
+<tr>
+<td align="center"><br><br>Waveform : xMEAN minus Injected (red) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_2','IFO','vAVRvINJ_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_2','IFO','vAVRvINJ_vRMS','time_zoom');">zoom</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_2_a" href="IFO_vAVRvINJ_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed-Injection"><img id="IFO_2_img" title="IFO_2" alt="IFO_2"  src="IFO_vAVRvINJ_vRMS_time.png" width="500px" /></a></td>
+</tr>
+
+</table>
+<!--PE_REC_INJ_SIGNAL_0_END-->
+
+
+<!--PE_REC_INJ_SIGNAL_HEADER_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Reconstructed vs Injected</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>PointEstimated</b> : reconstructed whitened waveform</a> </font><br>
+<font color="black" size="2"> <a><b>Injected</b> : injected whitened waveform</a> </font><br>
+<font color="black" size="2"> <a><b>InjectedCut</b> : injected whitened waveform in time-frequency subspace of the PointEstimated waveform</a> </font><br>
+<font color="black" size="2"> <a><b>xMEAN, xSIGMA, x2SIGMA</b> : obtained with <b>xNTRIALS</b> trials</a> </font><br>
+<font color="black" size="2"> <a><b>Frequency</b> : istantaneous frequency computed with Hilbert Transform</a> </font><br>
+<font color="black" size="2"> <a><b>Note</b> : the amplitude ol the whitened reconstructed signals is normalized for a sample rate of xRATEANA Hz</a> </font><br>
+</P>
+<hr>
+<p><br /></p>
+<!--PE_REC_INJ_SIGNAL_HEADER_END-->
+
+
+<!--PE_REC_INJ_SIGNAL_BEG-->
+<font color="red" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">IFO</a></h2>
+</font>
+
+<table align="center">
+
+<br>
+<tr>
+<td align="center">Waveform : InjectedCut (red) vs xMEAN (white) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_1','IFO','cINJ_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_1','IFO','cINJ_vRMS','time_zoom');">zoom</a></td>
+<td align="center">Waveform : xMEAN minus InjectedCut (red) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_2','IFO','vAVRcINJ_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_2','IFO','vAVRcINJ_vRMS','time_zoom');">zoom</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_1_a" href="IFO_cINJ_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Injection"><img id="IFO_1_img" title="IFO_1" alt="IFO_1"  src="IFO_cINJ_vRMS_time.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_2_a" href="IFO_vAVRcINJ_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed-Injection"><img id="IFO_2_img" title="IFO_2" alt="IFO_2"  src="IFO_vAVRcINJ_vRMS_time.png" width="500px" /></a></td>
+</tr>
+
+<br>
+<tr>
+<td align="center"><br><br>Frequency : xMEAN minus InjectedCut (red) <br> xSIGMA (gray) - x2SIGMA (light gray) <a href="javascript:showImage('IFO_3','IFO','fINJ_fRMS','time');">full</a> | <a href="javascript:showImage('IFO_3','IFO','fINJ_fRMS','time_zoom');">zoom</a></td>
+<td align="center"><br><br>Waveform : InjectedCut (red) - PointEstimated (blue) <br> RMS (green) <a href="javascript:showImage('IFO_4','IFO','cINJ_vREC_vRMS','time');">full</a> | <a href="javascript:showImage('IFO_4','IFO','cINJ_vREC_vRMS','time_zoom');">zoom</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_3_a" href="IFO_fINJ_fRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Injection"><img id="IFO_3_img" title="IFO_3" alt="IFO_3"  src="IFO_fINJ_fRMS_time.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_4_a" href="IFO_cINJ_vREC_vRMS_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Injection"><img id="IFO_4_img" title="IFO_4" alt="IFO_4"  src="IFO_cINJ_vREC_vRMS_time.png" width="500px" /></a></td>
+</tr>
+
+<br>
+<tr>
+<td align="center"><br><br>Waveform : Injected (red) <br> InjectedCut (blue) - Injected-InjectedCut (green) <a href="javascript:showImage('IFO_5','IFO','vINJ_cINJ_vINJcINJ','time');">full</a> | <a href="javascript:showImage('IFO_5','IFO','vINJ_cINJ_vINJcINJ','time_zoom');">zoom</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_5_a" href="IFO_vINJ_cINJ_vINJcINJ_time.png" rel="shadowbox[gallery]" title="IFO - Reconstructed vs Injection"><img id="IFO_5_img" title="IFO_5" alt="IFO_5"  src="IFO_vINJ_cINJ_vINJcINJ_time.png" width="500px" /></a></td>
+</tr>
+
+</table>
+<!--PE_REC_INJ_SIGNAL_END-->
+
+<!--PE_DISTRIBUTION_BEG-->
+<p><br /></p>
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="distributions">Distributions</a></h1>
+</font>
+<hr>
+<br>
+
+<br>
+<table align="center">
+<tr>
+<td align="center">Residual Errors Distribution</td>
+<td align="center">Frequency Residual Errors Distribution</td>
+</tr>
+<tr>
+<td><a href="residuals_errors.png" rel="shadowbox[gallery]" title="residual errors"><img id="img_residuals_errors" title="Residual Errors Distribution" alt="Residual Errors Distribution" src="residuals_errors.png" width="500px" /></a></td>
+<td><a href="fresiduals_errors.png" rel="shadowbox[gallery]" title="fresidual errors"><img id="img_fresiduals_errors" title="Frequency Residual Errors Distribution" alt="Frequency Residual Errors Distribution" src="fresiduals_errors.png" width="500px" /></a></td>
+</tr>
+</table>
+
+<br> <br> <br>
+<table align="center">
+<tr>
+<td align="center">SNRnet Distribution</td>
+</tr>
+<tr>
+<td><a href="SNRnet.png" rel="shadowbox[gallery]" title="residual errors"><img id="img_SNRnet" title="SNRnet Distribution" alt="SNRnet Distribution" src="SNRnet.png" width="500px" /></a></td>
+</tr>
+</table>
+<!--PE_DISTRIBUTION_END-->
+
+<!--PE_FACTORS_DISTRIBUTION_BEG-->
+<br> <br> <br>
+<table align="center">
+<tr>
+<td align="center">Fitting Factor Distribution</td>
+<td align="center">Overlap Factor Distribution</td>
+</tr>
+<tr>
+<td><a href="FittingFactor.png" rel="shadowbox[gallery]" title="Fitting Factor"><img id="img_residuals_errors" title="Fitting Factor Distribution" alt="Fitting Factor Distribution" src="FittingFactor.png" width="500px" /></a></td>
+<td><a href="OverlapFactor.png" rel="shadowbox[gallery]" title="Overlap Factor"><img id="img_residuals_errors" title="Overlap Factor Distribution" alt="Overlap Factor Distribution" src="OverlapFactor.png" width="500px" /></a></td>
+</tr>
+</table>
+<!--PE_FACTORS_DISTRIBUTION_END-->
+
+<!--PE_NULPIX_DISTRIBUTION_HEADER_BEG-->
+<p><br /></p>                              
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Null Pixels Distributions</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>Data </b> : Whitened Data</a> - <a><b>Residuals </b> : Whitened Residual Data</a> - <a><b>Reconstructed Signal </b> : Whitened Reconstructed Signal</a></font><br>
+<font color="black" size="2"> <a><b>null_00 / null_90 </b> : distribution of the phase  <b>00 / 90</b> null pixels (whitened-reconstructed pixels [all resolutions])</a> </font><br>
+<font color="black" size="2"> <a><b>KS</b> : Kolmogorov Smirnov Test</a>  -  <a><b>AD</b> : Anderson Darling Test</a></font><br>
+</P>
+<hr>
+<p><br /></p>
+<!--PE_NULPIX_DISTRIBUTION_HEADER_END-->
+
+<!--PE_NULPIX_DISTRIBUTION_BEG-->
+<font color="red" style="font-weight:bold;">
+<h2 align="center"><a id="det_resp">IFO</a></h2>
+</font>
+
+<table align="center">
+<br> <br> <br>
+<tr  align="center">
+<td align="center"><b>Data</b>: <a href="javascript:showImage('IFO_1','IFO','spectrogram','0');">Spectrogram</a> | <a href="javascript:showImage('IFO_1','IFO','spectrogram_logy','0');">Spectrogram-Logy</a></td>
+<td align="center"><b>Residuals</b>: <a href="javascript:showImage('IFO_0','IFO','null_spectrogram','0');">Spectrogram</a> | <a href="javascript:showImage('IFO_0','IFO','null_spectrogram_logy','0');">Spectrogram-Logy</a> <br> <b>Reconstructed Signal</b>: <a href="javascript:showImage('IFO_0','IFO','signal_spectrogram','0');">Spectrogram</a> | <a href="javascript:showImage('IFO_0','IFO','signal_spectrogram_logy','0');">Spectrogram-Logy</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_1_a" href="IFO_spectrogram_logy_0.png" rel="shadowbox[gallery]" title=IFO""><img id="IFO_1_img" title="IFO" alt="IFO"  src="IFO_spectrogram_logy_0.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_0_a" href="IFO_null_spectrogram_logy_0.png" rel="shadowbox[gallery]" title="IFO"><img id="IFO_0_img" title="IFO" alt="IFO"  src="IFO_null_spectrogram_logy_0.png" width="500px" /></a></td>
+
+<table align="center">
+<br> <br> <br>
+<br> <br> <br>
+<tr>
+<td align="center"><b>null</b> (red) : <b>noise</b> (black) : <b>null gaus fit</b> (green)</td>
+<td align="center"><b>null</b> (red) : <b>noise</b> (black) : <b>null gaus fit</b> (green)</td>
+</tr>
+<tr>
+<td><a href="IFO_null00_dist.png" rel="shadowbox[gallery]" title="IFO_null_00_dist"><img id="img_IFO_null_00_dist" title="IFO - 00 Phase Null Pixels Distribution" alt="IFO - 90 Phase Null Pixels Distribution" src="IFO_null_00_dist.png" width="500px" onerror="this.style.visibility = 'hidden'"  /></a></td>
+<td><a href="IFO_null90_dist.png" rel="shadowbox[gallery]" title="IFO_null_90_dist"><img id="img_IFO_null_90_dist" title="IFO - 90 Phase Null Pixels Distribution" alt="IFO - 90 Phase Null Pixels Distribution" src="IFO_null_90_dist.png" width="500px" onerror="this.style.visibility = 'hidden'"  /></a></td>
+</tr>
+</table>
+
+<!--PE_NULPIX_DISTRIBUTION_END-->
+
+<!--PE_MCHIRP_DISTRIBUTION_HEADER_BEG-->
+<p><br /></p>                              
+<font color="black" style="font-weight:bold;">
+<h1 align="center"><a id="det_resp">Chirp Mass Distributions</a></h1>
+</font>
+<P align="center">
+<font color="black" size="2"> <a><b>Chirp Mass Distribution</b> : distribution of the estimated chirp mass value obtained with <b>xNTRIALS</b> trials</a> </font><br>
+<font color="black" size="2"> <a><b>Chirp Mass Error Distribution</b> : distribution of the estimated chirp mass error obtained with <b>xNTRIALS</b> trials</a> </font><br>
+<font color="black" size="2"> <a><b>Chirp Mass Pixel Fraction Distribution</b> : distribution of the chirp mass pixel fraction (fraction of pixels insiade 2*sigma) obtained with <b>xNTRIALS</b> trials</a> </font><br>
+<font color="black" size="2"> <a><b>Chirp Mass Energy Fraction Distribution</b> : distribution of the chirp mass energy fraction (fraction of energy insiade 2*sigma) obtained with <b>xNTRIALS</b> trials</a> </font><br>
+<font color="black" size="2"> <a><b>Chirp Mass Ellipticity Distribution</b> : distribution of the chirp mass Ellipticity ( 0/1 : The pixels distribution in the Time-Freq^(-8/3) plane is close to a disc/line ) obtained with <b>xNTRIALS</b> trials</a> </font><br>
+</P>
+<hr>
+<p><br /></p>
+<!--PE_MCHIRP_DISTRIBUTION_HEADER_END-->
+
+<!--PE_MCHIRP_DISTRIBUTION_BEG-->
+<br> <br> <br>
+<table align="center">
+<tr>
+<td align="center">Chirp Mass Distribution</td>
+<td align="center">Chirp Mass Error Distribution</td>
+</tr>
+<tr>
+<td><a href="chirp_mass.png" rel="shadowbox[gallery]" title="chirp_mass"><img id="img_chirp_mass" title="Chirp Mass Distribution" alt="Chirp Mass Distribution" src="chirp_mass.png" width="500px" onerror="this.style.visibility = 'hidden'"  /></a></td>
+<td><a href="chirp_mass_err.png" rel="shadowbox[gallery]" title="chirp_err"><img id="img_chirp_err" title="Chirp Mass Error Distribution" alt="Chirp Mass Error Distribution" src="chirp_mass_err.png" width="500px" onerror="this.style.visibility = 'hidden'"  /></a></td>
+</tr>
+</table>
+
+<br> <br> <br>
+<table align="center">
+<tr>
+<td align="center">Chirp Mass Pixel Fraction</td>
+<td align="center">Chirp Mass Energy Fraction</td>
+</tr>
+<tr>
+<td><a href="chirp_pfrac.png" rel="shadowbox[gallery]" title="chirp_pfrac"><img id="img_chirp_pfrac" title="Chirp Mass Pixel Fraction" alt="Pixel Fracrion Distribution" src="chirp_pfrac.png" width="500px" onerror="this.style.visibility = 'hidden'"  /></a></td>
+<td><a href="chirp_efrac.png" rel="shadowbox[gallery]" title="chirp_efrac"><img id="img_chirp_efrac" title="Chirp Mass Energy Fraction" alt="Energy Fraction Distribution" src="chirp_efrac.png" width="500px" onerror="this.style.visibility = 'hidden'"  /></a></td>
+</tr>
+</table>
+
+<br> <br> <br>
+<table align="center">
+<tr>
+<td align="center">Chirp Mass Ellipticity</td>
+</tr>
+<tr>
+<td><a href="chirp_ell.png" rel="shadowbox[gallery]" title="chirp_ell"><img id="img_chirp_ell" title="Chirp Mass Ellipticity" alt="Ellipticity Distribution" src="chirp_ell.png" width="500px" onerror="this.style.visibility = 'hidden'" /></a></td>
+</tr>
+</table>
+<!--PE_MCHIRP_DISTRIBUTION_END-->
+
+

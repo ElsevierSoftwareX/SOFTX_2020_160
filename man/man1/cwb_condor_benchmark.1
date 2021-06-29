@@ -1,0 +1,188 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_CONDOR_BENCHMARK" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_condor_benchmark \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.nf
+
+\fBUsage\fP
+
+This command is to draw plots showing what is the memory usage and elapsed time for each job.
+
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor benchmark \(aqoptions\(aq\fP
+.UNINDENT
+.sp
+where options are, as written in the help code:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+options =
+                \-\-fstage FSTAGE  (select output file stage : def=FULL)
+                \-\-jstage JSTAGE  (select stage in the pipeline : def=FULL)
+                \-\-res    RES     (select resolution in the pipeline : def=\-1)
+                \-\-factor FACTOR  (select factor index in the pipeline : def=\-1)
+                \-\-bench  BENCH   (benchmark type : def=JET)
+                \-\-min    MIN     (min benchmark value : def=auto)
+                \-\-max    MAX     (max benchmark value : def=auto)
+                \-\-plot   TYPE    (plot type HIST/GRAPH/HIST2 : def=HIST)
+                \-\-save   SAVEOPT (save plot : use dir name(name is builtin)
+                                  or file path with extention .png)
+
+                no arguments     print help (exit with \(aqq\(aq)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.sp
+In details:
+.INDENT 0.0
+.IP \(bu 2
+.INDENT 2.0
+.TP
+\fBFSTAGE/JSTAGE\fP: selects one intermediate stage of the pipeline.
+The possibility are:
+.INDENT 7.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+FULL/INIT/STRAIN/CSTRAIN/COHERENCE/SUPERCLUSTER/LIKELIHOOD
+
+currently only FULL stage is implemented for FSTAGE option
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+\fBBENCH\fP: selects plot subject. Possibilities:
+.INDENT 2.0
+.IP \(bu 2
+\fBJET\fP : Job Elapsed Time
+.IP \(bu 2
+\fBMEM\fP : Memory
+.IP \(bu 2
+\fBJFS\fP : Job File Size
+.IP \(bu 2
+\fBSET\fP : Stage Elapsed Time
+.IP \(bu 2
+\fBTHR\fP : Threshold �| Coherence Stage
+.IP \(bu 2
+\fBGT\fP : Gating Time �| Coherence Stage (to be used only when the
+Gating Plugin is applied)
+.IP \(bu 2
+\fBPSIZE\fP : Number of selected pixels per lag �| Coherence Stage
+.IP \(bu 2
+\fBCSIZE\fP : Number of selected clusters per lag �| Coherence Stage
+.UNINDENT
+.IP \(bu 2
+\fBMIN/MAX\fP: minimum and maximum values in the plot. Useful to compare plots of different analyses.
+.IP \(bu 2
+\fBTYPE\fP: plot type. Possibilities:
+.INDENT 2.0
+.IP \(bu 2
+\fBHIST\fP : 1D Histogram of BENCH
+.IP \(bu 2
+\fBGRAPH\fP : Point Graph reporting on x\-axis the job number and on
+y\-axis the BENCH
+.IP \(bu 2
+\fBHIST2\fP : 2d Histogram where x\- and y\-axes are the job numbers
+(on y\-axis the job runs over 100, while on x\-axis runs
+progressively) and on z\-axis the values of BENCH
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+* cwb_condor benchmark \(aq\-\-jstage COHERENCE \-\-bench THR \-\-res 3 \-\-factor 3\(aq
+  \- plot the THRESHOLD used to select pixels in the COHERENCE Stage
+
+* cwb_condor benchmark \(aq\-\-jstage COHERENCE \-\-bench GT \-\-res 0 \-\-save report/dump \-\-plot GRAPH\(aq
+  \- plot the Gating Time vs JobID used to veto the selection of the pixels in the COHERENCE Stage
+
+    Note : To be used only when the Gating Plugin is applied
+
+* cwb_condor benchmark \(aq\-\-jstage FULL \-\-bench JET \-\-xmax 4\(aq
+  \- plot the Job Estimated Time at the end of the Stage LIKELIHOOD, max xaxis is set to 4 hours
+
+* cwb_condor benchmark \(aq\-\-jstage LIKELIHOOD \-\-bench SET\(aq
+  \- plot the Stage Estimated Time in the Stage LIKELIHOOD
+
+* cwb_condor benchmark \(aq\-\-jstage FULL \-\-bench JET \-\-save report/dump\(aq
+  \- plot the FULL Job Estimated Time, the plot is saved under report/dump dir
+
+* cwb_condor benchmark \(aq\-\-bench JET \-\-save file.png\(aq
+  \- plot the Job Estimated Time at the end of the last Stage, the plot is saved under report/dump dir
+
+* how to produce plots when analysis is done in 2 stages : supercluster + reconstruction
+  \- cwb_condor benchmark \(aq\-\-jstage FULL \-\-bench JET \-\-save report/dump \-\-fstage SUPERCLUSTER\(aq
+    \- plot the Job Estimated Time using the informations contained in the supercluster root files produced
+      in the supercluster stage, the plot is saved under report/dump dir
+  \- cwb_condor benchmark \(aq\-\-jstage FULL \-\-bench JET \-\-save report/dump\(aq
+    \- plot the Job Estimated Time using the informations contained in the wave root files produced
+      in the final stage, the plot is saved under report/dump dir
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

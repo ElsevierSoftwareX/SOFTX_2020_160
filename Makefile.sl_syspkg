@@ -1,0 +1,63 @@
+
+AUX_LIBS = $(HOME_LIBS)
+#AUX_LIBS = /home/cwb/waveburst/WORK/TESTS/HOME_LIBS
+
+sl: cfitsio cvode framelib lal root healpix
+
+cfitsio:
+	mkdir -p $(AUX_LIBS)/CFITSIO/syspkg
+	ln -sf /usr/lib64/libcfitsio.so.2 	$(AUX_LIBS)/CFITSIO/syspkg/libcfitsio.so 
+
+cvode:
+	mkdir -p $(AUX_LIBS)/CVODE/syspkg
+	rm -f $(AUX_LIBS)/CVODE/syspkg/include
+	rm -f $(AUX_LIBS)/CVODE/syspkg/lib
+	ln -sf /usr/include/sundials		$(AUX_LIBS)/CVODE/syspkg/include
+	ln -sf /usr/lib64			$(AUX_LIBS)/CVODE/syspkg/lib
+
+framelib:
+	mkdir -p $(AUX_LIBS)/FRAMELIB/syspkg
+	rm -f $(AUX_LIBS)/FRAMELIB/syspkg/Linux 
+	rm -f $(AUX_LIBS)/FRAMELIB/syspkg/src 
+	ln -sf /usr/lib64			$(AUX_LIBS)/FRAMELIB/syspkg/Linux 
+	ln -sf /usr/include			$(AUX_LIBS)/FRAMELIB/syspkg/src 
+
+lal:
+	mkdir -p $(AUX_LIBS)/LAL/syspkg
+	rm -f $(AUX_LIBS)/LAL/syspkg/bin 
+	rm -f $(AUX_LIBS)/LAL/syspkg/include 
+	rm -f $(AUX_LIBS)/LAL/syspkg/lib 
+	rm -f $(AUX_LIBS)/LAL/syspkg/lib64 
+	rm -f $(AUX_LIBS)/LAL/syspkg/share 
+	ln -sf /usr/bin				$(AUX_LIBS)/LAL/syspkg/bin 
+	ln -sf /usr/include/lal			$(AUX_LIBS)/LAL/syspkg/include 
+	ln -sf /usr/lib64			$(AUX_LIBS)/LAL/syspkg/lib 
+	ln -sf /usr/lib64			$(AUX_LIBS)/LAL/syspkg/lib64 
+	ln -sf /usr/share			$(AUX_LIBS)/LAL/syspkg/share 
+
+root:
+	mkdir -p $(AUX_LIBS)/ROOT/syspkg
+	rm -f $(AUX_LIBS)/ROOT/syspkg/bin 
+	rm -f $(AUX_LIBS)/ROOT/syspkg/include 
+	rm -f $(AUX_LIBS)/ROOT/syspkg/lib 
+	ln -sf /usr/bin				$(AUX_LIBS)/ROOT/syspkg/bin 
+	ln -sf /usr/include/root		$(AUX_LIBS)/ROOT/syspkg/include 
+	ln -sf /usr/lib64/root			$(AUX_LIBS)/ROOT/syspkg/lib 
+
+healpix:
+	mkdir -p $(AUX_LIBS)/HEALPix/syspkg
+	mkdir -p $(AUX_LIBS)/HEALPix/syspkg/src/cxx
+	mkdir -p $(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib
+	rm -f $(AUX_LIBS)/HEALPix/syspkg/src/cxx/Healpix_cxx 
+	rm -f $(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libc_utils.so 
+	rm -f $(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libcxxsupport.so 
+	rm -f $(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libfftpack.so 
+	rm -f $(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libhealpix_cxx.so 
+	rm -f $(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libsharp.so 
+	ln -sf /usr/include/healpix_cxx		$(AUX_LIBS)/HEALPix/syspkg/src/cxx/Healpix_cxx 
+	ln -sf /usr/lib64/libhealpix_cxx.so.0	$(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libc_utils.so 
+	ln -sf /usr/lib64/libhealpix_cxx.so.0	$(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libcxxsupport.so 
+	ln -sf /usr/lib64/libhealpix_cxx.so.0	$(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libfftpack.so 
+	ln -sf /usr/lib64/libhealpix_cxx.so.0	$(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libhealpix_cxx.so 
+	ln -sf /usr/lib64/libhealpix_cxx.so.0	$(AUX_LIBS)/HEALPix/syspkg/src/cxx/shared/lib/libsharp.so 
+

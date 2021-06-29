@@ -1,0 +1,23 @@
+GA       3                  GA4d000     32       200
+GA       2                  GA2d500     51       200
+GA       1                  GA1d000     127      200
+GA       0                  GA0d100     1236     1000
+
+SGEQ3    4                 SGE70Q3      70       200
+SGEQ3    5                SGE235Q3      235      200
+SGEQ3    6                SGE849Q3      849      200
+
+SGEQ9    7               SGE70Q8d9      70       200
+SGEQ9    8              SGE100Q8d9      100      200
+SGEQ9    9              SGE153Q8d9      153      200
+SGEQ9   10              SGE235Q8d9      235      200
+SGEQ9   11              SGE361Q8d9      361      200
+SGEQ9   12              SGE554Q8d9      554      200
+SGEQ9   13              SGE849Q8d9      849      200
+
+SGEQ100 14               SGE70Q100      70       200
+SGEQ100 15              SGE235Q100      235      200
+SGEQ100 16              SGE849Q100      849      200
+
+WNB     17       WNB_100_100_0d100      150      200
+WNB     18       WNB_250_100_0d100      300      200

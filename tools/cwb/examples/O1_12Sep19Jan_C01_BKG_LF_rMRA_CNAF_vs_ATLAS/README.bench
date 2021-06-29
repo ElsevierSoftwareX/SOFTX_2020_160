@@ -1,0 +1,12 @@
+cwb_condor benchmark '--jstage STRAIN       --bench JET --save report/dump --max 1'
+cwb_condor benchmark '--jstage CSTRAIN      --bench JET --save report/dump --max 1'
+cwb_condor benchmark '--jstage COHERENCE    --bench JET --save report/dump --max 1'
+cwb_condor benchmark '--jstage SUPERCLUSTER --bench JET --save report/dump --max 1'
+cwb_condor benchmark '--jstage FULL         --bench JET --save report/dump --max 1'
+
+cwb_condor benchmark '--jstage STRAIN       --bench MEM --save report/dump --max 3000'
+cwb_condor benchmark '--jstage CSTRAIN      --bench MEM --save report/dump --max 3000'
+cwb_condor benchmark '--jstage COHERENCE    --bench MEM --save report/dump --max 3000'
+cwb_condor benchmark '--jstage SUPERCLUSTER --bench MEM --save report/dump --max 3000'
+cwb_condor benchmark '--jstage FULL         --bench MEM --save report/dump --max 3000'
+

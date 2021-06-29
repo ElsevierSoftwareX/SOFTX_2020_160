@@ -1,0 +1,19 @@
+// 1G cwb simulation SG235Q9 with ADV detectors (create frames with sim strain & MDC)
+
+1) make directories for cwb
+
+2) generate frames for ADV ifos L1 H1 V1
+   to change the default vaules edit macro/CreateFramesNOISE.C
+
+3) generate SGQ9 MDC frames for ifos L1 H1 V1
+   to change the default vaules edit macro/CreateFramesMDC.C
+
+to generate all necessary stuff do "make setup"
+  
+to change the cwb parameters edit config/user_parameters.C
+
+to run cwb pipeline do "make cwb"
+
+to run ced do "make ced"
+
+to reset the directory do "make clean"

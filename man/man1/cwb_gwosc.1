@@ -1,0 +1,415 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_GWOSC" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_gwosc \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.sp
+This page provides a description of the cwb_gwosc command.
+.nf
+
+\fBUsage\fP
+
+.in +2
+This command is used to retrive and analyze GWOSC O2 catalog events
+
+\fI\%https://www.gw\-openscience.org/catalog/GWTC\-1\-confident\fP
+
+.in -2
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_gwosc\fP (without arguments)
+Prints help
+.UNINDENT
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_gwosc GW=GWyymmdd action [options]\fP
+Executes \(aqaction\(aq on GWyymmdd event
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBFurther informations\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+The following options can be passed to cwb_gwosc
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+GW=GWyymmdd (mandatory) \-> Ex: GW=GW150914
+
+             Thw following is the list of the O1,O2 available events:
+
+             O1 Events with LH Network:  GW150914 GW151012 GW151226
+
+             O2 Events with LH Network:  GW170104 GW170608 GW170729 GW170809
+                                         GW170814 GW170817 GW170818 GW170823
+
+             O2 Events with LHV Network: GW170729 GW170809 GW170814 GW170817 GW170818
+
+             NOTE: GW170817 event includes the L1 glitch \-> is not detected by cWB
+
+             O3a Events with LH/LHV Network: GW190408_181802 GW190412        GW190421_213856 GW190503_185404
+                                             GW190512_180714 GW190513_205428 GW190517_055101 GW190519_153544
+                                             GW190521        GW190521_074359 GW190602_175927 GW190701_203306
+                                             GW190706_222641 GW190707_093326 GW190727_060333 GW190728_064510
+                                             GW190814        GW190828_063405 GW190828_065509 GW190915_235702
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+action =     all       : setup + ced
+
+             setup     : frames + dq + init
+
+             init      : clean + create + files
+                         NOTE: before this command the frames & dq must be done
+
+             create    : create working directory
+
+             files     : create working files
+                         frames list, job analysis gps range
+                         copy user_parameters.C, copy plugin
+
+             clean     : remove sub\-working directories
+
+             frames    : copy LH event frames from GWOSC
+
+             dq        : copy LH event data quality from GWOSC
+
+             analysis  : make cWB analysis, output root file to data directory
+                        NOTE: before this command the setup, frames & dq must be done
+
+             ced       : make cWB analysis, output CED to report/ced directory
+                         NOTE: before this command the setup, frames & dq must be done
+
+             skymap    : make CED skymap, output skymap into CED report
+                         NOTE: before this command the ced must be done
+
+             xced      : display CED with firefox browser
+                         NOTE: before this command the setup, frames & dq must be done
+                         NOTE: enabled only in VIRTUALBOX !!!
+
+             psd       : display strain PSD
+                         NOTE: before this command the setup, frames & dq must be done
+
+             wpsd      : display whitened PSD
+                         NOTE: before this command the setup, frames & dq must be done
+
+             tf        : display whitened Time Frequency map
+                         NOTE: before this command the etup, frames & dq must be done
+
+             emax      : display max energy Time Frequency map
+                         NOTE: before this command the etup, frames & dq must be done
+
+             sparse    : display IFO sparse map
+                         NOTE: before this command the setup, frames & dq must be done
+
+             frdisplay : display IFO Time\-Frequency spectromram using frdisplay tool
+                         NOTE: before this command the setup, frames must be done
+
+             man       : display cWB manual with firefox browser
+                         NOTE: enabled only in VIRTUALBOX !!!
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+options      IFO       : IFO=L1(default),H1 : mandatory for actions: psd, wpsd, rms, ts, emax, sparse, frdisplay
+                         Ex: cwb_gwosc GW=GW150914 IFO=L1 psd
+
+             SR        : SR=4(default),16 (KHZ) : select frames sample rate
+                         Ex: cwb_gwosc GW=GW150914 SR=4 frames
+
+             LEVEL     : LEVEL=4,5(default),6,7,8,9,10  (Time Frequency decomposition level)
+
+             DIR       : DIR=$HOME/waveburst/GWOSC/catalog/GWTC\-1\-confident (default) : select a user define output path
+                         EX: cwb_gwosc GW=GW150914 DIR=$HOME/waveburst/GWOSC/catalog/GWTC\-1\-myconfident
+                             output working dir is $HOME/waveburst/GWOSC/catalog/GWTC\-1\-myconfident/GW150914/GWOSC_LH_GW150914_R1_run1
+
+             TAG       : TAG=run1 (default) : select a user tag for the working directory name
+                         EX: cwb_gwosc GW=GW150914 TAG=myrun1
+                             output working dir is $HOME/waveburst/GWOSC/catalog/GWTC\-1/GW150914\-confident/GWOSC_LH_GW150914_R1_myrun1
+
+             CFG       : CFG=$HOME_CWB/macros/gwosc_parameters.C (default) : select a user defined user_parameters.C file
+                         EX: cwb_gwosc GW=GW150914 CFG=mypath/myuser_parameters.C
+
+             SIM       : SIM=false(default), true : select to execute the cWB reconstruction on GW real data (false) or on simulated data (true)
+                         Ex: cwb_gwosc GW=GW150914 SIM=true all
+                             see the full description below in the list of examples
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+
+.fi
+.sp
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+the GWOSC default definitions are:
+.INDENT 2.0
+.IP \(bu 2
+GWOSC catalog event frames
+.INDENT 2.0
+.IP \(bu 2
+O1/O2 \-> \fBGWOSC_URL\fP      = \fI\%https://www.gw\-openscience.org/catalog/GWTC\-1\-confident\fP
+.IP \(bu 2
+O3a   \-> \fBGWOSC_URL\fP      = \fI\%https://www.gw\-openscience.org/eventapi/html/GWTC\-2\fP
+.UNINDENT
+.IP \(bu 2
+GWOSC O1/O2/O3a catalog event data quality segments
+.INDENT 2.0
+.IP \(bu 2
+\fBGWOSC_DQ\fP                = \fI\%https://www.gw\-osc.org/timeline/segments\fP
+.UNINDENT
+.IP \(bu 2
+GWOSC parameter\-estimation (PE) posteriors samples
+.INDENT 2.0
+.IP \(bu 2
+O1/O2 \-> \fBGWOSC_PE\fP       = \fI\%https://dcc.ligo.org/public/0157/P1800370/005\fP
+.IP \(bu 2
+O3a   \-> \fBGWOSC_PE\fP       = \fI\%https://dcc.ligo.org/LIGO\-P2000223/public\fP
+.UNINDENT
+.IP \(bu 2
+GWOSC the power spectral densities (PSDs)
+.INDENT 2.0
+.IP \(bu 2
+O1/O2 \-> \fBGWOSC_PSD\fP      = \fI\%https://dcc.ligo.org/public/0158/P1900011/001\fP
+.IP \(bu 2
+O3a   \-> are included in the PE h5 files
+.UNINDENT
+.IP \(bu 2
+GWOSC default local working directory
+.INDENT 2.0
+.IP \(bu 2
+\fBGWOSC_DIR\fP      = $(HOME)/GWOSC/catalog/GWTC\-1\-confident
+.UNINDENT
+.IP \(bu 2
+GWOSC default user_parameters.C configuration files are (selected according to the event name):
+.INDENT 2.0
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_lh_gwtc\-1.C
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_lhv_gwtc\-1.C
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_gw170817_lh_gwtc\-1.C
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_gw170817_lhv_gwtc\-1.C
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_bbh_lh_gwtc\-2.C
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_bbh_lhv_gwtc\-2.C
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_imbhb_lh_gwtc\-2.C
+.IP \(bu 2
+\fBGW_CONFIG_FILE\fP = $(HOME_CWB)/gwosc/gwosc_parameters_imbhb_lhv_gwtc\-2.C
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+the default definitions can be overwrite by the user in the following file: \fB$USER/.gwosc\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+The following command \fBlaunch a full GW150914 analysis \-> frames + dq + clean + create + files + ced\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 all\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBlaunch a full GW150914 analysis on simulated data\fP\&. This instruction downloads from GWOSC the PSDs and the PE posterior samples for GW150914. Next, the PSDs are used to simulate a stationary colored Gaussian noise and a random PE sample waveform is added to the data. Finally, cWB runs as in the previous example and reports the results on a CED. With this simulation we can also compare injected and reconstructed waveforms in both time and frequency domain :
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 SIM=true all\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBlaunch a full GW170814 analysis with LHV net \-> frames + dq + clean + create + files + ced\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW170814 IFO=V1 all\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBlaunch a full GW150914 setup \-> frames + dq + clean + create + files\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 setup\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBdownload GW150914 frames\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 frames\fP          \- for frames @ 4KHZ
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 SR=16 frames\fP    \- for frames @ 16KHZ
+.UNINDENT
+.IP \(bu 2
+The following command \fBdownload GW150914 data quality data\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 dq\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBproduces the GW150914 setup files into the working directory\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 files\fP           \- for frames @ 4KHZ
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 SR=16 files\fP     \- for frames @ 16KHZ
+.UNINDENT
+.IP \(bu 2
+The following commands \fBproduce the GW150914 CED\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 ced\fP             \- for frames @ 4KHZ
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 SR=16 ced\fP       \- for frames @ 16KHZ
+.UNINDENT
+.IP \(bu 2
+The following commands \fBlaunch the GW150914 analyis\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 analysis\fP        \- for frames @ 4KHZ
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 SR=16 analysis\fP  \- for frames @ 16KHZ
+.UNINDENT
+.IP \(bu 2
+The following command \fBproduces the GW150914 skymap plots \-> linked to CED www page\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 skymap\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBdisplay the GW150914 PSD of H1 strain\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 GW=GW150914 IFO=H1 psd\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBdisplay the GW150914 PSD of H1 whitened strain\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 GW=GW150914 IFO=H1 wpsd\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBdisplay the GW150914 time frequency map of H1 whitened strain\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 GW=GW150914 IFO=H1 tf\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBdisplay the GW150914 max energy time frequency map of H1\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 GW=GW150914 IFO=H1 LEVEL=5 emax\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBdisplay the GW150914 sparse map of H1\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 GW=GW150914 IFO=H1 sparse\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBdisplay the GW150914 time\-frequency spectrogram of H1 using frdisplay tool\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW150914 GW=GW150914 IFO=H1 frdisplay\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBlaunch a full GW190521 analysis \-> frames + dq + clean + create + files + ced\fP\&. The working directory is created here: $HOME/GWOSC/catalog/GWTC\-2\-confident/GW190521/GWOSC_LH_GW190521_R1_IMBHB.
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW190521 TAG=IMBHB DIR=$HOME/GWOSC/catalog/GWTC\-2\-confident all\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBlaunch a full GW190521 analysis with LHV net \-> frames + dq + clean + create + files + ced\fP:
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW190521 IFO=V1 TAG=IMBHB DIR=$HOME/GWOSC/catalog/GWTC\-2\-confident all\fP
+.UNINDENT
+.IP \(bu 2
+The following command \fBlaunch a full GW150914 analysis on simulated data\fP\&.
+.INDENT 2.0
+.IP \(bu 2
+\fBcwb_gwosc GW=GW190521 SIM=true TAG=IMBHB DIR=$HOME/GWOSC/catalog/GWTC\-2\-confident all\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

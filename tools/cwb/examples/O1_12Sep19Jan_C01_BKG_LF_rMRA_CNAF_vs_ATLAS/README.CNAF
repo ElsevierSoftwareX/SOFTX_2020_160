@@ -1,0 +1,142 @@
+The following instruction show how to perform this test in the CNAF cluster
+
+// ------------------------------------------------------
+// set WAT library configuration with watenv script
+// ------------------------------------------------------
+
+// ------------------------------------------------------
+// select cWB configuration
+// ------------------------------------------------------
+
+cp config/user_parameters_CNAF.C config/user_parameters.C
+
+// ------------------------------------------------------
+// build plugin
+// ------------------------------------------------------
+
+cwb_mplugin macro/CWB_Plugin_QLWveto_Gating.C $HOME_CWB/plugins/CWB_Plugin_QLWveto.C $HOME_CWB/plugins/CWB_Plugin_Gating.C
+
+
+// ------------------------------------------------------
+// compile plugin
+// ------------------------------------------------------
+
+root -l -b macro/CWB_Plugin_QLWveto_Gating.C++
+
+// ------------------------------------------------------
+// interactive test
+// ------------------------------------------------------
+
+cwb_inet 2
+
+// ------------------------------------------------------
+// CNAF uses LSF as job management system
+// A special command has been created to create and submit jobs, 
+// it is cwb_lsf, the available options are :
+// ------------------------------------------------------
+
+create jobs stuff      : create
+submit jobs            : submit
+recovery jobs          : recovery
+produce benchmark      : benchmark
+show queue status      : queue
+show all jobs status   : status
+show job log           : status jobID
+dump job log           : log jobName
+delete all jobs        : kill
+delete job             : kill jobID
+suspend all jobs       : stop
+suspend job            : stop jobID
+resume all jobs        : resume
+resume job             : resume jobID
+uncompress tgz files   : utar dir_name
+
+// ------------------------------------------------------
+// create jobs stuff : 
+// ------------------------------------------------------
+
+cwb_lsf create
+
+--> files created
+
+output lsf file :  'condor/O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf'
+output tgz file :  'condor/O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.tgz'
+
+
+// ---------------------------------------------------------------------
+// submit 100 jobs : 
+// ---------------------------------------------------------------------
+
+cwb_lsf submit
+
+--> console output
+
+input  dag file :  'O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.dag'
+output lsf file :  'O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf'
+LSFFILE  =  O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf
+Job <13907643> is submitted to queue <virgo>.
+
+
+Your LSF jobs has been submitted
+To monitor the jobs do                       : cwb_lsf status
+To monitor the queue                         : cwb_lsf queue
+To kill the all jobs do                      : cwb_lsf kill
+To resubmit paused jobs do                   : cwb_lsf resume
+To suspend all jobs do                       : cwb_lsf stop
+
+// ---------------------------------------------------------------------
+// show queue status      : cwb_lsf queue
+// ---------------------------------------------------------------------
+
+QUEUE_NAME      PRIO STATUS          MAX JL/U JL/P JL/H NJOBS  PEND   RUN  SUSP
+virgo            30  Open:Active    1200    -    -    4  2173   973  1200     0
+
+// ---------------------------------------------------------------------
+// how all jobs status     : 
+// ---------------------------------------------------------------------
+
+cwb_lsf status
+
+--> console output
+
+JOBID      USER    STAT  QUEUE      FROM_HOST   EXEC_HOST   JOB_NAME   SUBMIT_TIME
+13907643   vedovat PEND  virgo      ui01-virgo              A9         Jan 29 13:48
+
+// ---------------------------------------------------------------------
+// show job log  (use the JOBID reported with the 'cwb_lsf status' command)       : 
+// ---------------------------------------------------------------------
+
+cwb_lsf status 13907643
+
+--> show log produced by the cwb job
+
+// ---------------------------------------------------------------------
+// when job finish the final output file are :
+// ---------------------------------------------------------------------
+
+--> output root file
+
+output/9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf.tgz
+
+--> output log err/out files
+
+log/9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf.err
+log/9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf.out
+
+// ---------------------------------------------------------------------
+// uncompress output tgz files   : 
+// ---------------------------------------------------------------------
+
+cwb_lsf utar output
+
+--> files are uncompressed in the output directory
+
+output/supercluster_931081200_600_9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf_job9.root
+output/wave_931081200_600_9_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.lsf_slag0_lag0_1_job9.root
+
+NOTE : the supercluster root file is optional
+       it is produced only if the config/user_parameters.C file contains the following option :
+
+       jobfOptions |= CWB_JOBF_SAVE_TRGFILE;
+
+

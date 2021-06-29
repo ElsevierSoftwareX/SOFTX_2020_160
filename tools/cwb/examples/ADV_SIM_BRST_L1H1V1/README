@@ -1,0 +1,13 @@
+// Use this example to test CWB with noise for aLigo and a standard MDC BRST set
+
+to generate all necessary stuff do "make setup"
+  
+to change the cwb parameters edit config/user_parameters.C
+
+to run interactive cwb pipeline for job1 do "make cwb"
+
+to run interactive ced for job1 do "make ced"
+
+toy run 10 condor jobs do "make condor"
+
+to reset the directory do "make clean"

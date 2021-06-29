@@ -1,0 +1,238 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_REPORT" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_report \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.nf
+
+\fBUsage\fP
+
+This command produces background and simulation \fI\%web pages\fP\&.
+It needs a properly configured
+\fI\%user_pparameters.C\fP file.
+
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_report label action [option] user_parameters_file(optional) user_pparameters_file(optional)\fP
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBlabel\fP same label for the data, just like cwb_merge and cwb_setveto commands
+.IP \(bu 2
+\fBaction\fP :
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcreate\fP create a (simulation or background) report
+.IP \(bu 2
+\fBpe\fP create a parameter\-estimation report (simulation reports only)
+.IP \(bu 2
+\fBskymap\fP create a skymap\-statistics report (by using
+\fI\%https://github.com/reedessick/skymap_statistics\fP)
+.IP \(bu 2
+\fBlist\fP merge/report list the labels of ROOT files/web pages
+.IP \(bu 2
+\fBloudest\fP create condor dagman (dag + sub files) for the loudest events
+list produced by the background report (see \fBoptions loudest\fP)
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+\fBoption\fP specify lag(s) and superlag(s) (background reports only)
+.INDENT 2.0
+.IP \(bu 2
+\fBXlag\fP default : Xlag=\-1 the selected lags are : lag>0
+.IP \(bu 2
+\fBXslag\fP default : Xslag=\-1 the selected slags are : slag>=0
+.INDENT 2.0
+.IP \(bu 2
+Xlag=\-1 & Xslag=\-1 : lag>0 & slag>=0 (\fBBACKGROUND\fP)
+.IP \(bu 2
+Xlag =0 & Xslag =0 : lag=0 & slag=0 (\fBZERO LAG !!!\fP)
+.IP \(bu 2
+Xlag>=0 & Xslag>=0 : lag=Xlag & slag=Xslag
+.IP \(bu 2
+Xlag>=0 & Xslag=\-1 : lag=Xlag & slag=any
+.IP \(bu 2
+Xlag=\-1 & Xslag>=0 : lag=any & slag=Xslag
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+\fBoptions loudest\fP specify options for loudest action (background reports only)
+.INDENT 2.0
+.IP \(bu 2
+\fB\-evt\fP set the number of loudest events to be processed
+(\-nevt 0 : no limit) [default = pp_max_nloudest_list]
+.IP \(bu 2
+\fBrho\fP set the rho threshold above which events will be selected
+(rho[pp_irho]>RHO) [default = 0]
+.IP \(bu 2
+\fB\-idmin\fP set the min id number of the loudest events to be
+processed [default = 0 : no limit]
+.IP \(bu 2
+\fB\-idmax\fP set the max id number of the loudest events to be
+processed [default = 0 : no limit]
+.IP \(bu 2
+\fB\-ufile\fP set the user parameters file [default =
+$CWB_PARAMETERS_FILE]
+.IP \(bu 2
+\fB\-ced\fP set ced : true \-> produce CED [default = false]
+.IP \(bu 2
+\fB\-veto\fP set veto : true \-> events vetoed by pp vetoes are
+discarted [default = false]
+.IP \(bu 2
+\fB\-odir\fP set output directory name, which is created under the
+report dir [default = loudest]
+.IP \(bu 2
+\fB\-stage\fP auto = processing start from the last processed stage
+: full = full stage [default = auto]
+.UNINDENT
+.IP \(bu 2
+\fBXlag\fP default : Xlag=\-1 the selected lags are : lag>0
+.IP \(bu 2
+\fBno arguments\fP print help (exit with \(aqq\(aq)
+.IP \(bu 2
+\fBuser_parameters_file\fP alternative user_parameters file (optional)
+.IP \(bu 2
+\fBuser_pparameters_file\fP alternative user_pparameters file (optional)
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+* cwb_report M1 create
+  it creates a report page, background or simulation, depending from the value of the "simulation"
+  variable in user_parameters.C file (1=True; 0=False, hence background).
+
+* background and zero\-lag examples
+  cwb_report M1 create     \->  report for background (lag>0 & slag>=0)
+  cwb_report M1 create N M \->  report for background (lag=N & slag=M)
+  cwb_report M1 create 0 0 \->  report for zero lag
+
+* loudest examples (background only)
+  cwb_report M1.V_hvetoLH_cat3LH loudest \e
+    \(aq\-\-odir loud_rho1_gt_7d5 \-\-rho 7.5 \-\-ufile config/user_parameters_WavePeaks.C \-\-veto true \-\-nevt 0\(aq
+
+    select from the report loudest events list the events according to:
+
+    \- rho[pp_irho]>7.5
+    \- events are not vetoed by the post\-production vetoes
+    \- output directory name = loud_rho1_gt_7d5
+      is created under the dir report/postprod/report_dir/
+    \- it uses config/user_parameters_WavePeaks.C
+    \- nevt=0 : there are no limit on the number of selected events
+
+  The dag,sub condor files are produced under the condor directory.
+
+* cwb_report M1 pe
+  it creates the report page for Parameter\-Estimation (simulation only).
+
+
+* cwb_report skymap ced_dir/skyprobcc.fits
+  it creates the web page for skymap\-statistics (point estimate) : ced_dir/skyprobcc
+
+  The symbolic index file is copied to ced_dir and
+  a link to skymap\-statistics is added (Skymap Statistic ( point estimate ))
+
+
+* // only for CEDs created with PE (median skymap)
+  cwb_report skymap ced_dir/mskyprobcc.fits
+  it creates the web page for skymap\-statistics (median) : ced_dir/mskyprobcc
+
+  The symbolic index file is copied to ced_dir and
+  a link to skymap\-statistics is added (Skymap Statistic ( median ))
+
+
+* // only for CEDs created with PE (comparison skymap)
+  cwb_report skymap ced_dir/skyprobcc.fits \(aq\-\-fits ced_dir/cskyprobcc.fits\(aq
+  it creates the web page for comparison skymap\-statistics (point estimate vs median) : ced_dir/cskyprobcc
+
+  The symbolic index file is copied to ced_dir and
+  a link to skymap\-statistics is added (Skymap Statistic ( comparison ))
+
+
+* Examples of some web pages:
+
+  \- background :
+  https://ldas\-jobs.ligo.caltech.edu/~waveburst/reports  \e
+  /S6A_R4_BKG_L1H1V1_SGW_run1/postprod/M1.R_cc60_rho35_vED40/
+
+  \- background (zero lag) :
+  https://ldas\-jobs.ligo.caltech.edu/~waveburst/reports  \e
+  /S6A_R4_BKG_L1H1V1_SGW_run1/postprod/M1.R_cc60_rho35_vED40/
+
+  \- background after apply cwb_setveto :
+  https://ldas\-jobs.ligo.caltech.edu/~waveburst/reports  \e
+  /S6A_R4_BKG_L1H1V1_SGW_run1/postprod/                 \e
+  M1.VhvetoV_cat3LHV.R_hveto_cat3_pem_cc60_rho35_vED40/
+
+  \- simulation :
+  https://ldas\-jobs.ligo.caltech.edu/~waveburst/reports  \e
+  /ADV_SIM_BRST_LF_L1H1V1_1G_run1/postprod/M1.R_cc50_rho20_RHO20_win1/
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>                             
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">                                                      
+<!--                                                                           -->
+<!-- Author: CWB team (http://www.virgo.lnl.infn.it/Wiki/index.php/Main_Page)  -->
+<!--                                                                           -->
+<!--   Date: Sun Jan 13 16:13:38 2013                                          -->
+<!--                                                                           -->
+<head>                                                                                                                   
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />                                               
+<title>CWB Report</title>                                                                                       
+<meta name="rating" content="General" />                                                                                 
+<meta name="objecttype" content="Report" />                                                                              
+<meta name="keywords" content="software development, GW, Analisys, Virgo, LIGO " />                                                                                                                               
+<meta name="description" content="CWB - An Framework For GW Burst Data Analysis." />                              
+<link rel="shortcut icon" href="/~waveburst/LSC/waveburst/logo/cwb_icon" type="image/png" />                                          
+<link rel="icon" href="/~waveburst/LSC/waveburst/logo/cwb_logo_icon" type="image/png" />                                              
+<link rel="stylesheet" type="text/css" href="ROOT.css" id="CWBstyle" />                                                              
+<script type="text/javascript" src="ROOT.js"></script>                                                                                
+</head>                                                                                                                               
+<body  onload="javascript:SetValuesFromCookie();"><div id="body_content">                                                             
+<div id="root_header"><img src="https://ldas-jobs.ligo.caltech.edu/~waveburst/LSC/doc/cwb-lbanner.png" width="1100" height="180"
+ USEMAP="#cwb_map" alt="CWB banner"/></div>                                                                                           
+<map id="cwb_map" name="cwb_map"><area shape="rect" alt="" title="CWB
+Analysis" coords="3,1,236,172"
+href="http://www.virgo.lnl.infn.it/Wiki/index.php/Main_Page" target="_blanck"
+/><area shape="rect" alt="" title="CWB Manual" coords="240,1,627,171"
+href="https://ldas-jobs.ligo.caltech.edu/~waveburst/LSC/doc/cwb/man" target="" /><area shape="rect" alt="" title="LIGO Homepage" coords="631,1,844,88" href="http://www.ligo.caltech.edu/" target="_blanck" /><area shape="rect" alt="" title="VIRGO Homepage" coords="632,93,841,171" href="https://wwwcascina.virgo.infn.it/" target="_blanck" /></map>                                                                      
+
+<div id="toplinks">
+<div class="descrhead"><div class="descrheadcontent">
+<span class="descrtitle">Quick Links:</span>         
+<a class="descrheadentry" href="https://ldas-jobs.ligo.caltech.edu/~waveburst/LSC/doc/cwb/man">CWB Manual</a>
+<a class="descrheadentry" href="https://ldas-jobs.ligo.caltech.edu/~waveburst/doc/cwb/xman/library/html/files.html">CWB Reference</a>
+<a class="descrheadentry" href="https://trac.ligo.caltech.edu/watrepo/browser/wat/trunk">CWB Repository</a>
+<a class="descrheadentry" href="https://trac.ligo.caltech.edu/watrepo/report">CWB Reports</a>
+<a class="descrheadentry" href="http://root.cern.ch">ROOT Homepage</a>                          
+</div>                
+<script type="text/javascript">                                                                 
+function onSearch() {                                                                           
+var s='http://www.google.com/search?q=%s+site%3A%u+-site%3A%u%2Fsrc%2F+-site%3A%u%2Fexamples%2F';
+var ref=String(document.location.href).replace(/https?:\/\//,'').replace(/\/[^\/]*$/,'').replace(/\//g,'%2F');
+window.location.href=s.replace(/%u/ig,ref).replace(/%s/ig,escape(document.searchform.t.value));               
+return false;}                                                                                                
+</script>                                                                                                     
+</div>                                                                                                                                
+</div>                                                                                                                                
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">                                            
+<html><head>                                                                                                                          
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">                                                               
+<title>MAIN_Index</title>                                                                                                             
+<!-- Include the tabber code -->
+<script type="text/javascript" src="tabber.js"></script>
+<link rel="stylesheet" href="tabber.css" TYPE="text/css" MEDIA="screen">
+
+<script type="text/javascript">
+
+/* Optional: Temporarily hide the "tabber" class so it does not "flash"   on
+ * the page as plain HTML. After tabber runs, the class is changed
+   to "tabberlive" and it will appear. */
+
+document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+
+</script>
+                                                                                                                     
+</head>                                                                                                                         
+

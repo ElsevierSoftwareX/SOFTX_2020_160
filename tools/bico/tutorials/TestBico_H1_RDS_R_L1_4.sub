@@ -1,0 +1,13 @@
+universe = vanilla
+getenv = true
+priority = $(PRI)
+on_exit_hold = ( ExitCode != 0 )
+request_memory = 3000
+executable = TestBico_H1_RDS_R_L1_4.sh
+environment = JOBID=$(PID);BICO_CHNAME=$(BICO_CHNAME) 
+output = /home/vedovato/Y2/coherent/SVN/watrepo/wat/trunk/tools/bico/tutorials/log/$(PID)_TestBico_H1_RDS_R_L1_4.out
+error = /home/vedovato/Y2/coherent/SVN/watrepo/wat/trunk/tools/bico/tutorials/log/$(PID)_TestBico_H1_RDS_R_L1_4.err
+log = /local/user/vedovato/TestBico_H1_RDS_R_L1_4.log
+notification = never
+rank=memory
+queue

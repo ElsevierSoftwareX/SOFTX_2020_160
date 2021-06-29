@@ -1,0 +1,294 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_CONDOR" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_condor \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.sp
+This page provides a description of the cwb_condor command.
+.nf
+
+\fBUsage\fP
+
+.in +2
+This command prepares and submits the analysis jobs on the considered computing cluster by using the condor batch system.
+
+.in -2
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_condor\fP (without arguments)
+Prints help
+.UNINDENT
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_condor benchmark\fP
+Prints help in the benchmark type
+.UNINDENT
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_condor action [dag_file/cwb_stage] [input_dir]\fP
+Prepares and submits the jobs
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBFurther informations\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+The following options can be passed to cwb_condor:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+action =     create    : it creates the dag and sub files under the condor directory
+
+             submit    : it submits the jobs to the considered computing cluster
+
+             recovery  : it compares the list of jobs in the dag file and checks the number of jobs
+                         completed (from history). It produces the dag file data_label.dag.recovery.x
+                         (x = recovery version).
+
+             resume    : same as recovery but is done only if previous cwb_stage is present
+                         in the output dir
+             status    : it shows the jobs status.
+
+             remove    : (R/H/I) it remove the jobs with status (Running/Held/Idle).
+
+             check     : it checks which jobs have been completed.
+                         (by reading the history reported in the output root files).
+
+             list      : it lists the jobs reported in the dag file.
+
+             benchmark : it shows the computation load and related statistics
+                         (see cwb_condor benchmark).
+
+             cleanup   : remove broken symbolic links in the condor log dir (avoid init condor failure)
+                         to be used when jobs are in held status.
+
+             sdag      : read the standard \e*.dag file produced with cwb_condor create and produced
+                         a new dag file \e*.sdag
+                         The \e*.sdag permits to submit in each node N jobs in sequential mode
+
+             mtpe      : used to generate the multitask mode for the Parameter Estimation analysis
+                         (see How to do the Parameter Estimation Analysis).
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+dag_file/cwb_stage (optional) =
+
+
+             dag_file  : path to the dag file dag_file to be submitted
+                         (used as cwb_condor submit dag_file).
+
+             cwb_stage : used in the 2G analysis
+                         [FULL(default)/INIT/STRAIN/CSTRAIN/COHERENCE/SUPERCLUSTER/LIKELIHOOD]
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+input_dir (optional)  : it is used with the recovery option. The default input directory is the
+                        output_dir directory defined in cwb_parameters.C
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+The following command lines launch a \fBfull stage analysis\fP:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor create\fP
+.IP \(bu 2
+\fBcwb_condor submit\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command lines launch a \fBtwo\-stage analysis\fP:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor create SUPERCLUSTER\fP
+.IP \(bu 2
+\fBcwb_condor submit\fP
+.IP \(bu 2
+\fBcwb_condor recovery LIKELIHOOD outpu\fP
+.IP \(bu 2
+\fBcwb_condor submit condor/XXX.dag.recovery.x\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command line creates the \fBcondor/data_label.sub\fP and \fBcondor/data_label.dag\fP condor files:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor create\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command lines submit the analysis jobs to the considered computing cluster:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor submit\fP
+.IP \(bu 2
+\fBcwb_condor submit condor_data/data_label.dag\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command line recovers the analysis which did not get completed and creates the file \fBcondor/data_label.dag.recovery.1\fP:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor recovery\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command line submits the dag files listing the recovered files:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor submit condor/data_label.dag.recovery.1\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command line creates the condor files for the \fBSUPERCLUSTER stage\fP of the 2G analysis:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor create SUPERCLUSTER\fP
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+The intermediate jobs are stored in the node\(aqs temporary directory.  Symbolic links to the remote job files are created in the output directory.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command lines complete an analysis conducted with the 2G cWB pipeline starting from an intermediate stage:
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor recovery LIKELIHOOD\fP
+.IP \(bu 2
+\fBcwb_condor submit condor/data_label.dag.recovery.1\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+The following command line creates the condor/file.sdag file from the condor/file.dag (it defines 10 sequential jobs per node):
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBcwb_condor sdag 10 condor/file.dag\fP
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

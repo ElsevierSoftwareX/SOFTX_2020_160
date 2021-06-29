@@ -1,0 +1,241 @@
+
+# ---------------------------------------------------------------
+# GWTC-1 Catalog event definitions
+#
+# https://www.gw-openscience.org/eventapi/html/allevents/
+#
+# @ https://www.gw-openscience.org/catalog/GWTC-1-confident/html/
+#
+# GW_GPS          : event GPS time
+# GW_DATA_START   : frame file GPS start time
+# GW_DATA_LENGHT  : frame data segment lenght time (sec)
+# GW_DATA_SRATE   : frame data segment sample rate (Hz)
+# GW_DATA_RELEASE : frame data segment release
+# GW_DATA_VERSION : frame data segment version
+# GW_SEG_START    : data segment start GPS time
+# GW_SEG_STOP     : data segment stop GPS time
+# GW_SAMPLE_SEED  : seed used to randomly select posterior sample for simulation (if <0 then the first sample is selected)
+# GW_CATALOG      : event catalog name
+# GW_SEARCH       : cWB search
+# NET_LHV         : FALSE/TRUE -> detected only by LH / detected by LHV 
+# ---------------------------------------------------------------
+
+ifeq ($(GW_NAME),GW150914)
+
+  GW_GPS        = 1126259462
+  GW_DATA_START = 1126257415
+  GW_SEG_START  = 1126258790
+  GW_SEG_STOP   = 1126260010
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v3
+  GW_SAMPLE_SEED  = -1
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW151012)
+
+  GW_GPS        = 1128678900
+  GW_DATA_START = 1128676853
+  GW_SEG_START  = 1128677990
+  GW_SEG_STOP   = 1128679210
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v3
+  GW_SAMPLE_SEED  = 3 
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW151226)
+
+  GW_GPS        = 1135136350
+  GW_DATA_START = 1135134303
+  GW_SEG_START  = 1135136228
+  GW_SEG_STOP   = 1135137448
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v2
+  GW_SAMPLE_SEED  = 8
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW170104)
+
+  GW_GPS        = 1167559936
+  GW_DATA_START = 1167557889
+  GW_SEG_START  = 1167559190
+  GW_SEG_STOP   = 1167560410
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v2
+  GW_SAMPLE_SEED  = -1
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW170608)
+
+  GW_GPS        = 1180922494
+  GW_DATA_START = 1180920447
+  GW_SEG_START  = 1180922390
+  GW_SEG_STOP   = 1180923610
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v3
+  GW_SAMPLE_SEED  = 7
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW170729)
+
+  GW_GPS        = 1185389807
+  GW_DATA_START = 1185387760
+  GW_SEG_START  = 1185388790
+  GW_SEG_STOP   = 1185390010
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 5
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+  NET_LHV       = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW170809)
+
+  GW_GPS        = 1186302519
+  GW_DATA_START = 1186300472
+  GW_SEG_START  = 1186301990
+  GW_SEG_STOP   = 1186303210
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 2
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+  NET_LHV       = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW170814)
+
+  GW_GPS        = 1186741861
+  GW_DATA_START = 1186739814
+  GW_SEG_START  = 1186741190
+  GW_SEG_STOP   = 1186742410
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v3
+  GW_SAMPLE_SEED  = -1
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+  NET_LHV       = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW170817)
+
+  GW_GPS        = 1187008882
+  GW_DATA_START = 1187006835
+  GW_SEG_START  = 1187008790
+  GW_SEG_STOP   = 1187010010
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v3
+  GW_SAMPLE_SEED  = -1
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+  NET_LHV       = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW170818)
+
+  GW_GPS        = 1187058327
+  GW_DATA_START = 1187056280
+  GW_SEG_START  = 1187057990
+  GW_SEG_STOP   = 1187059210
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 3
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+  NET_LHV       = TRUE
+  # change the subnet to permit the detection
+  GW_CONFIG_FIXA = sed -i 's/subnet = 0.5;/subnet = 0.0;/g'
+  # change the netRHO to permit the LHV detection
+  GW_CONFIG_FIXB = sed -i 's/netRHO = 5.5;/netRHO = 4.5;/g'
+
+endif
+
+ifeq ($(GW_NAME),GW170823)
+
+  GW_GPS        = 1187529256
+  GW_DATA_START = 1187527209
+  GW_SEG_START  = 1187528390
+  GW_SEG_STOP   = 1187529610
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = -1
+  GW_CATALOG    = GWTC-1
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_CATALOG),GWTC-1)
+
+  # GWOSC definitions
+  GWOSC_URL = https://www.gw-openscience.org/eventapi/html/GWTC-1-confident
+  GWOSC_DQ  = https://www.gw-osc.org/timeline/segments
+  GWOSC_PE  = https://dcc.ligo.org/public/0157/P1800370/005
+  GWOSC_PSD = https://dcc.ligo.org/public/0158/P1900011/001
+
+  GW_SEARCH = BBH
+  GW_MODEL  = IMRPhenomPv2
+
+  # if configuration file is not provided by the user then we select the default configurations
+  ifndef CFG
+    ifeq ($(IFO),V1)
+      GW_CFG = $(HOME_GWOSC)/gwosc_parameters_lhv_gwtc-1.C
+    else
+      GW_CFG = $(HOME_GWOSC)/gwosc_parameters_lh_gwtc-1.C
+    endif
+
+    ifeq ($(GW_NAME),GW170817)
+      ifeq ($(IFO),V1)
+        GW_CFG = $(HOME_GWOSC)/gwosc_parameters_gw170817_lhv_gwtc-1.C
+      else
+        GW_CFG = $(HOME_GWOSC)/gwosc_parameters_gw170817_lh_gwtc-1.C
+      endif
+    endif
+  else
+    GW_CFG = ${CFG}
+  endif
+
+endif
+

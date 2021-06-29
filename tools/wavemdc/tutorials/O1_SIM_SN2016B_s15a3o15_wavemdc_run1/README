@@ -1,0 +1,57 @@
+// create working directory
+
+mkdir O1_SIM_SN2016B_s15a3o15_wavemdc_run1
+cd O1_SIM_SN2016B_s15a3o15_wavemdc_run1
+
+// create sub dirs
+
+mkdir frames log
+
+// create link to script
+
+ln -s /home/vedovato/Y2/coherent/SVN/watrepo/wat/trunk/tools/wavemdc/WaveMDC.sh
+
+// generate list of segments used to generate frame files
+// create or copy the GenerateSegmentList.C macro
+// read and change the parameters in the macro GenerateSegmentList.C
+// run the macro
+
+broot GenerateSegmentList.C
+
+// edit wmdc_config.C to setup the MDC to be generated
+
+// clean the frame and log directories
+
+rm -rf frames/*
+rm log/*
+
+// created dag,sub files
+
+wmdc_condor create
+
+// submit condor jobs (dag name is the working directory name)
+
+condor_submit_dag SN2016B_s15a3o15.dag
+
+// when condor is completed do (merge log files)
+
+wmdc_condor log
+
+// final log file 
+// declared in the config/user_parameters.C file :
+// strcpy(injectionList,"frames/L1H1-SN2016B_s15a3o15-Log.txt");
+
+frames/L1H1-SN2016B_s15a3o15-Log.txt
+
+// final frame file list
+// declared in the config/user_parameters.C file :
+// strcpy(channelNamesMDC[0],"L1:s15a2o09");
+// strcpy(channelNamesMDC[1],"H1:s15a2o09");
+// strcpy(frFiles[2],"frames/L1H1-SN2016B_s15a3o15-Log.frl");
+
+frames/L1H1-SN2016B_s15a3o15-Log.frl
+
+// to check the frame file do :
+
+FrDump -d 2 -i frames/L1H1-SN2016B_s15a3o15-11352/L1H1-SN2016B_s15a3o15-1135239243-600.gwf
+

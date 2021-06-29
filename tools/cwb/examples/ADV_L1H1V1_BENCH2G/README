@@ -1,0 +1,6 @@
+This working directory is used to test the pipeline in simulation and background modes
+To see the options do :
+make help
+
+The directory bench contains the log & root files of SIM & BKG job=25 
+Can be used to compare with new version of cWB

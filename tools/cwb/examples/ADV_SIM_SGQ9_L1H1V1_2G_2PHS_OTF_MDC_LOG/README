@@ -1,0 +1,36 @@
+// 1G -  MDC on the fly - plugin generate log mdc 
+
+// MDC are generated on the fly
+// In this example the user plugin generate log mdc
+// at the end the macro cwb_merge_logmdc is applied to collect all mdc logs
+
+1) make directories for cwb
+
+2) generate frames for ADV ifos L1 H1 V1
+   to change the default vaules edit macro/CreateFramesNOISE.C
+
+to generate all necessary stuff do "make setup"
+  
+to change the cwb parameters edit config/user_parameters.C
+
+to run cwb pipeline do "make cwb"
+
+to reset the directory do "make clean"
+
+-----------------------------------------
+2G analysis
+-----------------------------------------
+
+//phase 1+2
+make cwb
+
+// phase 1
+cwb_inet2G config/user_parameters.C 1 931158395 data1
+or
+make cwb1
+
+// phase 2
+cwb_inet2G "job file produced in phase 1" 2 931158395 data2
+or
+make cwb2 IF="job file produced in phase 1"
+

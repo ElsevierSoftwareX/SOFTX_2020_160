@@ -1,0 +1,22 @@
+// create working dirs
+mkdir config
+mkdir input
+mkdir output
+
+// create input/H1_RDS_R_L1.frl frame list
+ligo_data_find --observatory=H --type=H1_RDS_R_L1 --gps-start-time=942440000 --gps-end-time=942570000 --url-type=file >! input/H1_RDS_R_L1.frl
+
+// create input/H1_LDAS_C02_L2.frl frame list
+ligo_data_find --observatory=H --type=H1_LDAS_C02_L2 --gps-start-time=942440000 --gps-end-time=942570000 --url-type=file >! input/H1_LDAS_C02_L2.frl
+
+// set environment 
+source /home/vedovato/Y2/coherent/SVN/watrepo/wat/trunk/tools/config.csh
+
+// create bico config 
+config/BicoConfig.C
+
+// execute bico
+wavebico config/BicoConfig.C
+
+// final result is saved in the output dir
+output/bico_O2_942457664S_100L_5R_H1_LDAS-STRAIN_112Hz_16Hz_H1_SUS-ITMX_COIL_LL_0Hz_4Hz.png

@@ -1,0 +1,9 @@
+// 1G cwb simulation SG235Q9 (On the Fly) with ADV detectors L1H1V1 (On the Fly)
+
+make setup	// creates directories
+make cwb	// do 1G analysis
+make ced	// do ced
+
+// draw probability slymap produced in ced
+root -l macro/DrawProbability.C
+

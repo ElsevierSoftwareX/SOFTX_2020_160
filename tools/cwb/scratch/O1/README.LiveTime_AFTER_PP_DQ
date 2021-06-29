@@ -1,0 +1,28 @@
+// These following procedure compute the Live Time after the Post-Production DQ CAt2/4 & Hveto
+
+// For Zero Lag 
+
+broot GetLiveTime_ZeroLag_AFTER_PP_DQ.C
+
+Get the exact live time after DQ :
+
+----> BEFORE PP DQ : l1h1_live_time       : 1367400 sec - 15.8264 days
+----> AFTER PP DQ  : l1h1_time_job_cat234 : 1357298 sec - 15.7095 days
+
+// For Backfround
+
+broot GetLiveTime_BKG_AFTER_PP_DQ.C
+
+Get a conservative estimation of live time after DQ :
+
+----> BEFORE PP DQ (from the report page) : 
+      non-zero lags : 2360589 lags - 2142990024600.00 sec = 24803125.28 days = 67953.8 years 
+
+----> AFTER PP DQ (from GetLiveTime_BKG_AFTER_PP_DQ.C) :
+
+     L1 CAT234 vetoed time (ALL) : 3.25813e+06/2.0339e+09 Vetoed (%) : 0.160192
+     H1 CAT234 vetoed time (ALL) : 1.31132e+07/2.0339e+09 Vetoed (%) : 0.644732
+
+     CONSERVATIVE_PERC = L1+H1 = 0.160192+0.644732 = 0.804924 (%)
+
+     livetime-after-dq = 2142990024600.00*(1-0.804924/100.) = 2125740583574. sec = 24603478. days = 67406.8 years

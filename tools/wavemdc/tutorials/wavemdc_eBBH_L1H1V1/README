@@ -1,0 +1,30 @@
+// edit wmdc_config.C
+
+// create eBBH list -> macro/eBBH_3.5e06_10_25_2.lst
+root -l macro/CreateListEBBH.C
+
+// create segment file list -> Segments/eBBH_SegmentsList.txt
+root -l macro/CreateSegList.C
+
+// create condor stuff -> in wmdc_config.C is defined only 1 job
+wmdc_condor create
+
+condor_submit_dag wavemdc_eBBH.dag
+
+// when condor is completed do
+wmdc_condor log
+
+// interactive (test first job)
+setenv PID 1
+setenv WMDC_SEG_START 1
+setenv WMDC_SEG_STOP 1
+root -b -q -l ${WMDC_CONFIG} ${HOME_WAVEMDC}/WaveMDC.C
+root -n -l -b ${CWB_ROOTLOGON_FILE} ${WMDC_CONFIG} ${HOME_WAVEMDC}/wmdc_condor_log.C
+
+// check output
+FrDump -d 2 -i frames/L1H1V1-wavemdc_eBBH-9311/L1H1V1-wavemdc_eBBH-931158000-1000.gwf
+cat frames/L1H1V1-wavemdc_eBBH-9311/L1H1V1-wavemdc_eBBH-931158000-1000-Log.txt
+
+// display frame data
+// change definitions in the macro
+root -l macro/ReadDisplayFrame.C

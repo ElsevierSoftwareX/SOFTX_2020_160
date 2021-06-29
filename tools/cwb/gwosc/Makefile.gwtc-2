@@ -1,0 +1,433 @@
+
+# ---------------------------------------------------------------
+# GWTC-2 Catalog event definitions
+#
+# https://www.gw-openscience.org/eventapi/html/allevents/
+#
+# @ https://www.gw-openscience.org/eventapi/html/GWTC-2
+#
+# GW_GPS          : event GPS time
+# GW_DATA_START   : frame file GPS start time
+# GW_DATA_LENGHT  : frame data segment lenght time (sec)
+# GW_DATA_SRATE   : frame data segment sample rate (Hz)
+# GW_DATA_RELEASE : frame data segment release
+# GW_DATA_VERSION : frame data segment version
+# GW_SEG_START    : data segment start GPS time
+# GW_SEG_STOP     : data segment stop GPS time
+# GW_SAMPLE_SEED  : seed used to randomly select posterior sample for simulation (if <0 then the first sample is selected, if=0 -> maxl, if=1 -> map)
+# GW_CATALOG      : event catalog name
+# GW_MODEL        : posterior samples model used for simulation
+# GW_SEARCH       : cWB search
+# NET_LHV         : FALSE/TRUE -> detected only by LH / detected by LHV 
+# ---------------------------------------------------------------
+
+ifeq ($(GW_NAME),GW190408_181802)
+
+  GW_GPS        = 1238782700
+  GW_DATA_START = 1238780653
+  GW_SEG_START  = 1238781590
+  GW_SEG_STOP   = 1238782810
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190412)
+
+  GW_GPS        = 1239082261
+  GW_DATA_START = 1239080215
+  GW_SEG_START  = 1239081590
+  GW_SEG_STOP   = 1239082810
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v3
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv3HM
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+  ifeq ($(GW_SIM),true)
+    # lalsuite version must be > 2.2.0
+    LAL_SUITE_VER := $(shell $(HOME_LAL)/bin/lalsimulation_version | grep LALSimulation | awk '{print $$2}' | awk -F. '{print $$3+100*($$2+100*$$1)}')
+    ifeq ($(shell test $(LAL_SUITE_VER) -lt 20200; echo $$?),0)
+      LAL_SUITE_VER := $(shell $(HOME_LAL)/bin/lalsimulation_version | grep LALSimulation)
+      $(error $(GW_NAME) simulation with $(GW_MODEL) requires lalsimulation version >= 2.2.0, current version is "$(LAL_SUITE_VER)")
+    endif
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW190421_213856)
+
+  GW_GPS        = 1239917954
+  GW_DATA_START = 1239915907
+  GW_SEG_START  = 1239916790
+  GW_SEG_STOP   = 1239918010
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 7
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW190503_185404)
+
+  GW_GPS        = 1240944862
+  GW_DATA_START = 1240942815
+  GW_SEG_START  = 1240943990
+  GW_SEG_STOP   = 1240945210
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190512_180714)
+
+  GW_GPS        = 1241719652
+  GW_DATA_START = 1241717605
+  GW_SEG_START  = 1241719190
+  GW_SEG_STOP   = 1241720410
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190513_205428)
+
+  GW_GPS        = 1241816086
+  GW_DATA_START = 1241814039
+  GW_SEG_START  = 1241815190
+  GW_SEG_STOP   = 1241816107
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190517_055101)
+
+  GW_GPS        = 1242107479
+  GW_DATA_START = 1242105432
+  GW_SEG_START  = 1242107200
+  GW_SEG_STOP   = 1242108010
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190519_153544)
+
+  GW_GPS        = 1242315362
+  GW_DATA_START = 1242313315
+  GW_SEG_START  = 1242314977
+  GW_SEG_STOP   = 1242315610
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190521)
+
+  GW_GPS        = 1242442967
+  GW_DATA_START = 1242440920
+  GW_SEG_START  = 1242442790
+  GW_SEG_STOP   = 1242444010
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v3
+  GW_SAMPLE_SEED  = 2
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv3HM
+  GW_SEARCH     = IMBHB
+  STATUS        = TRUE
+
+  ifeq ($(GW_SIM),true)
+    # lalsuite version must be > 2.2.0
+    LAL_SUITE_VER := $(shell $(HOME_LAL)/bin/lalsimulation_version | grep LALSimulation | awk '{print $$2}' | awk -F. '{print $$3+100*($$2+100*$$1)}')
+    ifeq ($(shell test $(LAL_SUITE_VER) -lt 20200; echo $$?),0)
+      LAL_SUITE_VER := $(shell $(HOME_LAL)/bin/lalsimulation_version | grep LALSimulation)
+      $(error $(GW_NAME) simulation with $(GW_MODEL) requires lalsimulation version >= 2.2.0, current version is "$(LAL_SUITE_VER)")
+    endif
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW190521_074359)
+
+  GW_GPS        = 1242459857
+  GW_DATA_START = 1242457810
+  GW_SEG_START  = 1242459590
+  GW_SEG_STOP   = 1242460810
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW190602_175927)
+
+  GW_GPS        = 1243533584
+  GW_DATA_START = 1243531538
+  GW_SEG_START  = 1243532390
+  GW_SEG_STOP   = 1243533610
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = IMBHB
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190701_203306)
+
+  GW_GPS        = 1246048404
+  GW_DATA_START = 1246046357
+  GW_SEG_START  = 1246048236
+  GW_SEG_STOP   = 1246049456
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = IMBHB
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190706_222641)
+
+  GW_GPS        = 1246487219
+  GW_DATA_START = 1246485172
+  GW_SEG_START  = 1246486790
+  GW_SEG_STOP   = 1246488010
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = IMBHB
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190707_093326)
+
+  GW_GPS        = 1246527223
+  GW_DATA_START = 1246525177
+  GW_SEG_START  = 1246526390
+  GW_SEG_STOP   = 1246527610
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+  ifeq ($(IFO),V1)
+    $(error "Virgo not available for GW event: "$(GW_NAME))
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW190727_060333)
+
+  GW_GPS        = 1248242631
+  GW_DATA_START = 1248240584
+  GW_SEG_START  = 1248242390
+  GW_SEG_STOP   = 1248243610
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190728_064510)
+
+  GW_GPS        = 1248331528
+  GW_DATA_START = 1248329481
+  GW_SEG_START  = 1248331190
+  GW_SEG_STOP   = 1248332410
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190814)
+
+  GW_GPS        = 1249852254
+  GW_DATA_START = 1249850209
+  GW_SEG_START  = 1249851590
+  GW_SEG_STOP   = 1249852810
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v2
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv3HM
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+  ifeq ($(GW_SIM),true)
+    # lalsuite version must be > 2.2.0
+    LAL_SUITE_VER := $(shell $(HOME_LAL)/bin/lalsimulation_version | grep LALSimulation | awk '{print $$2}' | awk -F. '{print $$3+100*($$2+100*$$1)}')
+    ifeq ($(shell test $(LAL_SUITE_VER) -lt 20200; echo $$?),0)
+      LAL_SUITE_VER := $(shell $(HOME_LAL)/bin/lalsimulation_version | grep LALSimulation)
+      $(error $(GW_NAME) simulation with $(GW_MODEL) requires lalsimulation version >= 2.2.0, current version is "$(LAL_SUITE_VER)")
+    endif
+  endif
+
+endif
+
+ifeq ($(GW_NAME),GW190828_063405)
+
+  GW_GPS        = 1251009263
+  GW_DATA_START = 1251007216
+  GW_SEG_START  = 1251008390
+  GW_SEG_STOP   = 1251009610
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190828_065509)
+
+  GW_GPS        = 1251010527
+  GW_DATA_START = 1251008480
+  GW_SEG_START  = 1251009590
+  GW_SEG_STOP   = 1251010810
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_NAME),GW190915_235702)
+
+  GW_GPS        = 1252627040
+  GW_DATA_START = 1252624993
+  GW_SEG_START  = 1252625990
+  GW_SEG_STOP   = 1252627210
+  GW_DATA_RELEASE = R1
+  GW_DATA_VERSION = v1
+  GW_SAMPLE_SEED  = 0
+  NET_LHV       = TRUE
+  GW_CATALOG    = GWTC-2
+  GW_MODEL      = C01:IMRPhenomPv2
+  GW_SEARCH     = BBH
+  STATUS        = TRUE
+
+endif
+
+ifeq ($(GW_CATALOG),GWTC-2)
+
+  # GWOSC definitions
+  GWOSC_URL  = https://www.gw-openscience.org/eventapi/html/GWTC-2
+  GWOSC_DQ   = https://www.gw-osc.org/timeline/segments
+  GWOSC_PE   = https://dcc.ligo.org/LIGO-P2000223/public
+  #GWOSC_PSD = 
+
+  # if configuration file is not provided by the user then we select the default configurations
+  ifndef CFG
+    ifeq ($(GW_SEARCH),BBH)
+      ifeq ($(IFO),V1)
+        GW_CFG = $(HOME_GWOSC)/gwosc_parameters_bbh_lhv_gwtc-2.C
+      else
+        GW_CFG = $(HOME_GWOSC)/gwosc_parameters_bbh_lh_gwtc-2.C
+      endif
+    endif
+
+    ifeq ($(GW_SEARCH),IMBHB)
+      ifeq ($(IFO),V1)
+        GW_CFG = $(HOME_GWOSC)/gwosc_parameters_imbhb_lhv_gwtc-2.C
+      else
+        GW_CFG = $(HOME_GWOSC)/gwosc_parameters_imbhb_lh_gwtc-2.C
+      endif
+    endif
+  else
+    GW_CFG = ${CFG}
+  endif
+
+endif
+

@@ -1,0 +1,72 @@
+// ========================================================================
+// list of test analysis using thr frames generated following the 
+// procedure described in README.frames
+//
+// we describe three analysis types 
+// by default the analysis parameter is set = '2G' in all configurations files
+// if you want to switch to '1G' analysis set 'strcpy(analysis,"1G");
+//
+// 1) simulation analysis
+// 2) production zero lag analysis
+// 3) production zero lag analysis : strain+mdc are in 2 separate channels      
+//
+// ========================================================================
+
+// ------------------------------------------------------------------------
+// 1) simulation analysis
+//
+// frames must be produced in mode=SIM -> frames contain strains & mdc in separate channels
+// 
+// to change the cwb parameters for the cwb analysis use
+// config/sim_parameters.C
+// ------------------------------------------------------------------------
+
+- to run simulation with cwb pipeline do 
+  make sim
+- output files contain mdc SG1053Q9 at SNR=30
+
+- to run ced simulation with cwb pipeline do 
+  make sced
+- output ced contains mdc SG1053Q9 at SNR=30
+
+// ------------------------------------------------------------------------
+// 2) production zero lag analysis
+//
+// frames must be produced in mode=ZPROD -> frames contain strain+mdc ina single channel
+// 
+// to change the cwb parameters for the the zero lag production cwb analysis use
+// config/zprod_parameters.C
+// ------------------------------------------------------------------------
+
+- to run production zero lag with cwb pipeline do      
+  make zprod
+- output files contain mdc SG1053Q9 at SNR=50
+
+- to run ced production zero lag with cwb pipeline do      
+  make zpced
+- output ced contains mdc SG1053Q9 at SNR=50
+
+// ------------------------------------------------------------------------
+// 3) production zero lag analysis : strain+mdc are in 2 separate channels      
+// 
+// frames must be produced in mode=SIM    
+//
+// to change the cwb parameters for the cwb analysis use
+// config/sim_parameters.C
+// ------------------------------------------------------------------------
+
+- to run production zero lag (merge strain+mdc) with cwb pipeline do      
+  make mzprod
+- output files contain mdc SG1053Q9 at SNR=60
+
+- to run ced production zero lag (merge strain+mdc) with cwb pipeline do      
+  make mzpced
+- output ced contains mdc SG1053Q9 at SNR=60
+
+// ------------------------------------------------------------------------
+// clean directory
+// ------------------------------------------------------------------------
+
+- to reset the directory do   
+  make clean
+

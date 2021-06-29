@@ -1,0 +1,17 @@
+universe = vanilla
+getenv = true
+priority = $(PRI)
+on_exit_hold = ( ExitCode != 0 )
+request_memory = 3000
+executable = cwb.sh
+job_machine_attrs = Machine
+job_machine_attrs_history_length = 5
+requirements = target.machine =!= MachineAttrMachine1 && target.machine =!= MachineAttrMachine2 && target.machine =!= MachineAttrMachine3 && target.machine =!= MachineAttrMachine4 && target.machine =!= MachineAttrMachine5
+environment = CWB_JOBID=$(PID);CWB_UFILE=$(CWB_UFILE);CWB_STAGE=$(CWB_STAGE)
+accounting_group = ligo.prod.o1.burst.allsky.cwboffline
+output = /home/vedovato/O1/O1_12Sep19Jan_C01/O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS/log/$(PID)_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS_$(CWB_STAGE).out
+error = /home/vedovato/O1/O1_12Sep19Jan_C01/O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS/log/$(PID)_O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS_$(CWB_STAGE).err
+log = /atlas/user/atlas7/vedovato/condor/O1_12Sep19Jan_C01_BKG_LF_rMRA_CNAF_vs_ATLAS.log
+notification = never
+rank=memory
+queue

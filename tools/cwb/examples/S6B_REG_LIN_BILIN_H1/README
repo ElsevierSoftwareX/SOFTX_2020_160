@@ -1,0 +1,80 @@
+// ----------------------------------------------------------
+// Example to produce Ranking/Cleaning with Regression 1 DETECTOR
+// ----------------------------------------------------------
+
+// ----------------------------------------------------------
+// create working directory
+// ----------------------------------------------------------
+
+mkdir S6B_REG_LIN_BILIN_H1
+
+cd S6B_REG_LIN_BILIN_H1
+
+cwb_mkdir .
+
+// ----------------------------------------------------------
+// make config file
+// ----------------------------------------------------------
+
+config/user_parametrs.C
+
+// ----------------------------------------------------------
+// make input files in input directory
+// ----------------------------------------------------------
+
+// target segment list (CAT0,CAT1,CAT2)
+
+cp /home/salemi/S6/coherent/offline/SEGMENTS/S6B_R9_segments/S6B_OFFLINE_H1SCIENCE.txt input/.
+cp /home/salemi/S6/coherent/offline/SEGMENTS/S6B_R9_segments/S6B_OFFLINE_H1_DQCAT1SEGMENTS.txt input/.
+cp /home/salemi/S6/coherent/offline/SEGMENTS/S6B_R9_segments/S6B_OFFLINE_H1_DQCAT2SEGMENTS.txt input/.
+cp /home/salemi/S6/coherent/offline/SEGMENTS/lists/S6B_R6_H1_LDAS_C02_L2.frames input/. 
+
+//ligo_data_find --observatory=H --type=H1_LDAS_C02_L2 --gps-start-time=937473000 --gps-end-time=947017000 --url-type=file > input/H1_LDAS_C02_L2_937473000_947017000.frl 
+
+// witness frame file list
+
+ligo_data_find --observatory=H --type=H1_RDS_R_L1 --gps-start-time=937473000 --gps-end-time=947017000 --url-type=file > input/H1_RDS_R_L1_937473000_947017000.frl
+
+
+// witness channel list
+
+FrDump -d 4 -i /atlas/data/d15/LSC/H/94240/H-H1_RDS_R_L1-942401088-64.gwf | grep 0.0004882 | awk '{print $1}' > input/S6B_H1_Witness_Channel_List.txt
+
+// remove Vector: from input/S6B_H1_Witness_Channel_List.txt
+open file with vi and type :
+then
+%s/Vector://g
+
+
+// ----------------------------------------------------------
+// create condor stuff
+// ----------------------------------------------------------
+
+// cd working directory
+cwb_condor create
+
+cd condor
+condor_submit_dag S6B_REG_LIN_BILIN_H1.dag
+
+// ----------------------------------------------------------
+// interactive regression to job 1000
+// ----------------------------------------------------------
+
+// cd working directory
+// select Ranking or Cleaning Reagression in config/user_parameters.C 
+
+cwb_inet 1000
+
+// howto display channels with rank(1) > 0.98
+cat data/linear_regression_rank_H1_937473630_664_S6B_REG_LIN_BILIN_H1_job1000.txt | awk '$6>0.98'
+
+// ----------------------------------------------------------
+// display time-frequency target/cleaned channel with FrDisplay
+// ----------------------------------------------------------
+
+// noisy frame
+FrDisplayPROC -t H1:LDAS-STRAIN -i oframes/R-H-H1_LDAS_C02_L2-939304792-600.gwf -k "-Bu -Hp -o 6 -a 40"
+
+// cleaned frame
+FrDisplayPROC -t H1:LDAS-STRAIN -i oframes/R-H-H1_LDAS_C02_L2-939304792-600.gwf -k "-Bu -Hp -o 6 -a 40"
+

@@ -1,0 +1,37 @@
+// macro used to produce skymap 
+
+DrawSkyMapPRC.C
+
+// MEDIAN50	: PRC median 50%
+// MEDIAN90	: PRC median 90%
+// WRC50	: Normalized residual energy 50%
+// EFFICIENCY   : EFFICIENCY
+
+Ex: 
+root -l 'macro/DrawSkyMapPRC.C+("data/wave_ADV_SIM_BRST_LF_L1H1V1_run1.M1.root","EFFICIENCY")'
+root -l 'macro/DrawSkyMapPRC.C+("data/wave_ADV_SIM_BRST_LF_L1H1V1_run1.M1.root","MEDIAN50")'
+root -l 'macro/DrawSkyMapPRC.C+("data/wave_ADV_SIM_BRST_LF_L1H1V1_run1.M1.root","MEDIAN90")'
+root -l 'macro/DrawSkyMapPRC.C+("data/wave_ADV_SIM_BRST_LF_L1H1V1_run1.M1.root","WRC50")'
+
+where the input root file is the merged of the output root files
+
+// macro used to produce lars plots 
+
+DrawLarsHistogramPRC.C  
+
+Ex:
+root -l 'macro/DrawLarsHistogramPRC.C("lars_efficiency.lst","EFFICIENCY")'
+root -l 'macro/DrawLarsHistogramPRC.C("lars_median50.lst","MEDIAN50")'
+root -l 'macro/DrawLarsHistogramPRC.C("lars_median90.lst","MEDIAN90")'
+root -l 'macro/DrawLarsHistogramPRC.C("lars_wrc50.lst","WRC50")'
+
+where lars_efficiency.lst is the list of files produced by DrawSkyMapPRC.C
+
+Ex:
+SKYMAP_EFFICIENCY_wave_ADV_SIM_BRST_LF_L1H1V1_run1.M1_RES3_TEST.root     L1H1V1-1G-l8_256
+SKYMAP_EFFICIENCY_wave_ADV_SIM_BRST_LF_L1H1V1_2GM_run1.M1_RES3_TEST.root L1H1V1-2GM-l8_256
+SKYMAP_EFFICIENCY_wave_ADV_SIM_BRST_LF_L1H1V1_2GM_run2.M1_RES3_TEST.root L1H1V1-2GM-h7-l4_128
+SKYMAP_EFFICIENCY_wave_ADV_SIM_BRST_LF_L1H1V1_2GM_run3.M1_RES3_TEST.root L1H1V1-2GM-h7-l8_256
+SKYMAP_EFFICIENCY_wave_ADV_SIM_BRST_LF_L1H1V1_2GM_run5.M1_RES3_TEST.root L1H1V1-2GM-h7-l8_256-svn1620
+
+the second parameter is the legend entry

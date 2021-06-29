@@ -1,0 +1,328 @@
+.\" Man page generated from reStructuredText.
+.
+.TH "CWB_ECED" "1" "Jan 14, 2019" "" "coherent WaveBurst"
+.SH NAME
+cwb_eced \- cWB Documentation
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.nf
+
+.fi
+.sp
+.sp
+This page provides a description of the cwb_eced command.
+.nf
+
+\fBUsage\fP
+
+This command generates the CED of an event via command line (easy CED).
+
+\fBSyntax\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_eced\fP (no arguments)
+Prints help
+.UNINDENT
+.IP \(bu 2
+.INDENT 2.0
+.TP
+.B \fBcwb_eced eced_opts [detector_opts]\fP
+Generates the CED via command line
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+\fBFurther information\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+The following options can be passed to the cwb_eced command:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+eced_opts =   gps_time    :  this is the GPS time of the event
+
+             or
+
+             \(aq\-\-gps gps \-\-search search \-\-sim sim \-\-tag tag \-\-cfg cfgfile\(aq
+
+             In the above line, the various options have the following meaning:
+             \-\-gps is the GPS time of the event
+             \-\-search is the search type (r, i, s, g, R, I, S or G for the 1G pipeline, r for the 2G pipeline)
+             \-\-tag is a label used to name the directory in which the CED is generated. If the tag is not
+                   specified, the default tag is used (corresponding to the current GPS time).
+             \-\-cfg is the name of the configuration file. The default configuration file used to generate
+                   the easy CED is trunk/tools/cwb/macros/cwb_parameters.C. To chage the default values,
+                   add the desired parameter values in a new file cfg.C and use the option \-\-cfg cfg.C
+             \-\-ced false : disable CED, only root file is created
+
+
+detector_opts =  \(aq\-\-ifo ifo \-\-type type \-\-chraw chraw \-\-chmdc chmdc \-\-factor factor\(aq
+
+             In the above line, the various options have the following meaning:
+             \-\-ifo is the detector name. If the gw_data_find tool is used, the input must be one
+                   of the following: L1, H1, V1, G1
+             \-\-type is the type which identifies the considered detector\(aqs data. It the same as the one used
+                    by the gw_data_find tool. The following command lists the available types:
+                    gw_data_find \-y. Alternatively, the type can be the name of the file containing the list of
+                    the considered frame files. Note that the name of this file must be of the format yyy.xxx .
+                    If no type is defined, the following default values are used:
+                           L1 \-> L1_LDAS_C02_L2
+                           H1 \-> H1_LDAS_C02_L2
+                           V1 \-> Hreconline
+                           G1 \-> G1_RDS_C01_L3
+             \-\-chraw is the name of the channel to be read in the frame files. If no channel is defined,
+                    the following default values are used:
+                           L1 \-> L1:LDAS\-STRAIN
+                           H1 \-> H1:LDAS\-STRAIN
+                           V1 \-> V1:h_16384Hz
+                           G1 \-> G1:DER_DATA_H
+             \-\-chmdc is the name of the mdc frame channel
+             \-\-factor is the numerical factor used to rescale the hrss or the snr of the injected simulated signal
+             \-\-shift is the detector shift time in seconds for non zero lag events (NOTE : must be integer!!!)
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+The cwb_eced command creates a directory named according to the following format:
+.in +2
+\fBECED_net_TAGtag_GPSgps\fP
+where
+.in -2
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBnet\fP corresponds to the considered network (e.g., L1H1V1)
+.IP \(bu 2
+\fBtag\fP is part of the name of the directory in which the CED is saved, see above in this page.
+.IP \(bu 2
+\fBgps\fP is the GPS time of the considered event
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+An example of the directory\(aqs name is as follows:
+.in +2
+\fBECED_L1H1V1_TAG1048593634_GPS968654557\fP
+.in -2
+The following sub\-directories are created in the main folder:
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+\fBtmp:\fP this directory contains temporary files
+.IP \(bu 2
+\fBced:\fP this directory contains the CED of the event.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.nf
+
+A symbolic link is created in the user\(aqs public directory to make the CED accessible via a web browser, e.g.:
+.in +2
+\fB~waveburst/WWW/LSC/ceds/ECED_L1H1V1_TAG1048593634_GPS968654557\fP
+.in -2
+Note that the cwb_eced command cannot be used in the simulation mode.
+.fi
+.sp
+.nf
+
+\fBExamples\fP
+
+.fi
+.sp
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+The examples reported in this section have been performed on the ATLAS computing cluster.
+.IP \(bu 2
+The following command lines generate the easy CED of the hardware injection performed at 968654557 GPS time on the \fBL1H1V1 network\fP (Big Dog event):
+.INDENT 2.0
+.INDENT 3.5
+\fBcwb_eced 968654557 L1 H1 V1\fP
+.UNINDENT
+.UNINDENT
+.sp
+or
+.sp
+\fBcwb_eced 968654557 \(aq\-\-ifo L1\(aq \(aq\-\-ifo H1\(aq \(aq\-\-ifo V1\(aq\fP
+.IP \(bu 2
+.nf
+The CED is saved at ATLAS here:
+.fi
+.sp
+.sp
+\fI\%/home/waveburst/REPORTS/ECED_L1H1V1_TAG1048598836_GPS968654557\fP
+.sp
+and is available on the internet at the following link:
+.sp
+\fI\%CED link\fP
+.nf
+
+.fi
+.sp
+.IP \(bu 2
+.nf
+The following command lines generate the easy CED of the hardware injection performed at 968654557 GPS time on the \fBL1H1 network\fP (Big Dog event):
+.fi
+.sp
+.UNINDENT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.nf
+.ft C
+cwb_eced 968654557 \(aq\-\-ifo L1\(aq \(aq\-\-ifo H1\(aq\(ga\(ga
+
+or
+
+cwb_eced \(aq\-\-gps 968654557\(aq \(aq\-\-ifo L1\(aq \(aq\-\-ifo H1\(aq\(ga\(ga
+
+or
+
+cwb_eced 968654557 \(aq\-\-ifo L1 \-\-type L1_LDAS_C02_L2\(aq \(aq\-\-ifo H1 \-\-type H1_LDAS_C02_L2\(aq
+
+or
+
+cwb_eced 968654557 \(aq\-\-ifo L1 \-\-type L1_LDAS_C02_L2 \-\-channel L1:LDAS\-STRAIN\(aq \(aq\-\-ifo H1 \-\-type H1_LDAS_C02_L2 \-\-channel H1:LDAS\-STRAIN\(aq
+.ft P
+.fi
+.UNINDENT
+.UNINDENT
+.INDENT 0.0
+.IP \(bu 2
+.nf
+The following command line generates the easy CED of the hardware injection performed at 968654557 GPS time on \fBH1 data\fP (Big Dog event):
+.in +2
+\fBcwb_eced 968654557 H1\fP
+.in -2
+.fi
+.sp
+.INDENT 2.0
+.INDENT 3.5
+.INDENT 0.0
+.INDENT 3.5
+The CED is saved at ATLAS here:
+.INDENT 0.0
+.INDENT 3.5
+\fI\%/home/waveburst/REPORTS/ECED_H1_TAG1048598281_GPS968654557\fP
+.sp
+and is available on the internet at the following link:
+.sp
+\fI\%CED link\fP\&.
+.UNINDENT
+.UNINDENT
+.sp
+The same CED can be generated also starting from the H1.frames file, which contains the list of the frame files:
+.UNINDENT
+.UNINDENT
+.sp
+\fBcwb_eced 968654557 \(aq\-\-ifo H1 \-\-type H1.frames\(aq\fP
+.UNINDENT
+.UNINDENT
+.nf
+
+.fi
+.sp
+.IP \(bu 2
+.nf
+The following command line generates the easy CED of the noise event reconstructed at 934327040 GPS time on \fBL1 data\fP:
+.in +2
+\fBcwb_eced 934327040 L1\fP
+.in -2
+.fi
+.sp
+.INDENT 2.0
+.INDENT 3.5
+.INDENT 0.0
+.TP
+.B The CED is saved at ATLAS here:
+\fI\%/home/waveburst/REPORTS/ECED_L1_TAG1048598553_GPS934327040\fP
+and is available on the internet at the following link: \fI\%CED
+link\fP\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.IP \(bu 2
+.nf
+The following command line generates the easy CED of an S5 event in H1 at GPS=825676252 specifing the type,chraw used in S5, ced is disabled, only root file is created:
+\fBcwb_eced "\-\-gps 825676252 \-\-tag _CR \-\-ced false" "\-\-ifo H1 \-\-type H1_RDS_C03_L2 \-\-chraw H1:LSC\-STRAIN"\fP
+.fi
+.sp
+.IP \(bu 2
+.nf
+The following command line generates the easy CED of a non zero lag
+L1H1V1 noise event reconstructed at 934970296 GPS time on \fBL1
+data\fP, 934970296+272 GPS time on \fBH1 data\fP, 934970296+79 GPS time on \fBV1 data\fP:
+\fBcwb_eced "\-\-gps 934970296 \-\-cfg config/user_parameters_eced.C \-\-ced true \-\-tag BKG"\fP
+         \fB"\-\-ifo L1 \-\-shift 0" "\-\-ifo H1 \-\-shift \-272" "\-\-ifo V1 \-\-shift \-79"\fP
+The CED is saved at ATLAS here:
+ \fI\%/home/waveburst/REPORTS/S6A_BKG_LF_L1H1V1_2G_RSRA_eced\fP
+ and is available on the internet at the following link: \fI\%CED
+ link\fP\&.
+.fi
+.sp
+.UNINDENT
+.sp
+\fBNOTE:\fP
+.INDENT 0.0
+.INDENT 3.5
+if \fB"\-ced false"\fP is declared then only the standard wave*.root is created.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.SH AUTHOR
+Gabriele Vedovato
+.SH COPYRIGHT
+2018, cWB Team
+.\" Generated by docutils manpage writer.
+.

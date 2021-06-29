@@ -1,0 +1,89 @@
+<html>
+<title>HEADER CAPTION</title>
+<body>
+
+<a name="rho"><h1 align="center">rho</h1></a>
+
+<p>rho - detection statistics of cWB, defines the strength of a trigger. For details, see <a href="http://tier2.ihepa.ufl.edu/~klimenko/waveburst/talks/cwb_postprod.pdf">this presentation</a>.
+
+<p>Coherent triggers with rho>2.9 are sent to LUMIN and GEM to be considered for EM follow-up
+
+<a name="netCC"><h1 align="center">netCC</h1></a>
+<p>netCC - network correlation. For details, see <a href="http://tier2.ihepa.ufl.edu/~klimenko/waveburst/talks/cwb_postprod.pdf">this presentation</a>.
+
+<a name="netED"><h1 align="center">netED</h1></a>
+<p>netED - network energy disbalance. For details, see <a href="http://tier2.ihepa.ufl.edu/~klimenko/waveburst/talks/cwb_postprod.pdf">this presentation</a>.
+
+<a name="penalty"><h1 align="center">penalty</h1></a>
+<p>For details, see <a href="http://tier2.ihepa.ufl.edu/~klimenko/waveburst/talks/cwb_postprod.pdf">this presentation</a>.
+
+<a name="ifar"><h1 align="center">IFAR</h1></a>
+
+<p>IFAR - inverse false alarm rate. It is computed using time-shifted analysis with 4000-1 time shifts. It is measured in days on the last processed hour of data. For a given rho=rho_0, it says that triggers with rho>=rho_0 can happen 
+no more frequently than 1 in IFAR days.
+
+<p>Since time shifted analysis is running somewhat behind real-time, it is important to measure just how much behind. The second number is the difference between the trigger time and the end of the time interval processed by time-shifted analysis at the moment  
+when the trigger is sent to LUMIN/GEM. It is measured in hours. Typically time-shifted analysis is ~1 hour behind the zero lag analysis.
+
+<p>IFAR, as well as DQ table and error region gif, is provided only for triggers sent to LUMIN/GEM. For other triggers it is "none/none".
+
+<a name="DEC"><h1 align="center">DEC</h1></a>
+<p>DEC - declination angle.
+<p>DEC, RA defines source location in celestial coordinates.
+
+<a name="RA"><h1 align="center">RA</h1></a>
+<p>RA - right assension angle.
+<p>DEC, RA defines source location in celestial coordinates.
+
+<a name="phi"><h1 align="center">phi</h1></a>
+<p>phi, theta - polar coordinates that describe source position in Earth Centered, Earth Fixed coordinate system. phi = phi(RA,gps), theta=90-DEC.
+
+<a name="error_region"><h1 align="center">Error region</h1></a>
+<p>Reconstructed sky position of a source is given as a list of the most probable pixels. This list contains no more than 1000 pixels, less pixels are taken if the commulatative probability adds up to 92%. 
+<ul>
+<li><b>erA</b> - effective error angle that characterize the size of error region = sqrt of an area with the most probable pixels with probabilities adding up to 10%, 20%, 30%, 40%, 50%, 60%, 70%, 90%
+<li><b>txt</b> - error region in text format
+<li><b>html</b> - error region in html format
+<li><b>gif</b> - plot of error region; the pixel with the highest probability is shown with a black circle; in <b>hardware injections</b> tables the injection coordinates are shown with a red square.
+</ul>
+
+<a name="t"><h1 align="center">t</h1></a>
+
+<p>t - central time of a trigger; we measure the length of intervals between central time of a trigger (t) and the boundaries of a job (js,je) and science segment interval (ss, se) to make sure that a trigger is not due to some kind of boundary artifact.
+
+<a name="ss"><h1 align="center">ss</h1></a>
+
+<p>ss stands for science start. We measure the length of an interval the trigger central time (t) and the science segment start (ss) to make sure that the trigger is not some kind of job boundary artifact.
+
+<a name="js"><h1 align="center">js</h1></a>
+
+<p>js stands for job start. We measure the length of an interval between the trigger central time (t) and job start (js) to make sure that the trigger is not some kind of job boundary artifact.
+
+<a name="je"><h1 align="center">je</h1></a>
+
+<p>je stands for job end. We measure the length of an interval between job end (je) and the trigger central time (t) to make sure that the trigger is not some kind of job boundary artifact.
+
+<a name="se"><h1 align="center">se</h1></a>
+
+<p>se stands for science end. We measure the length of an interval between science segment end (je) and the trigger central time (t) to make sure that the trigger is not some kind of job boundary artifact.
+
+<a name="S"><h1 align="center">S</h1></a>
+
+<p>S flag indicates the type of trigger:
+<ul>
+<li>S=0 - incoherent trigger
+<li>S=1 - coherent trigger, too weak (rho<2.9) to be sent to LUMIN/GEM
+<li>S=3 - coherent trigger with rho>=2.9, sent to LUMIN/GEM
+<li>S=4 - coherent loud trigger with rho>=5 - potential detection (or hardware injection)
+</ul>
+
+The trigger is considered coherent if:
+<ul>
+<li>netCC>0.6
+<li>netED<0.35
+<li>penalty>0.6
+</ul>
+
+</body>
+</html>
+

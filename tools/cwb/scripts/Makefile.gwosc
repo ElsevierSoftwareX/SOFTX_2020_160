@@ -1,0 +1,539 @@
+
+# -------------------------------------
+# GWOSC definitions
+# -------------------------------------
+
+GWOSC_URL = https://www.gw-openscience.org/catalog/GWTC-1-confident
+GWOSC_DQ  = https://www.gw-osc.org/timeline/segments
+GWOSC_PE  = https://dcc.ligo.org/public/0157/P1800370/005
+GWOSC_PSD = https://dcc.ligo.org/public/0158/P1900011/001
+
+GWOSC_TOOLS = $(CWB_MACROS)/GWOSC_Tools.C
+
+ifeq (${SITE_CLUSTER},VIRTUALBOX)
+GWOSC_DIR = /home/cwb/waveburst/GWOSC/catalog/GWTC-1-confident
+else
+GWOSC_DIR = $(HOME)/GWOSC/catalog/GWTC-1-confident
+endif
+
+# ---------------------------------------------------------
+# GWOSC user definitions: overwrite the default definitions
+# ---------------------------------------------------------
+
+GWOSC_USER = $(HOME)/.gwosc
+
+ifneq ("$(wildcard $(GWOSC_USER))","")
+include $(HOME)/.gwosc
+endif
+
+# -------------------------------------
+# cwb_gwosc input options
+# -------------------------------------
+
+# ---> GW_DIR
+ifdef DIR
+GWOSC_DIR = ${DIR}
+endif
+
+# ---> GW_NAME
+ifndef CFG
+ifeq ($(IFO),V1)
+GW_CFG = $(HOME_CWB)/macros/gwosc_parameters_lhv.C
+else
+GW_CFG = $(HOME_CWB)/macros/gwosc_parameters.C
+endif
+else
+GW_CFG = ${CFG}
+endif
+
+# ---> GW_SIM
+ifndef SIM
+GW_SIM = false
+else
+GW_SIM = ${SIM}
+endif
+
+# ---> GW_TAG
+ifndef TAG
+GW_TAG = run1
+else
+GW_TAG = ${TAG}
+endif
+
+# ---> GW_NAME
+ifndef GW
+GW_NAME = GW150914
+else
+GW_NAME = ${GW}
+endif
+
+# ---> IFO
+ifndef IFO
+IFO = L1
+else
+IFO = ${IFO}
+endif
+
+STATUS=FALSE
+ifeq ($(IFO),L1) 
+STATUS=TRUE
+endif
+ifeq ($(IFO),H1)
+STATUS=TRUE
+endif
+ifeq ($(IFO),V1)
+STATUS=TRUE
+endif
+ifeq ($(STATUS),FALSE)
+$(error IFO option $(IFO) not valid: options -> L1,H1,V1)
+endif
+
+# ---> LEVEL
+ifndef LEVEL
+LEVEL = 5
+else
+LEVEL = ${LEVEL}
+endif
+
+# ---> SAMPLE RATE
+ifndef SR
+SR = 4
+else
+SR = ${SR}
+endif
+
+STATUS=FALSE
+ifeq ($(SR),4) 
+STATUS=TRUE
+endif
+ifeq ($(SR),16)
+STATUS=TRUE
+endif
+ifeq ($(STATUS),FALSE)
+$(error SR option $(SR) not valid: options -> 4,16 KHZ)
+endif
+
+ifeq ($(GW_SIM),true)
+ifeq (, $(shell which h5dump))
+$(error "No h5dump (needed with SIM=true option), consider doing apt-get install h5dump")
+endif
+endif
+
+# ---------------------------------------------------------------
+# GW O2 Catalog event definitions
+#
+# @ https://www.gw-openscience.org/catalog/GWTC-1-confident/html/
+#
+# GW_GPS          : event GPS time
+# GW_DATA_START   : data segment start GPS time
+# GW_DATA_LENGHT  : data segment lenght time (sec)
+# GW_DATA_SRATE   : data segment sample rate (Hz)
+# GW_DATA_VERSION : data segment version
+# ---------------------------------------------------------------
+
+GW_DATA_LENGHT  = 4096
+GW_DATA_SRATE   = $(SR)KHZ
+GW_DATA_VERSION = R1
+GW_DQ_VERSION   = v1
+GW_CONFIG_FIXA  = @echo 'no fix -> '	# used to change user_parameters.C parameters
+GW_CONFIG_FIXB  = @echo 'no fix -> '	# used to change user_parameters.C parameters
+
+NET_LHV=FALSE
+STATUS=FALSE
+ifeq ($(GW_NAME),GW150914)
+GW_GPS        = 1126259462
+GW_DATA_START = 1126257415
+GW_SEG_START  = 1126258790
+GW_SEG_STOP   = 1126260010
+GW_SEED       = -1
+STATUS        = TRUE
+endif
+ifeq ($(GW_NAME),GW151012)
+GW_GPS        = 1128678900
+GW_DATA_START = 1128676853
+GW_SEG_START  = 1128677990
+GW_SEG_STOP   = 1128679210
+GW_SEED       = 3 
+STATUS        = TRUE
+endif
+ifeq ($(GW_NAME),GW151226)
+GW_GPS        = 1135136350
+GW_DATA_START = 1135134303
+GW_SEG_START  = 1135136228
+GW_SEG_STOP   = 1135137448
+GW_SEED       = 8
+STATUS        = TRUE
+endif
+ifeq ($(GW_NAME),GW170104)
+GW_GPS        = 1167559936
+GW_DATA_START = 1167557889
+GW_SEG_START  = 1167559190
+GW_SEG_STOP   = 1167560410
+GW_SEED       = -1
+STATUS        = TRUE
+endif
+ifeq ($(GW_NAME),GW170608)
+GW_GPS        = 1180922494
+GW_DATA_START = 1180920447
+GW_SEG_START  = 1180922390
+GW_SEG_STOP   = 1180923610
+GW_SEED       = -1
+STATUS        = TRUE
+endif
+ifeq ($(GW_NAME),GW170729)
+GW_GPS        = 1185389807
+GW_DATA_START = 1185387760
+GW_SEG_START  = 1185388790
+GW_SEG_STOP   = 1185390010
+GW_SEED       = 5
+STATUS        = TRUE
+NET_LHV       = TRUE
+endif
+ifeq ($(GW_NAME),GW170809)
+GW_GPS        = 1186302519
+GW_DATA_START = 1186300472
+GW_SEG_START  = 1186301990
+GW_SEG_STOP   = 1186303210
+GW_SEED       = 2
+STATUS        = TRUE
+NET_LHV       = TRUE
+endif
+ifeq ($(GW_NAME),GW170814)
+GW_GPS        = 1186741861
+GW_DATA_START = 1186739814
+GW_SEG_START  = 1186741190
+GW_SEG_STOP   = 1186742410
+GW_SEED       = -1
+STATUS        = TRUE
+NET_LHV       = TRUE
+endif
+ifeq ($(GW_NAME),GW170817)
+GW_GPS        = 1187008882
+GW_DATA_START = 1187006835
+GW_SEG_START  = 1187008790
+GW_SEG_STOP   = 1187010010
+GW_SEED       = -1
+STATUS        = TRUE
+NET_LHV       = TRUE
+ifndef CFG
+ifeq ($(IFO),V1)
+GW_CFG        = $(HOME_CWB)/macros/gwosc_parameters_gw170817_lhv.C
+else
+GW_CFG        = $(HOME_CWB)/macros/gwosc_parameters_gw170817.C
+endif
+endif
+endif
+ifeq ($(GW_NAME),GW170818)
+GW_GPS        = 1187058327
+GW_DATA_START = 1187056280
+GW_SEG_START  = 1187057990
+GW_SEG_STOP   = 1187059210
+GW_SEED       = 3
+STATUS        = TRUE
+NET_LHV       = TRUE
+# change the subnet to permit the detection
+GW_CONFIG_FIXA = sed -i 's/subnet = 0.5;/subnet = 0.0;/g'
+# change the netRHO to permit the LHV detection
+GW_CONFIG_FIXB = sed -i 's/netRHO = 5.5;/netRHO = 4.5;/g'
+endif
+ifeq ($(GW_NAME),GW170823)
+GW_GPS        = 1187529256
+GW_DATA_START = 1187527209
+GW_SEG_START  = 1187528390
+GW_SEG_STOP   = 1187529610
+GW_SEED       = -1
+STATUS        = TRUE
+endif
+
+# ---> GW_SEED
+ifdef SEED
+GW_SEED = ${SEED}
+endif
+
+ifeq ($(STATUS),FALSE)
+$(error : GW option $(GW) not allowed, select one event -> Ex: cwb_gwosc GW=GW150914)
+endif
+
+ifeq ($(NET_LHV),FALSE)
+ifeq ($(IFO),V1)
+$(error : IFO option $(IFO) not allowed for event $(GW_NAME))
+endif
+endif
+
+# -------------------------------------
+# GW cWB definitions
+# -------------------------------------
+
+GW_CONFIG_FILE = ${GW_CFG}	
+
+GW_WORK_PATH   = $(GWOSC_DIR)/$(GW_NAME)
+ifeq ($(GW_SIM),false)
+ifeq ($(IFO),V1)
+GW_WORK_DIR    = $(GW_WORK_PATH)/GWOSC_LHV_$(GW_NAME)_$(GW_DATA_VERSION)_$(GW_TAG)
+else
+GW_WORK_DIR    = $(GW_WORK_PATH)/GWOSC_LH_$(GW_NAME)_$(GW_DATA_VERSION)_$(GW_TAG)
+endif
+else	# GW_SIM=true
+ifeq ($(IFO),V1)
+GW_WORK_DIR    = $(GW_WORK_PATH)/GWOSC_LHV_SIM_$(GW_NAME)_$(GW_DATA_VERSION)_$(GW_TAG)
+else
+GW_WORK_DIR    = $(GW_WORK_PATH)/GWOSC_LH_SIM_$(GW_NAME)_$(GW_DATA_VERSION)_$(GW_TAG)
+endif
+endif
+
+GW_GPS_START   = $(GW_SEG_START)
+GW_GPS_STOP    = $(GW_SEG_STOP)
+
+GW_H1_DATA_FILE = H-H1_GWOSC_$(GW_DATA_SRATE)_$(GW_DATA_VERSION)-$(GW_DATA_START)-$(GW_DATA_LENGHT).gwf
+GW_L1_DATA_FILE = L-L1_GWOSC_$(GW_DATA_SRATE)_$(GW_DATA_VERSION)-$(GW_DATA_START)-$(GW_DATA_LENGHT).gwf
+GW_V1_DATA_FILE = V-V1_GWOSC_$(GW_DATA_SRATE)_$(GW_DATA_VERSION)-$(GW_DATA_START)-$(GW_DATA_LENGHT).gwf
+
+GW_DQ_PATH     = $(GW_WORK_PATH)/DQ
+GW_FRAMES_PATH = $(GW_WORK_PATH)/FRAMES
+GW_PE_PATH     = $(GW_WORK_PATH)/PE
+GW_PSD_PATH    = $(GW_WORK_PATH)/PSD
+
+# Cleaned, L1 glitch-subtracted -> https://dcc.ligo.org/LIGO-T1700406/public
+L1_CLEANED_FRAME = L-L1_CLEANED_HOFT_C02_T1700406_v3-1187008667-4096.gwf
+
+# -------------------------------------
+# GW cWB procedures
+# -------------------------------------
+
+help:
+	man cwb_gwosc
+
+all:	setup ced
+
+setup:	frames dq pe asd init
+
+init:	clean create files
+
+create:	
+	if [ ! -d $(GW_WORK_PATH) ]; then mkdir $(GW_WORK_PATH) ; fi;
+	if [ ! -d $(GW_FRAMES_PATH) ]; then mkdir -p $(GW_FRAMES_PATH) ; fi;
+	if [ ! -d $(GW_DQ_PATH) ]; then mkdir $(GW_DQ_PATH) ; fi;
+	if [ ! -d $(GW_PE_PATH) ]; then mkdir $(GW_PE_PATH) ; fi;
+	if [ ! -d $(GW_PSD_PATH) ]; then mkdir $(GW_PSD_PATH) ; fi;
+	yes y | /bin/tcsh ${HOME_CWB}/scripts/cwb_mkdir.csh $(GW_WORK_DIR)
+	@echo ""
+	@echo "cWB Working Dir: $(GW_WORK_DIR)"
+	@echo ""
+
+pe:
+	if [ $(GW_SIM) = true ]; then 												\
+	  if [ ! -d $(GW_PE_PATH) ]; then mkdir $(GW_PE_PATH) ; fi;								\
+	  cd $(GW_PE_PATH);												        \
+	  wget $(GWOSC_PE)/$(GW_NAME)_GWTC-1.hdf5 -q -O $(GW_NAME)_GWTC-1.hdf5;							\
+	  h5dump -o $(GW_NAME)_GWTC-1.txt -y -w 400 $(GW_NAME)_GWTC-1.hdf5;							\
+	  root -l -b -q '$(GWOSC_TOOLS)("ConvertSamples","$(GW_NAME)_GWTC-1.txt","$(GW_NAME)_GWTC-1.dat",$(GW_GPS))';		\
+	fi
+
+asd:
+	if [ $(GW_SIM) = true ]; then 												\
+	  if [ ! -d $(GW_PSD_PATH) ]; then mkdir $(GW_PSD_PATH) ; fi;								\
+	  cd $(GW_PSD_PATH);												        \
+	  wget $(GWOSC_PSD)/GWTC1_$(GW_NAME)_PSDs.dat -q -O GWTC1_$(GW_NAME)_PSDs.dat;						\
+	  root -l -b -q '$(GWOSC_TOOLS)("ConvertPSD","GWTC1_$(GW_NAME)_PSDs.dat")';						\
+	fi
+
+dq:
+	if [ ! -d $(GW_DQ_PATH) ]; then mkdir $(GW_DQ_PATH) ; fi;
+	cd $(GW_DQ_PATH);												        \
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/L1_DATA/$(GW_DATA_START)/$(GW_DATA_LENGHT)/       -q -O L1_cat0.txt;	\
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/L1_BURST_CAT1/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O L1_cat1.txt;	\
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/L1_BURST_CAT2/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O L1_cat2.txt;	\
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/L1_BURST_CAT3/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O L1_cat3.txt;	\
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/H1_DATA/$(GW_DATA_START)/$(GW_DATA_LENGHT)/       -q -O H1_cat0.txt;	\
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/H1_BURST_CAT1/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O H1_cat1.txt;	\
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/H1_BURST_CAT2/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O H1_cat2.txt;	\
+	wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/H1_BURST_CAT3/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O H1_cat3.txt;	\
+	if [ $(IFO) = V1 ]; then 												\
+	  wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/V1_DATA/$(GW_DATA_START)/$(GW_DATA_LENGHT)/       -q -O V1_cat0.txt;	\
+	  wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/V1_BURST_CAT1/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O V1_cat1.txt;	\
+	  wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/V1_BURST_CAT2/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O V1_cat2.txt;	\
+	  wget $(GWOSC_DQ)/$(GW_NAME)-$(GW_DQ_VERSION)/V1_BURST_CAT3/$(GW_DATA_START)/$(GW_DATA_LENGHT)/ -q -O V1_cat3.txt;	\
+	fi;															\
+	sed -i 's/ \+[^ ]\+$$//' *	# remove the third entry of each line
+	@echo ""
+	@echo "cWB DQ Dir: $(GW_DQ_PATH)"
+	@echo ""
+
+frames:
+	if [ ! -d $(GW_FRAMES_PATH) ]; then mkdir -p $(GW_FRAMES_PATH) ; fi;
+	cd $(GW_FRAMES_PATH);					        							\
+	wget -N $(GWOSC_URL)/data/$(GW_NAME)/$(GW_H1_DATA_FILE);								\
+	if [ "$(GW_NAME)" = "GW170817" ]; then											\
+	  wget https://dcc.ligo.org/public/0144/T1700406/003/$(L1_CLEANED_FRAME);						\
+	else															\
+	  wget -N $(GWOSC_URL)/data/$(GW_NAME)/$(GW_L1_DATA_FILE);								\
+	fi;															\
+	if [ $(IFO) = V1 ]; then 												\
+	  wget -N $(GWOSC_URL)/data/$(GW_NAME)/$(GW_V1_DATA_FILE);								\
+	fi;
+	@echo ""
+	@echo "cWB Frame Dir: $(GW_FRAMES_PATH)"
+	@echo ""
+
+frdisplay:
+	if [ -d $(GW_FRAMES_PATH) ]; then											\
+	  cd $(GW_FRAMES_PATH);					        							\
+	  if [ $(IFO) = H1 ]; then 												\
+	    ${HOME_WAT}/tools/frdisplay/FrDisplay -d 5 -proc -t $(IFO):GWOSC-$(GW_DATA_SRATE)_R1_STRAIN  -i  $(GW_H1_DATA_FILE);\
+	  fi;															\
+	  if [ $(IFO) = L1 ]; then 												\
+	    ${HOME_WAT}/tools/frdisplay/FrDisplay -d 5 -proc -t $(IFO):GWOSC-$(GW_DATA_SRATE)_R1_STRAIN  -i  $(GW_L1_DATA_FILE);\
+	  fi;															\
+	  if [ $(IFO) = V1 ]; then 												\
+	    ${HOME_WAT}/tools/frdisplay/FrDisplay -d 5 -proc -t $(IFO):GWOSC-$(GW_DATA_SRATE)_R1_STRAIN  -i  $(GW_V1_DATA_FILE);\
+	  fi;															\
+	else															\
+	  @echo "Frame file dir do not exist: $(GW_FRAMES_PATH)";								\
+	fi;
+
+files:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	ls -1 $(GW_FRAMES_PATH)/$(GW_H1_DATA_FILE) >   	$(GW_WORK_DIR)/input/H1_frames.in
+	if [ "$(GW_NAME)" = "GW170817" ]; then											\
+	  ls -1 $(GW_FRAMES_PATH)/$(L1_CLEANED_FRAME) > $(GW_WORK_DIR)/input/L1_frames.in;					\
+	else															\
+	  ls -1 $(GW_FRAMES_PATH)/$(GW_L1_DATA_FILE) >  $(GW_WORK_DIR)/input/L1_frames.in;					\
+	fi;															\
+	if [ $(IFO) = V1 ]; then 												\
+	  ls -1 $(GW_FRAMES_PATH)/$(GW_V1_DATA_FILE) >  $(GW_WORK_DIR)/input/V1_frames.in;					\
+	fi;
+	cp $(HOME_CWB)/plugins/CWB_Plugin_WF.C 	       	$(GW_WORK_DIR)/macro/.
+	cp $(HOME_CWB)/macros/gwosc_plugin_config.C 	$(GW_WORK_DIR)/macro/CWB_Plugin_Config.C
+	cp $(GW_CONFIG_FILE) 			       	$(GW_WORK_DIR)/config/user_parameters.C
+	$(GW_CONFIG_FIXA)			       	$(GW_WORK_DIR)/config/user_parameters.C
+	$(GW_CONFIG_FIXB)			       	$(GW_WORK_DIR)/config/user_parameters.C
+	sed -i 's/GWOSC-4KHZ/GWOSC-$(GW_DATA_SRATE)/g' 	$(GW_WORK_DIR)/config/user_parameters.C
+	echo $(GW_GPS_START) $(GW_GPS_STOP) > 	       	$(GW_WORK_DIR)/input/cwb_period.txt
+#
+	if [ "$(GW_NAME)" = "GW170817" ]; then											\
+	  cp $(HOME_CWB)/plugins/CWB_Plugin_TukeyWindow.C $(GW_WORK_DIR)/macro/.;						\
+	  yes y | /bin/tcsh ${HOME_CWB}/scripts/cwb_mplugin.csh $(GW_WORK_DIR)/macro/CWB_Plugin_TukeyWindow_WF.C 		\
+                            $(GW_WORK_DIR)/macro/CWB_Plugin_TukeyWindow.C $(GW_WORK_DIR)/macro/CWB_Plugin_WF.C;			\
+	  echo -e "1187006835 1187008881.28\n1187008881.48 1187010931" > $(GW_WORK_DIR)/input/gw170817_twwin_cat2.txt;		\
+	fi
+	if [ $(GW_SIM) = true ]; then 												\
+	  cd $(GW_PE_PATH);												        \
+	  root -l -b -q '$(GWOSC_TOOLS)("Posterior2XML","$(GW_NAME)","",$(GW_SEED))';						\
+	  cd $(GW_WORK_DIR)/input;												\
+	  ln -sf ../../PSD/GWTC1_$(GW_NAME)_ASD_H1.dat H1_ASD.txt;								\
+	  ln -sf ../../PSD/GWTC1_$(GW_NAME)_ASD_L1.dat L1_ASD.txt;								\
+	  ln -sf ../../PSD/GWTC1_$(GW_NAME)_ASD_V1.dat V1_ASD.txt;								\
+	  cd $(GW_WORK_DIR)/config;												\
+	  ln -sf ../../PE/$(GW_NAME)_GWTC-1.xml injections.xml;									\
+	  sed -i 's/simulation = 0;/simulation = 4;/g' 			$(GW_WORK_DIR)/config/user_parameters.C;		\
+	  sed -i 's/CWB_Plugin_WF/CWB_Plugin_SimNoise_MDC_OTF_WF/g' 	$(GW_WORK_DIR)/config/user_parameters.C;		\
+	  yes y | /bin/tcsh ${CWB_SCRIPTS}/cwb_mplugin.csh $(GW_WORK_DIR)/macro/CWB_Plugin_SimNoise_MDC_OTF_WF.C 		\
+                                                           ${HOME_CWB}/plugins/CWB_Plugin_SimNoise.C 				\
+                                                           ${HOME_CWB}/plugins/CWB_Plugin_MDC_OTF.C 				\
+                                                           ${HOME_CWB}/plugins/CWB_Plugin_WF.C;					\
+	fi
+	@echo ""
+	@echo "cWB Working Dir: $(GW_WORK_DIR)"
+	@echo ""
+
+analysis:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	rm -rf $(GW_WORK_DIR)/tmp/*
+	rm -rf $(GW_WORK_DIR)/data/*
+	cd $(GW_WORK_DIR); /bin/tcsh ${HOME_CWB}/scripts/cwb_inet.csh 1 $(GW_GPS)
+	@echo ""
+	@echo "cWB Working Dir: $(GW_WORK_DIR)"
+	@echo ""
+
+ced:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	rm -rf $(GW_WORK_DIR)/tmp/*
+	rm -rf $(GW_WORK_DIR)/data/*
+	rm -rf $(GW_WORK_DIR)/report/ced/*
+	cd $(GW_WORK_DIR); 						\
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_inet.csh 1 $(GW_GPS) ced;	\
+	if [ -e data/ced* ]; then mv data/ced* report/ced/ ; fi; 
+	@echo ""
+	@echo "cWB Working Dir: $(GW_WORK_DIR)"
+	@echo ""
+
+inj:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	if [ $(GW_SIM) = true ]; then 						      		\
+	  cd $(GW_WORK_DIR); 						              		\
+	  /bin/tcsh ${HOME_CWB}/scripts/cwb_inet2G.csh config/user_parameters.C STRAIN 1	\
+	                      '--tool inj --draw true';				      		\
+	else									      		\
+	  echo "";								      		\
+	  echo "Error: inj option is allowed only in simulation mode (SIM=true)";     		\
+	  echo "";								      		\
+	fi;
+
+psd:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	cd $(GW_WORK_DIR); 						              		\
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_inet2G.csh config/user_parameters.C STRAIN 1       	\
+                              '--tool psd --ifo $(IFO) --type strain --draw true'
+wpsd:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	cd $(GW_WORK_DIR); 						              		\
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_inet2G.csh config/user_parameters.C CSTRAIN 1      	\
+                              '--tool psd --ifo $(IFO) --type white --draw true'
+rms:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	cd $(GW_WORK_DIR); 						              		\
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_inet2G.csh config/user_parameters.C CSTRAIN 1      	\
+                              '--tool nrms --ifo $(IFO) --type white --draw true'
+tf:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	cd $(GW_WORK_DIR); 						              		\
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_inet2G.csh config/user_parameters.C CSTRAIN 1      	\
+                              '--tool wdm --ifo $(IFO) --type white --draw true'
+emax:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	cd $(GW_WORK_DIR); 						              		\
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_inet2G.csh config/user_parameters.C COHERENCE 1    	\
+                              '--tool emax --level $(LEVEL) --draw true'
+sparse:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	cd $(GW_WORK_DIR); 						              		\
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_inet2G.csh config/user_parameters.C SUPERCLUSTER 1 	\
+                              '--tool sparse --ifo $(IFO) --type supercluster --draw true'
+
+skymap:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	/bin/tcsh ${HOME_CWB}/scripts/cwb_report.csh skymap $(GW_WORK_DIR)/report/ced/ced_*/*/skyprobcc.fits
+
+xced:
+	if [ ! -d $(GW_WORK_DIR) ]; then echo -e "\ndirectory\n$(GW_WORK_DIR)\ndoes not exist!\n"; exit 1 ; fi;
+	if [ $(SITE_CLUSTER) = VIRTUALBOX ] || [ $(SITE_CLUSTER) = USER ]; then 			\
+	  firefox $(GW_WORK_DIR)/report/ced/ced_*/*/index.html &					\
+	else												\
+	  if [ $(SITE_CLUSTER) = DOCKER ]; then 							\
+	    midori $(GW_WORK_DIR)/report/ced/ced_*/*/index.html &					\
+	  else												\
+	    @echo "action xced is not enabled for SITE_CLUSTER: $(SITE_CLUSTER)";			\
+	  fi;												\
+	fi;
+
+man:
+	if [ "$(SITE_CLUSTER)" = "VIRTUALBOX" ]; then			\
+	  firefox /home/cwb/waveburst/WWW/doc/cwb/man/index.html & 	\
+	else								\
+	  @echo "action man is not enabled in $(SITE_CLUSTER)" ;	\
+	fi;
+
+clean: 
+	if [ -d $(GW_WORK_DIR) ]; then			\
+	  cd $(GW_WORK_DIR); 				\
+	  if [ -d input ];  then rm -rf input ; fi;	\
+	  if [ -d macro ];  then rm -rf macro ; fi;	\
+	  if [ -d condor ]; then rm -rf condor ; fi;	\
+	  if [ -d log ];    then rm -rf log ; fi;	\
+	  if [ -d output ]; then rm -rf output ; fi;	\
+	  if [ -d merge ];  then rm -rf merge ; fi;	\
+	  if [ -d report ]; then rm -rf report ; fi;	\
+	  if [ -d data ];   then rm -rf data ; fi;	\
+	  if [ -d tmp ];    then rm -rf tmp ; fi;	\
+	fi;
+

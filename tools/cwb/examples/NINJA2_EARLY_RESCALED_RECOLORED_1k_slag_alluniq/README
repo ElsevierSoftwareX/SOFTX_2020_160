@@ -1,0 +1,128 @@
+// BKG estimation on NINJA2 recolored&rescaled HLV detectors data with unique lags and super-lags
+
+This is an example on how to run cWB  on the two months NINJA2 data set 
+(i.e. HLV data from S6-VSR2/3 recolored&rescaled (and time shifted) 
+to resemble the initial advanced detectors ) 
+Useful information on the cWB NINJA2 search can be found here: 
+http://www.virgo.lnl.infn.it/Wiki/index.php/NINJA
+(standard LVC + shakesperian collaboration password)
+
+
+1) Creating working environment [ATLAS]
+
+   source /home/waveburst/SOFT/WAT/trunk/atlas_watenv.csh  
+    ( users can source their own installation instead of the one under /home/waveburst )
+   mkdir DIR_NAME
+   cd DIR_NAME
+   cwb_mkdir .  (to be done in DIR_NAME)
+   
+
+
+2) Editing files needed for the analysis
+
+   cd DIR_NAME/input
+   add files with data quality GPS starts and stops of the considered data set and the 
+   lists of detectors frame files (see example)
+
+   cd DIR_NAME/config
+   edit user_parameters.C with the cWB parameters for the analysis (see example)
+
+
+   cWB parameters specifically set for the NINJA2 analysis
+ 
+    search = 'I'           // this enables the elliptical constraint, which should 
+                              be considered when targeting coalescing binaries as 
+                              emitted signals are elliptically polarized
+    bpp   = 0.0001         // this parameter was set one order of magnitude smaller 
+                              than what is usually done for the all-sky burst search
+    fLow  = 32.            // the low frequency of the search is set to 32 Hz
+    fHigh = 1024.          // the higher frequency is set to 1024 Hz ( even if no IMBH binary 
+                              is expected to emit above ~400 Hz) to be more efficient 
+                              at rejecting flip glitches (wide-band signals) 
+                            
+    int levelR  = 3        // downsample level to restrict the investigated frequency 
+                              band below 1024 Hz
+    lagSize    = 201;      // number of lags including the zero-lag 
+    lagStep    = 2.985;    // time interval between lags [sec] : this parameter can be 
+                              chosen between 0.5 s <  lagStep < segment duration/lagSize
+    lagOff     = 0;        // first lag id (lagOff=0 - include zero lag )
+    lagMax     = 600;      // 0/>0 -  standard/extended lags
+    lagFile    = "lag_uniq200.txt";   // lag file list passed via external ascii 
+                                         file to choose unique lags 
+    lagMode[0]  = 'r';
+
+    // super lags
+    slagFile = new char[1024];
+    strcpy(slagFile,"slag_uniq200.txt");  // slag file list passed via external ascii 
+                                              file to choose unique slags
+    slagSize   = 10;       // number of super lags (simulation=1) - if slagSize=0 -> Igor Segments
+    slagOff    = 0;        // first lag id of the list to be processed
+
+
+    strcpy(channelNamesRaw[0],"L1:LDAS-STRAIN");  // channel name for Livingston data
+    strcpy(channelNamesRaw[1],"H1:LDAS-STRAIN");  // channel name for Hanford data
+    strcpy(channelNamesRaw[2],"V1:h_16384Hz");    // channel name for Virgo data
+
+    //list of L1 NINJA2 frame files @Atlas
+    strcpy(frFiles[0],"input/L1_NINJA2_G1000176_EARLY_RECOLORED_ATLAS.list"); 
+    //list of H1 NINJA2 frame files @Atlas
+    strcpy(frFiles[1],"input/H1_NINJA2_G1000176_EARLY_RECOLORED_ATLAS.list"); 
+    //list of V1 NINJA2 frame files @Atlas
+    strcpy(frFiles[2],"input/V1_NINJA2_G1000176_EARLY_RESCALED_RECOLORED_ATLAS.list");
+
+    nDQF=12;
+    dqfile dqf[nDQF]={
+      //list of science segments for NINJA2 L1 
+      {"L1" ,"input/L1_NINJA2_G1000176_EARLY_RECOLORED.txt", CWB_CAT0, 0., false, false}, 
+      {"L1" ,"input/S6D_OFFLINE_L1_DQCAT1SEGMENTS.txt", CWB_CAT1, -66858896, true, false},
+      {"L1" ,"input/S6D_OFFLINE_L1_DQCAT2SEGMENTS.txt", CWB_CAT2, -66858896, true, false},
+      {"L1" ,"input/S6D_OFFLINE_L1_DQCAT4SEGMENTS.txt", CWB_CAT1, -66858896, true, false},
+      //list of science segments for NINJA2 H1 
+      {"H1" ,"input/H1_NINJA2_G1000176_EARLY_RECOLORED.txt", CWB_CAT0, 0., false, false}, 
+      {"H1" ,"input/S6D_OFFLINE_H1_DQCAT1SEGMENTS.txt", CWB_CAT1, -61545543, true, false},
+      {"H1" ,"input/S6D_OFFLINE_H1_DQCAT2SEGMENTS.txt", CWB_CAT2, -61545543, true, false},
+      {"H1" ,"input/S6D_OFFLINE_H1_DQCAT4SEGMENTS.txt", CWB_CAT1, -61545543, true, false},
+      //list of science segments for NINJA2 V1 
+      {"V1" ,"input/V1_NINJA2_G1000176_EARLY_RECOLORED.txt", CWB_CAT0, 0., false, false}, 
+      {"V1" ,"input/S6A_OFFLINE_V1_DQCAT1SEGMENTS.txt", CWB_CAT1, -31035296., true, false},
+      {"V1" ,"input/S6A_OFFLINE_V1_DQCAT2SEGMENTS.txt", CWB_CAT2, -31035296., true, false},
+      {"V1" ,"input/S6A_OFFLINE_V1_DQCAT4SEGMENTS.txt", CWB_CAT1, -31035296., true, false}
+    };
+
+
+ Editing the post-production parameters in user_pparameters.txt 
+ and dq cat3/hveto files for the vetoing phase      
+ 
+   const int nvdqf=7;
+   dqfile vdqf[nvdqf] = {
+    {"L1","input/L1-HVETO_COMBINED_VETO_SEGS_INST-961545600-9676800.txt",CWB_HVETO,-66858896,false,false},
+    {"H1","input/H1-HVETO_COMBINED_VETO_SEGS_INST-961545600-9676800.txt",CWB_HVETO,-61545543,false,false},
+    {"V1","input/V1_KW_HVETO_S6A.txt", CWB_HVETO, -31035296., false, false},
+    {"L1","input/S6D_OFFLINE_L1_DQCAT3SEGMENTS.txt", CWB_CAT3,-66858896, false, false},
+    {"H1","input/S6D_OFFLINE_H1_DQCAT3SEGMENTS.txt", CWB_CAT3, -61545543, false, false},
+    {"V1","input/S6A_OFFLINE_V1_DQCAT3SEGMENTS.txt", CWB_CAT3, -31035296., false, false}
+   };
+
+
+3) Creation of files for jobs submission
+
+   cwb_condor create (to be done in DIR_NAME)
+   cd DIR_NAME/condor
+   condor_submit_dag DIR_NAME.dag
+
+
+4) Merging jobs output 
+
+   cwb_merge MX (to be done in DIR_NAME) where X=1,2,3... can be different stages 
+   of the production (e.g. M1 =>30%, M2=>60%, ...M6=>100% completed )  
+   
+5) Vetoing phase
+
+  cwb_setveto MX
+  At the end of this process, a label will be written on the standard output 
+  (combination of MX and of the applied vetoing flags)
+  
+6) Creating a report html page
+
+  cwb_report "label" create
+

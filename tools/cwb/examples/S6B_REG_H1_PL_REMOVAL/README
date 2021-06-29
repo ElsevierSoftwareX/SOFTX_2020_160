@@ -1,0 +1,54 @@
+// ----------------------------------------------------------
+// Example to Cleaning Power Lines with Regression applied to H1
+// ----------------------------------------------------------
+
+mkdir S6B_REG_H1_vaibhav_run2
+
+cd S6B_REG_H1_vaibhav_run2
+
+cwb_mkdir .
+
+// ----------------------------------------------------------
+// make config file
+// ----------------------------------------------------------
+config/user_parametrs.C
+
+// ----------------------------------------------------------
+// make input files in input directory
+// ----------------------------------------------------------
+
+// ----------------------------------------------------------
+// create condor stuff
+// ----------------------------------------------------------
+
+cwb_condor create
+
+cd condor
+condor_submit_dag S6B_REG_H1_vaibhav_run2_job83.dag
+
+// ----------------------------------------------------------
+// how to create the input frame files list
+// ----------------------------------------------------------
+
+ligo_data_find --observatory=H --type=H1_RDS_R_L1 --gps-start-time=942400000 --gps-end-time=942500000 --url-type=file > input/H1_RDS_R_L1_94240000_942500000.frl
+
+ligo_data_find --observatory=H --type=H1_LDAS_C02_L2 --gps-start-time=942400000 --gps-end-time=942500000 --url-type=file > input/H1_LDAS_C02_L2_94240000_942500000.frl 
+
+// display time frequency target channel
+
+FrDisplayPROC -t H1:LDAS-STRAIN -i ldf -o H -s H1_LDAS_C02_L2 -f 942450000 -l 942460000 -k "-Bu -Hp -o 6 -a 30" 
+
+// ----------------------------------------------------------
+// interactive regression to job 83
+// ----------------------------------------------------------
+
+cwb_inet 83
+
+// ----------------------------------------------------------
+// display time frequency target/cleaned channel
+// ----------------------------------------------------------
+
+// noisy frame
+FrDisplayPROC -t H1:LDAS-STRAIN -i oframes/H-H1_LDAS_C02_L2-942450232-600.gwf -k "-Bu -Hp -o 6 -a 40"
+// cleaned frame
+FrDisplayPROC -t H1:LDAS-STRAIN -i oframes/H-H1_LDAS_C02_L2_REG-942450232-600.gwf -k "-Bu -Hp -o 6 -a 40"

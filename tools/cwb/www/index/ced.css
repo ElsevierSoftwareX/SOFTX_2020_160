@@ -1,0 +1,97 @@
+/*
+ * ced.css - coherent event display
+ *         - main style sheet
+ *
+ * $Id: ced.css 2721 2007-05-10 19:09:12Z ram $
+ */
+
+body {
+  color: #000000;
+  /*background-color: #efefef;*/
+  background-color: #ffffff;
+  font-family: sans-serif;
+  padding: 10px 20px 10px 20px;
+}
+
+div#header {
+  background-color: #ffffff;
+  border: 1px solid #00478d;
+  padding: 10px 10px 10px 10px;
+  font-family: sans-serif;
+  width: auto;
+  margin: 0px 0px 10px 0px;
+  color: #00478d;
+  cursor: default;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+div#nmenu {
+  font-family: sans-serif;
+  float: left;
+  width: 160px;
+  font-size: 13px;
+  text-align: left;
+}
+
+div#nmenu a {
+  background-color: #ffffff;
+  border: 1px solid #00478d;
+  display: block;
+  padding: 3px 10px 3px 10px;
+  width: 100%;
+}
+
+div#nmenu a:hover {
+  background-color: #00478f;
+  border-color: #000000;
+  color: #ffffff;
+}
+
+div.title {
+  background-color: #ffffff;
+  border-top: 1px solid #00478d;
+  border-right: 1px solid #00478d;
+  border-left: 1px solid #00478d;
+  color: #00478d;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  padding: 3px 10px 3px 10px;
+  margin: 10px 0px 0px 190px;
+}
+
+div.content {
+  background-color: #ffffff;
+  border: 1px solid #00478d;
+  padding: 6px 10px 6px 10px;
+  margin-left: 190px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid #000000;
+}
+
+th {
+  text-align: left;
+  padding: 2px;
+  border-collapse: collapse;
+  border: 1px solid #000000;
+}
+
+td {
+  text-align: right;
+  padding: 2px;
+  border-collapse: collapse;
+  border: 1px solid #000000;
+}
+
+/*
+ * vim: et ts=2 tw=0
+ */

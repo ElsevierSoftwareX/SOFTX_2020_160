@@ -1,0 +1,9 @@
+// ------------------------------------------------------------------------
+// Use this example to produce frame to be used for the online cwb pipeline
+// ------------------------------------------------------------------------
+
+- README.frames   : generate frames (ADV L1/H1/V1 detectors + MDC) 4sec duration under frames dir
+
+- README.analysis : list of test analysis using thr frames generated following the procedure described in README.frames 
+
+- README.glitches : add glitch to data  (read first README.frames and README.analysis)

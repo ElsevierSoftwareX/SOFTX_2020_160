@@ -1,0 +1,74 @@
+// This example shows how to use 1G background analysis for S6A
+
+mkdir S6A_R4_BKG_L1H1V1
+cd S6A_R4_BKG_L1H1V1
+
+mkdir config
+// edit config/user_parameters.C
+// edit config/user_pparameters.C
+
+// to apply phase mis-calibration to data uncomment plugin line in config/user_parameters.C
+
+// create working subdirectories
+cwb_mkdir batch
+
+cd input
+
+// set dq file lists
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1SCIENCE.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT1SEGMENTS.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT2SEGMENTS.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT3SEGMENTS.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_H1_DQCAT4SEGMENTS.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1SCIENCE.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT1SEGMENTS.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT2SEGMENTS.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT3SEGMENTS.txt
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/S6A_R4_segments/S6A_OFFLINE_L1_DQCAT4SEGMENTS.txt
+
+// set detector's frame lists, mdc frame lists)
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/lists/S6A_R3_L1_LDAS_C02_L2.frames
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/lists/S6A_R3_H1_LDAS_C02_L2.frames
+ln -s /home/salemi/S6/coherent/offline/SEGMENTS/lists/S6A_R1_V1_HrecV3.frames
+
+// dump the standard job list is here (only for info purposes)
+cwb_dump job
+report/dump/S6A_R4_BKG_L1H1V1.job
+
+// create condor daq/sub
+// S6A_R4_BKG_L1H1V1.dag
+// S6A_R4_BKG_L1H1V1.sub
+cwb_condor create
+
+// start condor
+// root/txt create in the output dir
+// condor log files created in the log dir
+cwb_condor submit condor/S6A_R4_BKG_L1H1V1.dag
+
+// merge (create automatically a version [start from R1])
+// wave_S6A_R4_BKG_L1H1V1_M1.root
+// live_S6A_R4_BKG_L1H1V1_M1.root
+// merge_S6A_R4_BKG_L1H1V1_M1.lst
+cwb_merge M1
+
+// add slag if output root file do not contains slag
+cwb_fix_slag_missed M1 
+cwb_fix_live_slag_missed M1
+
+// list merge
+cwb_report list merge 
+
+// veto
+cwb_setveto M1  // if original data are without slag
+// live_S6A_R4_BKG_L1H1V1.M1.VhvetoV_cat3LHV.root
+// wave_S6A_R4_BKG_L1H1V1.M1.VhvetoV_cat3LHV.root
+
+// reports
+cwb_report M1.FIX.VhvetoV_cat3LHV create 
+
+// produce ced of loudest events (listed in report M1.FIX.VhvetoV_cat3LHV)
+cwb_condor submit condor/S6A_R4_BKG_L1H1V1.FIX.VhvetoV_cat3LHV.R200_2048_hveto_cat3_cc60_rho35.ced.dag
+
+// ZERO LAG
+cwb_report M1.VhvetoV_cat3LHV create 0 0
+// M1.FIX.VhvetoV_cat3LHV.R200_2048_hveto_cat3_cc60_rho35_lag0_slag0

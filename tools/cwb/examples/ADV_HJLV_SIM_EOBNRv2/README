@@ -1,0 +1,112 @@
+// Example for simulation of CBC signals in simulated advanced detectors data
+
+This is an example on how to run a cWB simulation for coalescing intermediate 
+mass black holes (IMBHs) in advanced HJLV simulated data. 
+Useful information on the cWB IMBH search can be found here: 
+http://www.virgo.lnl.infn.it/Wiki/index.php/IMBH
+(standard LVC collaboration password)
+
+
+1) Creating working environment [ATLAS]
+
+   source /home/waveburst/SOFT/WAT/trunk/atlas_watenv.csh  
+     ( users can source their own installation instead of the one under /home/waveburst )
+   mkdir DIR_NAME
+   cd DIR_NAME
+   cwb_mkdir .  (to be done in DIR_NAME)
+   mkdir DIR_NAME/plugins
+
+
+2) Editing files needed for the analysis
+
+   cd DIR_NAME/input
+   edit inspiral.in with GPS start and stop of the considered data set (see example) 
+   cd DIR_NAME/config
+   edit user_parameters.C with the cWB parameters for the analysis (see example)
+
+
+          cWB parameters specifically set for the IMBH search on advanced detectors
+ 
+          a) search = 'I'        this enables the elliptical constraint, which should 
+                                 be considered when targeting coalescing 
+                                 binaries as emitted signals are elliptically polarized
+          b) bpp   = 0.0001      this parameter was set one order of magnitude smaller 
+                                 than what is usually done for the all-sky burst search
+          c) fLow  = 16.         the low frequency of the search is set to 16 Hz as 
+                                 advanced detectors are considered. The same 
+                                 parameter was set to 32 for the S6-VSR2/3 IMBH search 
+          d) fHigh = 512 .       the higher frequency is set to 512 as no IMBH binary 
+                                 is expected to emit at higher frequency 
+                                 (in the considered parameter space)
+          e) netRHO= 2.5         as simulated data are considered, reconstructed events 
+                                 are interesting also at very low rho values
+          f) int levelR  = 4     downsample level to restrict the investigated frequency 
+                                 band below 512 Hz
+          g) int nfactor = 1     no additional factors are used to rescale the amplitudes 
+                                 and, therefore, the distances, of the injected signals.
+
+
+   cd DIR_NAME/plugins
+   edit CWB_Plugin_TestClassCBC.C with the detectors sensitivities  (see example)    
+
+
+          As simulated data from advanced detectors are considered, 
+          the ASCII files reporting the designed sensitivities are set here
+
+          a) if(ifo.CompareTo("L1")==0) fName="detectors_PSD/LIGO_zero_det_HP.txt";
+          b) if(ifo.CompareTo("H1")==0) fName="detectors_PSD/LIGO_zero_det_HP.txt";
+          c) if(ifo.CompareTo("V1")==0) fName="detectors_PSD/VIRGO.txt";
+          d) if(ifo.CompareTo("J1")==0) fName="detectors_PSD/KAGRA.txt";
+
+
+   edit CWB_Plugin_TestClassCBC_Config.C with the parameter space investigated 
+        by the analysis and the distributions of the injections parameters  (see example)
+
+
+          Options in CWB_Plugin_TestClassCBC_Config.C:
+          
+          a) --time-step         time unit containing one injection
+          b) --time-interval     time interval to distribute the signal peak time 
+                                 at different moments within the considered --time-step
+          c) --l-distr           set the source location distribution
+          d) --gps-start-time    GPS start
+          e) --gps-end-time      GPS stop
+          f) --d-distr           set the distance distribution of injections 
+          g) --m-distr           set the mass distribution of injections 
+          h) --i-distr           set the inclination distribution
+          i) --f-lower           initial frequency of injected signals
+          j) --min-mtotal        minimum total mass value (in solar masses)
+          k) --max-mtotal        maximum total mass value (in solar masses)
+          l) --min-mratio        minimum mass ratio 
+          m) --max-mratio        maximum mass ratio
+          n) --min-distance      minimum distance at which injections are located 
+          o) --max-distance      maximum distance at which injections are located
+          p) --waveform          injected waveform family
+          q) --disable-spin      disables spinning injections  
+                                 (--enable-spin if wanting spinning compact objects)
+          r) --taper-injection   taper the inspiral template
+          s) --seed              initial MonteCarlo seed
+
+          If wanting spinning compact objects, replace q) with
+
+          t) --enable-spin  
+          u) --aligned           enforces the spins to be along the direction of 
+                                 orbital angular momentum.
+          v) --min-spin1         Set the minimum spin1 
+          w) --max-spin1         Set the maximum spin1 
+          x) --min-spin2         Set the minimum spin2 
+          y) --max-spin2         Set the maximum spin2 
+
+          and p) with a waveform family valid for spinning binaries 
+
+
+3) Creation of files for jobs submission
+
+   cwb_condor create (to be done in DIR_NAME)
+   cd DIR_NAME/condor
+   condor_submit_dag DIR_NAME.dag
+
+
+4) Once jobs have been processed
+
+   cwb_merge M0 (to be done in DIR_NAME)

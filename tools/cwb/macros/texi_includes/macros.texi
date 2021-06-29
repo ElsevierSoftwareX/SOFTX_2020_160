@@ -1,0 +1,272 @@
+@c =====================================================================
+@c macro popupimage
+@c Ex: to popup the image images/AnalysisPipeline/AnalysisPipeline_2.png
+@c @popupimage{images/AnalysisPipeline,AnalysisPipeline_2}
+@c =====================================================================
+
+@macro popupimage{param1, param2, param3}
+@ifhtml
+@html
+(\param3\
+<input id="input_\param2\" type="checkbox"
+       onclick="toggleVisible('input_\param2\');" />
+)
+<div class="section" id="div_input_\param2\" style="display: none;">
+
+<ul><br/>
+<a class="image" title="CWB Libraries">
+<img src="\param1\/\param2\.png" width="700"> </a>
+</br></ul>
+@end html
+@end ifhtml
+
+@iftex
+@image{\param1\/\param2\,,12cm,png}
+@end iftex
+
+@ifhtml
+@html
+</div>
+@end html
+@end ifhtml
+@end macro
+
+@c =====================================================================
+@c macro displayimage
+@c Ex: to show the image images/AnalysisPipeline/AnalysisPipeline_2.png
+@c @displayimage{images/AnalysisPipeline,AnalysisPipeline_2}
+@c =====================================================================
+
+@macro displayimage{param1, param2, param3}
+@ifhtml
+@html
+<ul><br/>
+<a class="image" title="\param2\">
+<img src="\param1\/\param2\.png" width="\param3\"> </a>
+</br></ul>
+@end html
+@*@*
+@end ifhtml
+
+@iftex
+@image{\param1\/\param2\,,12cm,png}
+@end iftex
+@end macro
+
+@c =====================================================================
+@c macro latexusage
+@c use of latex syntax in html
+@c =====================================================================
+@c <img src="http://latex.codecogs.com/svg.latex?\param1\" border="0"/>
+
+@macro latexusage{param1,param2,param3}
+@ifhtml
+@html
+\param2\ \param1\ \param3\
+@end html
+@end ifhtml 
+@ifnothtml
+@math{\param1\}
+@end ifnothtml
+@end macro
+
+@c =====================================================================
+@c macros which implement the tabber
+@c
+@c This example creates a tabber with 2 tabs :
+@c
+@c @tabberbeg
+@c @tabbertab{frame1.html,name1}
+@c @tabbertab{frame2.html,name2}
+@c @tabberend
+@c
+@c NOTES :
+@c the files tabber.css, tabber.js must be present in the html directory
+@c =====================================================================
+
+@macro tabberbeg
+@ifhtml
+@html
+
+<html><head>
+<meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title>MAIN_Index</title>
+<!-- Include the tabber code -->
+<script type="text/javascript" src="tabber.js"></script>
+<link rel="stylesheet" href="tabber.css" TYPE="text/css" MEDIA="screen">
+
+<script type="text/javascript">
+
+/* Optional: Temporarily hide the "tabber" class so it does not "flash"   on
+ * the page as plain HTML. After tabber runs, the class is changed
+   to "tabberlive" and it will appear. */
+
+document.write('<style type="text/css">.tabber@{display:none;@}</style>');
+
+</script>
+
+</head>
+
+<head>
+<!-- Include the tabber code -->
+<script type="text/javascript" src="tabber.js"></script>
+<link rel="stylesheet" href="tabber.css" TYPE="text/css" MEDIA="screen">
+<script type="text/javascript">
+document.write('<style type="text/css">.tabber@{display:none;@}</style>');
+</script>
+</head>
+<html>
+<br>
+<div class="tabber">
+
+@end html
+@end ifhtml 
+@end macro
+
+
+@macro tabbertab0{name}
+@ifhtml
+@html
+<div class="tabbertab">
+<h2>\name\</h2>
+</div>
+@end html
+@end ifhtml 
+@end macro
+
+
+@macro tabbertab1{name,frame1,height1}
+@ifhtml
+@html
+<div class="tabbertab">
+<h2>\name\</h2>
+<iframe src="\frame1\" width="100%"  height="\height1\px" frameborder="0"></iframe>
+</div>
+@end html
+@end ifhtml 
+@end macro
+
+
+@macro tabbertab2{name,frame1,height1,frame2,height2}
+@ifhtml
+@html
+<div class="tabbertab">
+<h2>\name\</h2>
+<iframe src="\frame1\" width="100%"  height="\height1\px" frameborder="0"></iframe>
+<iframe src="\frame2\" width="100%"  height="\height2\px" frameborder="0"></iframe>
+</div>
+@end html
+@end ifhtml 
+@end macro
+
+
+@macro tabberend
+@ifhtml
+@html
+
+</div>
+</html>
+
+@end html
+@end ifhtml 
+@end macro
+
+@c =====================================================================
+@c macros which popup section (only for html)
+@c Ex: 
+@c @popupsecbeg{name}
+@c section to be popup
+@c @popupsecend{name}
+@c =====================================================================
+
+@macro popupsecbeg{param1}
+@ifhtml
+@html
+<input id="input_\param1\" type="checkbox"
+       onclick="toggleVisible('input_\param1\');" />
+<div class="section" id="div_input_\param1\" style="display: none;">
+@end html
+@end ifhtml
+@end macro
+
+@macro popupsecend
+@ifhtml
+@html
+</div>
+@end html
+@end ifhtml
+@end macro
+
+@c =====================================================================
+@c macros to set color to text (only for html)
+@c Ex: 
+@c @txtcolor{text,red}
+@c =====================================================================
+
+@macro txtcolor{param1,param2}
+@ifhtml
+@html
+<font color="\param2\">\param1\</font>
+@end html
+@end ifhtml
+@ifnothtml
+\param1\
+@end ifnothtml
+@end macro
+
+@c =====================================================================
+@c macros to set font to text (only for html)
+@c Ex: 
+@c @txtfont{text,red,h2}
+@c =====================================================================
+
+@macro txtfont{param1,param2,param3}
+@ifhtml
+@html
+<font color="\param2\"><\param3\>\param1\</\param3\></font>
+@end html
+@end ifhtml
+@ifnothtml
+\param1\
+@end ifnothtml
+@end macro
+
+@c =====================================================================
+@c macros draw a line (only for html)
+@c Ex: 
+@c @drawline
+@c =====================================================================
+
+@macro drawline
+@ifhtml
+@html
+<hr>
+@end html
+@end ifhtml
+@end macro
+
+@c =====================================================================
+@c macros which center section (only for html)
+@c
+@c @centerbeg
+@c ...
+@c @centerend
+@c
+@c =====================================================================
+
+@macro centerbeg
+@ifhtml
+@html
+<div align="center">
+@end html
+@end ifhtml
+@end macro
+
+@macro centerend
+@ifhtml
+@html
+</div>
+@end html
+@end ifhtml
+@end macro
+

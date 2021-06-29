@@ -1,0 +1,18 @@
+// Use this example to test the 2G cwb pipeline 2 phases
+// MDC are generated on the fly
+// MDC are NSNS
+
+1) make directories for cwb
+
+2) generate frames for ADV ifos L1 H1 V1
+   to change the default vaules edit macro/CreateFramesNOISE.C
+
+to generate all necessary stuff do "make setup"
+  
+to change the cwb parameters edit config/user_parameters.C
+
+to run cwb pipeline do "make cwb"
+
+to reset the directory do "make clean"
+
+

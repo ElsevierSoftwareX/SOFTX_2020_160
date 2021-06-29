@@ -1,0 +1,32 @@
+<font color="red" style="font-weight:bold;">
+<h3 align="center"><a id="det_resp">IFO</a>
+</font>
+
+<td><a id="det_resp"> - ( PSD</a>
+<input id="IFO_input_psd" type="checkbox" onclick="toggleVisible('IFO_input_psd');" />
+<a id="det_resp"> )</a>
+</td>
+</h3>
+
+<div class="section" id="div_IFO_input_psd" style="display: none;">
+<table align="center">
+<tr>
+<td align="center">( <a href="IFO_psd.dat">data file</a> )</td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_psd" href="IFO_psd.png" rel="shadowbox[gallery]" title="IFO - psd"><img id="IFO_psd_img" title="IFO_psd" alt="IFO_psd"  src="IFO_psd.png" width="1000px" /></a></td>
+</tr>
+</table>
+</div>
+<br><br>
+
+<table align="center">
+<tr>
+<td align="center">Strain: <a href="javascript:showImage('IFO_ht','IFO','wf','strain');">full</a> | <a href="javascript:showImage('IFO_ht','IFO','wf_strain','zoom');">zoom</a> | <a href="javascript:showImage('IFO_ht','IFO','wf_strain','fft');">fft</a> | <a href="IFO_wf_strain.dat">dat</a></td>
+<td align="center">Whitened: <font color="red">Reconstructed Response</font> - <font color="black">Band Limited Output</font> <a href="javascript:showImage('IFO_sn','IFO','wf','signal');">time</a> | <a href="javascript:showImage('IFO_sn','IFO','wf_signal','fft');">fft</a> | <a href="IFO_wf_signal.dat">dat</a></td>
+</tr>
+<tr>
+<td align="center"><a id="IFO_ht_a" href="IFO_wf_strain.png" rel="shadowbox[gallery]" title="IFO - strain"><img id="IFO_ht_img" title="IFO_ht" alt="IFO_ht"  src="IFO_wf_strain.png" width="500px" /></a></td>
+<td align="center"><a id="IFO_sn_a" href="IFO_wf_signal.png" rel="shadowbox[gallery]" title="IFO - Whitened: Reconstructed Response (Red) - Band Limited Output (Black)"><img id="IFO_sn_img" title="IFO_sn" alt="IFO_sn"  src="IFO_wf_signal.png" width="500px" /></a></td>
+</tr>
+</table>

@@ -1,0 +1,2 @@
+ligo_data_find --observatory=H --type=H1_RDS_R_L1 --gps-start-time=942450000 --gps-end-time=942460000 --url-type=file > H1_RDS_R_L1.frl
+

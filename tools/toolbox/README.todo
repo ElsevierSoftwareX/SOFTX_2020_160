@@ -1,0 +1,31 @@
+1) modificare classe livetime.C per N detectors > 5
+
+// done 2) dividere in 2 la macro user_pparameters.C
+
+// done 3) inserire in "ecwb_condor create" al rimozione dei jobs con lenght<LEN_MIN dopo CAT2
+
+4) definire enum per 2COL/4COL e DQ_LIST_REVERSE
+
+5) unificare le ecwb_net 
+
+6) introdurre dataShift in ecwb_net
+
+7) impllementare slag in apply veto
+
+8) inserire history della produzione nell'history del merge
+
+9) rendere indipendente apply veto dal numero di run
+
+10) inserire user define veto names (se possibile)
+
+11) inserire generazione rumore gaussiano in ToolBox + generazione on-fly in ecwb_net
+
+12) inserire slag  in macro/livetime.* (gia' fatto in wat-5.3.9.slag.2)
+
+13) sostituire il comando data con /bin/date
+
+14) sistemare Job Status in html quando condor ha un tag!=""
+
+15) sistemare ecwb_inet con tempo evento fissato e non lag zero
+
+15) controllare getSlagIndex per nIFO>3

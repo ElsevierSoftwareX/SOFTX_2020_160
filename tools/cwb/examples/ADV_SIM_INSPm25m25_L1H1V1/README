@@ -1,0 +1,5 @@
+// 1G cwb simulation inspiral (LAL On the Fly) with ADV detectors L1H1V1 (On the Fly)
+
+make setup      // creates directories
+make cwb        // do 1G analysis
+make ced        // do ced

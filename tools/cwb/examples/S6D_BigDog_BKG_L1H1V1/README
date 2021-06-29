@@ -1,0 +1,13 @@
+// This example reproduce the 1G analysis of the Big Dog event 
+// data are produced under data directory
+
+1) create directories for cwb
+   make setup
+
+2) 1G analysis 
+   make cwb
+
+3) 1G analysis + ced
+   make ced
+
+

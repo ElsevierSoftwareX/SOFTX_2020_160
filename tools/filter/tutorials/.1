@@ -1,0 +1,31 @@
+#define MILD_ANGLE  32
+
+{
+
+  double pi = TMath::Pi();
+
+  TH1F* h = new TH1F("h","h",90,0,90); 
+
+  double at = tan(MILD_ANGLE*pi/180.);
+
+  double Fp[2] = {1,0};
+  double Fx[2] = {0,at};
+  double X[2];
+
+cout << "Fp : " << Fp[0] << " Fx : " << Fx[1] << endl;
+
+  for (int i=0;i<100000;i++) {
+    double Hp=gRandom->Uniform(-1,1);
+    double Hx=gRandom->Uniform(-1,1);
+
+    X[0] = Fp[0]*Hp+Fx[0]*Hx;
+    X[1] = Fp[1]*Hp+Fx[1]*Hx;
+
+    double angle = fabs(atan2(X[1],X[0])*180./pi);
+    
+    h->Fill(angle);
+  }
+
+  h->Draw();
+
+}

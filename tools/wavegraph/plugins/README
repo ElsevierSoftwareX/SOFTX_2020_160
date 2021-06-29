@@ -1,0 +1,37 @@
+List of available plugins
+-------------------------
+
+%%%%%%%%%%%% Background runs %%%%%%%%%%%%
+
+CWB_Plugin_CBC_Config.C: configure and perform the injection of CBC signals
+
+CWB_Plugin_wavegraph.C: run cWB search with wavegraph clustering (use with real data)
+
+Note: to run a cWB search with real data, simply don't use any plugin!
+
+%%%%%%%%%%%% Simulation runs %%%%%%%%%%%%
+
+CWB_Plugin_nowavegraph.C: run cWB search and CBC injections (use with real data)
+
+CWB_Plugin_wavegraph_MDC.C: run cWB search with wavegraph clustering and CBC injection (use with real data)
+
+%%%%%%%%%%%% Background and simulation runs with Gaussian noise %%%%%%%%%%%%
+
+CWB_Plugin_nowavegraph_gaussian_noise.C: generate colored Gaussian noise and run standard cWB search
+
+CWB_Plugin_wavegraph_gaussian_noise.C: generate colored Gaussian noise and run cWB search with wavegraph clustering
+
+Options
+=======
+
+WAVEGRAPH_WDMDUMP: enable/disable dump of WDM data in file
+
+Production of multi-plugins
+---------------------------
+
+cwb_mplugin macro/CWB_Plugin_wavegraph_multi.C $HOME_WAT/tools/cwb/plugins/CWB_Plugin_MDC_OTF.C $HOME_WAT/tools/cwb/plugins/CWB_Plugin_SimNoise.C
+macro/CWB_Plugin_wavegraph.C
+
+cwb_mplugin CWB_Plugin_nowavegraph.C $HOME_WAT/tools/cwb/plugins/CWB_Plugin_MDC_OTF.C
+
+cwb_mplugin CWB_Plugin_wavegraph_MDC.C CWB_Plugin_wavegraph.C $HOME_WAT/tools/cwb/plugins/CWB_Plugin_MDC_OTF.C

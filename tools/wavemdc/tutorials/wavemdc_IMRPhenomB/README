@@ -1,0 +1,11 @@
+// edit wmdc_config.C
+
+// create segment file list 
+Segments/S6a_LS-segs.txt
+
+wmdc_condor create
+
+condor_submit_dag 'frLabel'.dag
+
+// when condor is completed do
+wmdc_condor log

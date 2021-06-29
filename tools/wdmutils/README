@@ -1,0 +1,20 @@
+
+This package reproduces the contents of the file  
+
+FourierCoefficients.icc
+
+included in the WDM transform class, which contains crucial hardcoded values
+needed for the calculation of WDM filters with different K, M, n coefficients.
+
+
+
+USAGE:
+
+1.  
+   make
+
+2.  
+   ./ComputeWDMFourier > myWDMFourier.icc 
+
+
+

@@ -1,0 +1,157 @@
+// this examples is a simulation with a "On the Fly" GWGC distribution up to 50Mpc
+
+In this simulation we use advanced curves noise for network L1H1V1
+The sensitivity curve files are stored in the following directory :
+   $HOME_WAT/tools/cwb/plugins/strains/
+Infos about the files are reported in the README 
+   $HOME_WAT/tools/cwb/plugins/strains/README
+
+To use the network L1H1 instead of L1H1V1 use the config file L1H1_user_parameters.C
+
+  cp config/L1H1_user_parameters.C config/user_parameters.C
+
+By default the 1G pipeline is used, to change to 2G select in user_parameters.C
+
+  strcpy(analysis,"2G");
+
+Warning : 2G pipeline is currently under developement !!!
+
+The injection types used in this simulation are :
+
+  WNB250_100_0d100
+  SG235Q3
+  SG235Q8d9
+  SGC235Q9
+
+These signals are injected with fixed constant input network SNR 
+   netSNR^2 = Sum_i[SNR_i^2]
+where SNR_i is the SNR of the detector i
+The value of netSNR must be defined in the config/user_parameters.C
+
+  nfactor = 1;
+  simulation = 2;  // snr mode (fixed input snr)
+  factors[0]=10*sqrt(3);
+
+Sky distribution is the GWGC : "Gravitational Wave Galaxy Catalog" 
+MDC are generated "On the fly"
+
+The custom code for noise & GWGC is implemented with a CWB plugin:
+The plugin is :
+
+  macro/CWB_Plugin_BRST_LF_GWGC.C              // main plugin
+
+The MDC configuration is defined in the config plugin :
+
+  macro/CWB_Plugin_BRST_LF_GWGC_Config.C       // configuration plugin
+
+the plugin must be define in the cwb user parameter file "config/user_parameters.C"
+
+The example show how to use a celestial skymask.
+The celestial skymask allows to analize only the sky positions which contains a GWGC source.
+
+The macro:
+
+  macro/CreateSkyMaskGWGC.C
+
+is used to create the celestial skymask (used by CWB to select the sky locations to be analyzed)
+
+  input/SkyMaskCC_GWGC_Rev1d8_HPX7_PAD.txt
+
+By default in this example the healpix order=7 sky segmentation is used.
+To use the built-in cwb sky segmentation comment the line :
+  healpix = 7;
+in config/user_parameters.C
+
+in accordance a consistent skymask must be generated, to do this comment the line :
+  #define HEALPIX_ORDER 7
+moreover in macro/CreateSkyMaskGWGC.C must be commented and the line
+  sprintf(skyMaskCCFile,"input/SkyMaskCC_GWGC_Rev1d8_HPX7_PAD.txt");
+must be substituted with :
+  sprintf(skyMaskCCFile,"input/SkyMaskCC_GWGC_Rev1d8_R0d40_PAD.txt");
+
+To create the mask we use the GWGC catalog, the catalog is defined in the macro as:
+  #define GWGCCatalog "$CWB_GWAT/data/GWGCCatalog_Rev1d8.txt"
+There is a local copy in $CWB_GWAT/data/GWGCCatalog_Rev1d8.txt
+The catalog has been downloaded from:
+
+  https://www.lsc-group.phys.uwm.edu/cgi-bin/pcvs/viewcvs.cgi/bursts/collabs/DO_proposal/ \
+  gwgc/GWGCCatalog.txt?cvsroot=lscdocs
+
+The GWGC documentation is here :
+
+  https://www.lsc-group.phys.uwm.edu/cgi-bin/pcvs/viewcvs.cgi/bursts/collabs/DO_proposal/ \
+  gwgc/GWGCReadme.pdf?cvsroot=lscdocs
+
+We use the healpix order 7 sky segmentation
+The skymask is padded with the 8 neighbors pixels
+to take into account possible inaccuracies in the sky localizations
+
+the cc skymask must be defined in the cwb user parameter file :
+config/user_parameters.C
+
+-------------------------------------------------------------------------
+- How to run the simulation :
+-------------------------------------------------------------------------
+
+1) copy example dir :
+
+   mkdir WORK_DIR	(a unique name defined by the user)
+   cp -r trunk/tools/cwb/examples/ADV_SIM_BRST_LF_GWGC_L1H1V1 WORK_DIR
+
+2) create working directories
+
+   cd WORK_DIR
+   cwb_mkdir .
+
+   - create symbolic link to the cwb plugin directory (contains the sensitivity curves)
+   ln -s $HOME_WAT/tools/cwb/plugins
+
+3) create celestial skymask
+
+   root -l  macro/CreateSkyMaskGWGC.C
+  
+   To plot skymask uncomment 
+     #define PLOT_SKYMASK
+
+   To plot the GWGC skymap distribution uncomment
+     #define PLOT_GWGC
+
+4) run and interactive job :
+
+   cwb_inet 1		# root file is produced under data dir
+   cwb_inet 1 0 true	# CED is produced under data dir
+
+   if you want to disable the skymask comment in config/user_parameters.C
+   //sprintf(skyMaskCCFile,"input/SkyMaskCC_GWGC_Rev1d8_HPX7_PAD.txt");
+
+5) run many jobs in batch mode
+   the period is define in input/burst.in
+   for this example the period is :
+   from 931158000 to 931999000
+   to which correspond ~1402 jobs/segments with a duration of 600 sec each
+   output root/ascii files are stored under the output directory 
+
+   cwb_condor create
+   cwb_condor submit
+
+6) merge output files
+   the command cwb_merge merge the output root files in one single root file
+   the output merged file is produced under the merge directory
+   merge/wave_ADV_SIM_BRST_LF_GWGC_L1H1V1.M1.root
+
+   cwb_merge M1
+
+7) plot/save of percentage of detected events versus the error region area
+
+   copy the macro under local macro directory :
+     cp $HOME_WAT/tools/gwat/tutorials/DrawPercentageVsAreaPRC.C macro/.
+   by default this macro use :
+     - 3 detectors  : #define nIFO  3
+     - the mdc set  : float factors[3] = {10*sqrt(nIFO), 20*sqrt(nIFO), 30*sqrt(nIFO)};
+     - 3 snr values : float factors[3] = {10*sqrt(nIFO), 20*sqrt(nIFO), 30*sqrt(nIFO)}; 
+   change that values according to the analysis to be done
+     - for L1H1 select : #define nIFO  2
+
+   To run macro do:
+
+   root -l  'macro/DrawPercentageVsAreaPRC.C("merge/wave_ADV_SIM_BRST_LF_GWGC_L1H1V1.M1.root",0,true)'

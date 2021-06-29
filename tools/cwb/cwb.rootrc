@@ -1,0 +1,4 @@
+#Browser.Name:            TRootBrowser
+Browser.Name:            TRootBrowserLite
+#Rint.Logon:              rootlogon.C
+Rint.Logon:              $CWB_ROOTLOGON_FILE

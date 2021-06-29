@@ -1,0 +1,75 @@
+// this example is a simulation with a "On the Fly" GWGC distribution and L1H1 network
+
+In this simulation we use advanced curves noise for network L1H1 (define in macro/CWB_Plugin_BRST_LF_GWGC.C)
+The injections (defined in macro/CWB_Plugin_BRST_LF_GWGC_Config.C) are :
+
+WNB250_100_0d100
+SG235Q3
+SG235Q8d9
+SGC235Q9
+
+MDC are generated "On the fly"
+Sky distribution is from the "Gravitation Wave Galaxy Catalog"
+GWGC is defined in macro/CWB_Plugin_BRST_LF_GWGC_Config.C
+The GWGC catalog is : $CWB_GWAT/data/GWGCCatalog_Rev1d8.txt
+
+Setup is defined in config/user_parameters.C 
+
+  nfactor = 1;
+  simulation = 2;               // snr mode
+  factors[0]=10*sqrt(2);        // fixed injected network snr ~ 17
+
+  healpix = 7;     // use healpix sky segmentation (196608 pixels)
+  Psave = true;    // save skymap probability to output root file
+  nSky = -9999;    // save pixels skymap probability pixels up to cumulative prob < 0.9999
+                   // see $CWB_PARAMETER_FILE for more infos
+  dump=false;      // disable output to output/*.txt file (only output/*.root file)
+
+The output root files (output/*.root) contains the probability skymap.
+
+1) make SETUP   // create working directories
+
+2) make JOB     // interactive job #1
+
+3) make CONDOR  // create jobs
+
+4) make SUBMIT  // submit jobs
+
+5) make MERGE    
+
+   merge all thr output/*.root files 
+   The merging exclude the probability skymap to reduce the size of the final merged file.
+
+   So the merged file :
+     merge/wave_ADV_SIM_BRST_LF_GWGC_L1H1_1G_run3.M1.root
+   contains all the reconstructed parameters except the probability skymap.
+   To extract the skymap one must use the output/*.root files (see RootsSkyMap2Fits.C).
+   NOTE : the skymap storage (for L1H1 network) might need a big disk space (~800KB/skymap) !!!
+
+
+6) Post-Production
+
+There are some macros that can be used to "extract" / "display" / "save to fits" 
+the probability skymap saved on the output root files. 
+
+Note : change definitions in the macro code
+
+- macro/ReadSkyMapFromTree.C
+This macro show how to read/save to fits/display skymap probability from output root file
+Ex : root -l macro/ReadSkyMapFromTree.C
+
+- macro/RootSkyMap2Fits.C
+This macro show how to convert skymap probability from root to fits files
+Ex : root -l macro/RootSkyMap2Fits.C 
+
+- macro/RootsSkyMap2Fits.C
+This macro show how to convert skymap probability from a list of output/root files to fits files
+Ex : root -l macro/RootsSkyMap2Fits.C 
+
+- macro/DrawFits.C
+This macro show how to display skymap probability from fits file
+Ex : root -l 'macro/DrawFits.C("probability_skymap_931158248.fits.gz")'
+
+NOTE : These macros must be used as tutorials to learn how to play with the root probability skymap
+Look into the code and modify to customize it.
+

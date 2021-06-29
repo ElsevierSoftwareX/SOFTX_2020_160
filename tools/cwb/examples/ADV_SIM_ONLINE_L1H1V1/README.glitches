@@ -1,0 +1,116 @@
+// ========================================================================
+// add glitch to data
+// ========================================================================
+
+Before to run examples the user must produce a list of glitches for each detector
+The file lists must be declared with the names:
+
+input/L1_glitches.lst
+input/H1_glitches.lst
+input/V1_glitches.lst
+
+Ex:
+#          gps                       name       theta             phi              psi           rho            iota             snr            ID              id
+1040739003.865                    SG100Q9        160.88         235.66          167.19          1.00            0.00            40.00           1               0
+
+The set of waveforms to be used for glitches must be declared in the config plugin file:
+macro/CWB_Plugin_GOnlineFrame_Config.C
+in the 'mdc_type=="glitch"' section.
+
+The macro : 
+macro/CreateListOfGlitches.C
+is an example which show how to produce the lists.
+Change definitions if you want a different set of glitches.
+The set of waveforms used to generate gliches are defined in the macro :
+macro/CWB_Plugin_GOnlineFrame_Config.C 
+
+To run the macro 'macro/CreateListOfGlitches.C' do:
+make glitch
+
+// ------------------------------------------------------------------------
+to add glitches to strain+MDC use the make commands described in README.frames & README.analysis
+adding  'g' in front to the make label
+
+Ex : make gsetup	// create working dir
+     make gframe	// create frames with glitch channels L1/H1/V1:FAKE-GLITCHES
+     make gsim		// run mdc+glitch simulation (only mdc are detected because of "gap" window selection) 
+     make gsced		// as gsim + ced
+     make gzprod	// run noise+glitch (glitches can be detected) 
+     make gzpced	// as gzprod + ced 
+     make gmzprod	// run noise+mdc+glitch (mdc& glitches can be detected) 
+     make gmzpced	// as gmzprod + ced 
+
+// ------------------------------------------------------------------------
+// frame(with glitches) generation with condor
+// ------------------------------------------------------------------------
+
+NB! before to run condor remember to do :
+    1) make gsetup
+    2) setup gps range in Makefile (gsetup) used to generate
+       input/frames.in	// gps range for frame generation
+       input/burst.in	// gps range for cwb analysis
+    3) generate input/XX_glitches.lst glitch list files 
+       see for example :
+       macro/CreateListOfGlitches.C
+       setup GPS_* parameters
+
+create 100 jobs(600s) ~ 16hours (each job produce 150 frames lasting 4sec )
+jobs are created according the input/burst.in file
+
+1)  make gbatch
+
+submit condor jobs : frames & mdc-logs are created under "frames" & frames/logs directories
+
+2)  make gsubmit
+
+merge mdc-logs + list-frames-files + waveforms
+merged log file is created under frames directory
+
+3)  make gmlog
+
+// ------------------------------------------------------------------------
+Example of frame generation with condor (use default values) :
+// ------------------------------------------------------------------------
+cp -r $HOME_WAT/tools/cwb/examples/ADV_SIM_ONLINE_L1H1V1 ADV_SIM_ONLINE_L1H1V1_run1
+cd ADV_SIM_ONLINE_L1H1V1_run1
+make gsetup
+make glitch
+make gbatch
+make gsubmit
+make gmlog 
+
+// ------------------------------------------------------------------------
+Example how to test glitches in interactive mode (use default values) :
+// ------------------------------------------------------------------------
+In this example cWB is running in interactive mode for run=2
+glitches are generated with SNR=40 for each detector
+
+3 glitches are injected
+
+1) 1040739055.156 - glitch : L1,H1,V1 = SG100Q3, SG100Q9,   WNB100_100_0d100 
+2) 1040739091.072 - glitch : L1,H1,V1 = SG100Q3, SG100Q100, SG100Q9
+3) 1040739122.714 - glitch : L1,H1,V1 = SG100Q3, SG100Q100, SG100Q9
+
+only the glitch 2) is detected with 1G and nothing with 2G
+
+1 gw signals injected and detected :
+
+1) 1040739109.271 - signal : L1,H1,V1 = SG1053Q9, SG1053Q9, SG1053Q9
+
+cp -r $HOME_WAT/tools/cwb/examples/ADV_SIM_ONLINE_L1H1V1 ADV_SIM_ONLINE_L1H1V1_run1
+cd ADV_SIM_ONLINE_L1H1V1_run1
+make gsetup
+make glitch
+make gframe
+make gmzpced
+
+ceds are produced in data directory
+to make ceds visible from web do:
+mv data/ced_1040739668_60_ADV_SIM_ONLINE_L1H1V1_run1_slag0_lag0_1_job12/ report/ced/
+
+// ------------------------------------------------------------------------
+To display glitch and sensitivity curve use the macro :
+macro/DisplayFrameAndSensitivity.C
+
+To setup the glitch gps time define in the macro the line : 
+#define GPS 1040739671
